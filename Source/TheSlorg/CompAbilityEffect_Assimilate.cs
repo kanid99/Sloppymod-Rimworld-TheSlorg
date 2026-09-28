@@ -12,26 +12,25 @@ namespace TheSlorg
     }
 
     /// <summary>
-    /// Injects a downed or imprisoned humanlike with nanoprobes: they become a Slorg drone and join the caster's collective.
+    /// Injects a downed or imprisoned humanlike with nanoprobes. Assimilation then plays out as an infection.
     /// </summary>
     public class CompAbilityEffect_Assimilate : CompAbilityEffect
     {
-        public override bool Valid(LocalTargetInfo target, bool throwMessages = false)
+        public static bool CanAssimilate(Pawn caster, Pawn victim, bool throwMessages)
         {
-            Pawn victim = target.Pawn;
-            if (victim == null || !victim.RaceProps.Humanlike || victim.genes == null)
+            if (victim == null || !victim.RaceProps.Humanlike || victim.genes == null || victim.Dead)
             {
                 return false;
             }
-            if (SlorgUtility.IsDrone(victim))
+            if (SlorgUtility.HasLinkGene(victim) || victim.health.hediffSet.HasHediff(SlorgDefOf.Slorg_NanoprobeInfection))
             {
                 if (throwMessages)
                 {
-                    Messages.Message($"{victim.LabelShortCap} is already part of the collective.", victim, MessageTypeDefOf.RejectInput, historical: false);
+                    Messages.Message($"{victim.LabelShortCap} is already part of the collective, or soon will be.", victim, MessageTypeDefOf.RejectInput, historical: false);
                 }
                 return false;
             }
-            bool helpless = victim.Downed || (victim.IsPrisoner && victim.HostFaction == parent.pawn.Faction);
+            bool helpless = victim.Downed || (victim.IsPrisoner && victim.HostFaction == caster.Faction);
             if (!helpless)
             {
                 if (throwMessages)
@@ -40,7 +39,12 @@ namespace TheSlorg
                 }
                 return false;
             }
-            return base.Valid(target, throwMessages);
+            return true;
+        }
+
+        public override bool Valid(LocalTargetInfo target, bool throwMessages = false)
+        {
+            return CanAssimilate(parent.pawn, target.Pawn, throwMessages) && base.Valid(target, throwMessages);
         }
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
@@ -53,15 +57,22 @@ namespace TheSlorg
                 return;
             }
 
-            victim.genes.SetXenotype(SlorgDefOf.Slorg_Drone);
+            Hediff infection = HediffMaker.MakeHediff(SlorgDefOf.Slorg_NanoprobeInfection, victim);
+            infection.TryGetComp<HediffComp_NanoprobeInfection>().sourceFaction = caster.Faction;
+            victim.health.AddHediff(infection);
 
-            if (victim.Faction != caster.Faction)
+            if (victim.Faction != null && victim.Faction.IsPlayer)
             {
-                RecruitUtility.Recruit(victim, caster.Faction, caster);
+                Find.LetterStack.ReceiveLetter("Nanoprobe infection",
+                    $"{caster.LabelShortCap} has injected {victim.LabelShortCap} with Slorg nanoprobes.\n\n"
+                    + $"In about three days {victim.LabelShortCap} will become a Slorg drone. Normal tending only slows the infection. "
+                    + "To purge it you need tends of exceptional quality: glitterworld medicine and a skilled doctor.",
+                    LetterDefOf.ThreatBig, victim);
             }
-
-            Messages.Message($"{victim.LabelShortCap} has been assimilated. Resistance was futile.", victim, MessageTypeDefOf.PositiveEvent);
-            GameComponent_SlorgCollective.RefreshNow();
+            else
+            {
+                Messages.Message($"{victim.LabelShortCap} has been injected with nanoprobes. Resistance is futile.", victim, MessageTypeDefOf.NeutralEvent);
+            }
         }
     }
 }

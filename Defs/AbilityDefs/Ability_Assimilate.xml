@@ -4,9 +4,9 @@
 	<AbilityDef ParentName="AbilityTouchBase">
 		<defName>Slorg_Assimilate</defName>
 		<label>assimilate</label>
-		<description>Inject a downed person or a prisoner with nanoprobes. They become a Slorg drone and join this drone's faction. Any skill they know better than the collective becomes the collective's, for as long as they live.\n\nResistance is futile.</description>
+		<description>Inject a downed person or a prisoner with nanoprobes. Over about three days the nanoprobes rebuild them into a Slorg drone who joins this drone's faction. Any skill they know better than the collective becomes the collective's, for as long as they live.\n\nOrdinary tending only slows the infection. Exceptional tends, which need glitterworld medicine, purge it.\n\nResistance is futile.</description>
 		<iconPath>UI/Abilities/Slorg_Assimilate</iconPath>
-		<cooldownTicksRange>30000</cooldownTicksRange>
+		<cooldownTicksRange>2500</cooldownTicksRange>
 		<hostile>false</hostile>
 		<casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
 		<stunTargetWhileCasting>true</stunTargetWhileCasting>

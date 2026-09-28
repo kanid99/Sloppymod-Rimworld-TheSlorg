@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!-- Enemy drones go for downed enemies and inject them with nanoprobes. -->
+	<ThinkTreeDef>
+		<defName>Slorg_AssimilateSubtree</defName>
+		<insertTag>Humanlike_PostMentalState</insertTag>
+		<insertPriority>90</insertPriority>
+		<thinkRoot Class="TheSlorg.JobGiver_SlorgAssimilate" />
+	</ThinkTreeDef>
+
+</Defs>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<RecipeDef ParentName="SurgeryFlesh">
+		<defName>Slorg_SeverLink</defName>
+		<label>sever collective link</label>
+		<description>Cut a severed Slorg drone's transceiver out of their brainstem, freeing them from the collective for good. They become a disconnected drone.\n\nOnly possible while the drone is severed from the collective, for example in the days after their queen falls.</description>
+		<workerClass>TheSlorg.Recipe_SeverLink</workerClass>
+		<jobString>Severing collective link.</jobString>
+		<workAmount>4000</workAmount>
+		<targetsBodyPart>false</targetsBodyPart>
+		<hideBodyPartNames>true</hideBodyPartNames>
+		<surgerySuccessChanceFactor>0.8</surgerySuccessChanceFactor>
+		<researchPrerequisite>Slorg_NeuralSeverance</researchPrerequisite>
+		<skillRequirements>
+			<Medicine>10</Medicine>
+		</skillRequirements>
+		<recipeUsers>
+			<li>Human</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MedicineUltratech</li>
+					</thingDefs>
+				</filter>
+				<count>2</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MedicineUltratech</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
+</Defs>

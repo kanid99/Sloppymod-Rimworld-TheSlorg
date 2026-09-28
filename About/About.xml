@@ -24,12 +24,13 @@
 	</loadAfter>
 	<description>We are the Slorg. Your biological and technological distinctiveness will be added to our own.
 
-Adds the Slorg, a cybernetic hive-mind xenotype.
+Adds the Slorg Collective, a cybernetic hive-mind enemy faction.
 
-- Assimilate: drones can inject a downed enemy or a prisoner with nanoprobes, turning them into a Slorg drone and adding them to the collective.
-- Collective knowledge: each drone works at the collective's best level in every skill. The collective only keeps a skill while the drone that knows it is alive and linked. If that drone dies, is captured or leaves, the collective loses that skill.
-- Collective strength: the more drones are linked, the stronger every drone gets. A lone drone is isolated and weakened.
-- Shared traits: useful traits such as industrious, tough or careful shooter spread from the drone that has them to the whole collective, for as long as that drone stays linked.
+- Assimilation: drones inject your downed colonists with nanoprobes. The infection takes about 3 days, and only exceptional tends with glitterworld medicine can purge it. If it finishes, your colonist joins the Slorg.
+- Collective knowledge: each drone works at the collective's best level in every skill. Kill the drone that knew it and the collective loses it.
+- The queen: she comes with very large raids. Kill or capture her and the drones around her are severed, so you can capture them and cut them free with surgery.
+- The Unicomplex: destroy the queen core in their main settlement to end Slorg control of the planet.
+- Disconnected drones: freed Slorg keep their implants and can join you, but their genes can't be passed on.
 
 Requires Biotech and Harmony.</description>
 </ModMetaData>

@@ -16,7 +16,7 @@
 	<GeneDef ParentName="Slorg_GeneBase">
 		<defName>Slorg_CollectiveLink</defName>
 		<label>collective link</label>
-		<description>A subspace neural transceiver wired into the brainstem links the carrier to every other drone in their faction. Knowledge, strength and even personality flow freely through the collective.\n\nThe collective only keeps what its drones carry. Lose a drone and you lose what it knew.</description>
+		<description>A subspace neural transceiver wired into the brainstem links the carrier to every other drone in their faction. Knowledge, strength and even personality flow freely through the collective.\n\nThe collective only keeps what its drones carry. Lose a drone and you lose what it knew.\n\nThe link can't survive serving anyone but the collective: a drone that joins another faction burns out into a disconnected drone.</description>
 		<iconPath>UI/Icons/Genes/Slorg_CollectiveLink</iconPath>
 		<displayOrderInCategory>0</displayOrderInCategory>
 		<biostatCpx>4</biostatCpx>
@@ -32,7 +32,53 @@
 			<li>Each skill is performed at the collective's best level, as long as the drone that knows it is alive and linked.</li>
 			<li>Gains stat bonuses that grow with the number of linked drones. A lone drone is isolated and weakened.</li>
 			<li>Useful traits carried by one drone are shared with all drones.</li>
-			<li>Prisoners and slaves are cut off from the collective.</li>
+			<li>Prisoners, slaves and severed drones are cut off from the collective.</li>
+			<li>Burns out if the carrier joins the player: they become a disconnected drone.</li>
+		</customEffectDescriptions>
+	</GeneDef>
+
+	<!-- Queen only. -->
+	<GeneDef ParentName="Slorg_GeneBase">
+		<defName>Slorg_HiveSovereign</defName>
+		<label>hive sovereign</label>
+		<description>The carrier is the voice and will of the collective. Nearby drones fight harder in her presence, but the whole structure depends on her: when she falls, the drones around her are severed from the collective.</description>
+		<iconPath>UI/Icons/Genes/Slorg_HiveSovereign</iconPath>
+		<displayOrderInCategory>1</displayOrderInCategory>
+		<biostatCpx>5</biostatCpx>
+		<biostatMet>-3</biostatMet>
+		<statOffsets>
+			<ArmorRating_Sharp>0.20</ArmorRating_Sharp>
+			<ArmorRating_Blunt>0.20</ArmorRating_Blunt>
+			<MentalBreakThreshold>-0.20</MentalBreakThreshold>
+		</statOffsets>
+		<forcedTraits>
+			<li>
+				<def>Nerves</def>
+				<degree>2</degree>
+			</li>
+		</forcedTraits>
+		<customEffectDescriptions>
+			<li>Drones on the same map count as a much larger collective.</li>
+			<li>If she is killed or captured, every drone on her map is severed from the collective for about two days.</li>
+			<li>When she falls, the collective raises a new queen.</li>
+		</customEffectDescriptions>
+	</GeneDef>
+
+	<!-- Marks a disconnected drone. -->
+	<GeneDef ParentName="Slorg_GeneBase">
+		<defName>Slorg_Severed</defName>
+		<label>severed link</label>
+		<description>The carrier once belonged to the Slorg collective. The transceiver in their brainstem is dead, but the silence where the collective used to be never quite goes away.\n\nSlorg nanoprobes destroy any genetic material taken from the carrier, so none of these genes can be extracted or passed on.</description>
+		<iconPath>UI/Icons/Genes/Slorg_Severed</iconPath>
+		<displayOrderInCategory>2</displayOrderInCategory>
+		<biostatCpx>1</biostatCpx>
+		<biostatMet>1</biostatMet>
+		<statOffsets>
+			<MentalBreakThreshold>0.05</MentalBreakThreshold>
+		</statOffsets>
+		<customEffectDescriptions>
+			<li>Genes cannot be extracted or reimplanted from this pawn.</li>
+			<li>Can be assimilated again.</li>
 		</customEffectDescriptions>
 	</GeneDef>
 

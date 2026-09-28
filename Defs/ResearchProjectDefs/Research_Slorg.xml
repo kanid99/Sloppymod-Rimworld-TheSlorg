@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<ResearchTabDef>
+		<defName>Slorg_ResearchTab</defName>
+		<label>Slorg</label>
+	</ResearchTabDef>
+
+	<ResearchProjectDef>
+		<defName>Slorg_NeuralSeverance</defName>
+		<label>neural severance</label>
+		<description>Study Slorg transceiver implants well enough to cut them out without killing the host. Unlocks the Sever link surgery, which frees a severed drone from the collective for good.</description>
+		<baseCost>2500</baseCost>
+		<techLevel>Spacer</techLevel>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<tab>Slorg_ResearchTab</tab>
+		<researchViewX>0</researchViewX>
+		<researchViewY>0</researchViewY>
+	</ResearchProjectDef>
+
+</Defs>

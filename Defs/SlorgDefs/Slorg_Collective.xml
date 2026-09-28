@@ -5,7 +5,13 @@
 	<TheSlorg.SlorgCollectiveDef>
 		<defName>Slorg_Collective</defName>
 		<label>slorg collective</label>
-		<refreshIntervalTicks>250</refreshIntervalTicks>
+		<refreshIntervalTicks>500</refreshIntervalTicks>
+		<!-- A queen on the map counts as this many extra drones for the collective link stages. -->
+		<queenPresenceBonusDrones>10</queenPresenceBonusDrones>
+		<!-- Raids of at least this many points have this chance to bring the queen. -->
+		<queenRaidMinPoints>5000</queenRaidMinPoints>
+		<queenRaidChance>0.5</queenRaidChance>
+		<unicomplexName>Unicomplex</unicomplexName>
 		<shareableTraits>
 			<li><def>Industriousness</def><degree>1</degree></li>  <!-- industrious -->
 			<li><def>Industriousness</def><degree>2</degree></li>  <!-- hard worker -->

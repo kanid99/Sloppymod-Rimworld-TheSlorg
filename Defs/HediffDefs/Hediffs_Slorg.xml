@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!-- Assimilation. Climbs about 0.33/day untended (about 3 days), 0.18/day tended.
+	     A tend of 105%+ quality (glitterworld medicine and a good doctor) purges 0.35. -->
+	<HediffDef>
+		<defName>Slorg_NanoprobeInfection</defName>
+		<label>nanoprobe infection</label>
+		<description>Slorg nanoprobes are rebuilding this person from the inside. Grey tubules spread under the skin and implants begin to form. When the process completes, they will be a Slorg drone.\n\nOrdinary tending only slows the nanoprobes. Only tends of exceptional quality, which need glitterworld medicine and a skilled doctor, can purge them.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.55, 0.95, 0.55)</defaultLabelColor>
+		<isBad>true</isBad>
+		<tendable>true</tendable>
+		<makesSickThought>true</makesSickThought>
+		<everCurableByItem>false</everCurableByItem>
+		<initialSeverity>0.05</initialSeverity>
+		<maxSeverity>1</maxSeverity>
+		<comps>
+			<li Class="HediffCompProperties_TendDuration">
+				<baseTendDurationHours>12</baseTendDurationHours>
+				<severityPerDayTended>-0.15</severityPerDayTended>
+			</li>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>0.33</severityPerDay>
+			</li>
+			<li Class="TheSlorg.HediffCompProperties_NanoprobeInfection">
+				<purgeTendQuality>1.05</purgeTendQuality>
+				<purgeAmount>0.35</purgeAmount>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<label>early</label>
+				<painOffset>0.05</painOffset>
+			</li>
+			<li>
+				<minSeverity>0.3</minSeverity>
+				<label>spreading</label>
+				<painOffset>0.10</painOffset>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>-0.10</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>0.6</minSeverity>
+				<label>implants forming</label>
+				<painOffset>0.15</painOffset>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>-0.20</offset>
+					</li>
+					<li>
+						<capacity>Moving</capacity>
+						<offset>-0.10</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>0.85</minSeverity>
+				<label>almost assimilated</label>
+				<painOffset>0.15</painOffset>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>-0.30</offset>
+					</li>
+					<li>
+						<capacity>Moving</capacity>
+						<offset>-0.20</offset>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<!-- A drone cut off from the collective: its queen fell nearby, its queen core was destroyed, or it was just freed. -->
+	<HediffDef>
+		<defName>Slorg_Severance</defName>
+		<label>severed from collective</label>
+		<description>The collective has gone silent. This drone has collapsed, unable to act without the voices it has always heard.\n\nWhile severed, a drone can be given the Sever link surgery to cut it from the collective for good. When the severance wears off, a drone that still has its link reconnects.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.7, 0.7, 0.7)</defaultLabelColor>
+		<isBad>true</isBad>
+		<everCurableByItem>false</everCurableByItem>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>100000~140000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.1</setMax>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
+
+</Defs>

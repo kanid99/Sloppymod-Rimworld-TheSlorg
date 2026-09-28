@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<PawnKindDef Name="Slorg_KindBase" Abstract="True">
+		<race>Human</race>
+		<defaultFactionType>Slorg_CollectiveFaction</defaultFactionType>
+		<useFactionXenotypes>false</useFactionXenotypes>
+		<xenotypeSet>
+			<xenotypeChances>
+				<Slorg_Drone>1</Slorg_Drone>
+			</xenotypeChances>
+		</xenotypeSet>
+		<chemicalAddictionChance>0</chemicalAddictionChance>
+		<backstoryCryptosleepCommonality>0</backstoryCryptosleepCommonality>
+		<invNutrition>0</invNutrition>
+		<minGenerationAge>18</minGenerationAge>
+		<maxGenerationAge>60</maxGenerationAge>
+		<apparelAllowHeadgearChance>0.3</apparelAllowHeadgearChance>
+		<!-- Drones can't be talked round. Freeing one takes surgery. -->
+		<initialResistanceRange>60~90</initialResistanceRange>
+		<initialWillRange>6~10</initialWillRange>
+	</PawnKindDef>
+
+	<PawnKindDef ParentName="Slorg_KindBase">
+		<defName>Slorg_DroneKind</defName>
+		<label>slorg drone</label>
+		<combatPower>90</combatPower>
+		<weaponMoney>300~700</weaponMoney>
+		<weaponTags>
+			<li>MedievalMeleeDecent</li>
+		</weaponTags>
+		<apparelMoney>600~1400</apparelMoney>
+		<apparelTags>
+			<li>IndustrialMilitaryBasic</li>
+			<li>IndustrialMilitaryAdvanced</li>
+		</apparelTags>
+		<skills>
+			<li>
+				<skill>Melee</skill>
+				<range>6~12</range>
+			</li>
+		</skills>
+	</PawnKindDef>
+
+	<PawnKindDef ParentName="Slorg_KindBase">
+		<defName>Slorg_TacticalDroneKind</defName>
+		<label>tactical drone</label>
+		<combatPower>140</combatPower>
+		<weaponMoney>900~2200</weaponMoney>
+		<weaponTags>
+			<li>SpacerGun</li>
+		</weaponTags>
+		<apparelMoney>1500~3200</apparelMoney>
+		<apparelTags>
+			<li>IndustrialMilitaryAdvanced</li>
+			<li>SpacerMilitary</li>
+		</apparelTags>
+		<skills>
+			<li>
+				<skill>Shooting</skill>
+				<range>6~12</range>
+			</li>
+		</skills>
+	</PawnKindDef>
+
+	<PawnKindDef ParentName="Slorg_KindBase">
+		<defName>Slorg_QueenKind</defName>
+		<label>slorg queen</label>
+		<combatPower>600</combatPower>
+		<factionLeader>true</factionLeader>
+		<fixedGender>Female</fixedGender>
+		<minGenerationAge>25</minGenerationAge>
+		<xenotypeSet Inherit="False">
+			<xenotypeChances>
+				<Slorg_Queen>1</Slorg_Queen>
+			</xenotypeChances>
+		</xenotypeSet>
+		<weaponMoney>3000~5000</weaponMoney>
+		<weaponTags>
+			<li>SpacerGun</li>
+		</weaponTags>
+		<apparelMoney>4000~7000</apparelMoney>
+		<apparelTags>
+			<li>SpacerMilitary</li>
+		</apparelTags>
+		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+		<initialResistanceRange>150~200</initialResistanceRange>
+		<skills>
+			<li>
+				<skill>Shooting</skill>
+				<range>12~18</range>
+			</li>
+			<li>
+				<skill>Melee</skill>
+				<range>12~18</range>
+			</li>
+		</skills>
+	</PawnKindDef>
+
+</Defs>

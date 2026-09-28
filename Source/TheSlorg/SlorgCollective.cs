@@ -11,7 +11,14 @@ namespace TheSlorg
     public class SlorgCollective
     {
         public readonly Faction faction;
+        /// <summary>Linked drones on a map or in a caravan. These receive the collective's skills, traits and stats.</summary>
         public readonly List<Pawn> drones = new List<Pawn>();
+
+        /// <summary>Linked drones elsewhere in the world. They still contribute what they know.</summary>
+        public readonly List<Pawn> offMapDrones = new List<Pawn>();
+
+        /// <summary>The map the queen is on, if she is on one.</summary>
+        public Map queenMap;
 
         /// <summary>Best natural level of each skill among linked drones, indexed by SkillDef.index.</summary>
         public readonly int[] skillLevels;
@@ -31,6 +38,21 @@ namespace TheSlorg
         }
 
         public int DroneCount => drones.Count;
+
+        public IEnumerable<Pawn> AllDrones
+        {
+            get
+            {
+                foreach (Pawn drone in drones)
+                {
+                    yield return drone;
+                }
+                foreach (Pawn drone in offMapDrones)
+                {
+                    yield return drone;
+                }
+            }
+        }
 
         public int LevelFor(SkillDef skill)
         {

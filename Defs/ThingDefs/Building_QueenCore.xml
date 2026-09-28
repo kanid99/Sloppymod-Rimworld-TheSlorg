@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<ThingDef ParentName="BuildingBase">
+		<defName>Slorg_QueenCore</defName>
+		<label>queen core</label>
+		<description>A humming lattice of processors and nanoprobe vats at the centre of the Unicomplex. The queen core binds every Slorg drone on this world to the collective and grows the next queen when the last one falls.\n\nDestroy it and every drone on the surface is permanently disconnected.</description>
+		<thingClass>TheSlorg.Building_QueenCore</thingClass>
+		<graphicData>
+			<texPath>Things/Building/Slorg_QueenCore</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(3,3)</drawSize>
+		</graphicData>
+		<size>(3,3)</size>
+		<altitudeLayer>Building</altitudeLayer>
+		<passability>Impassable</passability>
+		<blockWind>true</blockWind>
+		<fillPercent>1</fillPercent>
+		<castEdgeShadows>true</castEdgeShadows>
+		<rotatable>false</rotatable>
+		<useHitPoints>true</useHitPoints>
+		<leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+		<statBases>
+			<MaxHitPoints>4000</MaxHitPoints>
+			<Flammability>0</Flammability>
+			<Beauty>-10</Beauty>
+		</statBases>
+		<building>
+			<claimable>false</claimable>
+			<deconstructible>false</deconstructible>
+		</building>
+		<killedLeavings>
+			<ComponentSpacer>6</ComponentSpacer>
+			<Plasteel>60</Plasteel>
+		</killedLeavings>
+		<comps>
+			<li Class="CompProperties_Glower">
+				<glowRadius>9</glowRadius>
+				<glowColor>(80,220,100,0)</glowColor>
+			</li>
+		</comps>
+	</ThingDef>
+
+</Defs>

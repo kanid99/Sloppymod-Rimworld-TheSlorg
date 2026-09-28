@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<FactionDef ParentName="FactionBase">
+		<defName>Slorg_CollectiveFaction</defName>
+		<label>slorg collective</label>
+		<description>We are the Slorg. Your biological and technological distinctiveness will be added to our own.\n\nA cybernetic hive mind that grows by assimilating everyone it meets. The Slorg don't trade and don't negotiate. Drones share everything the collective knows, and they carry off the fallen to add to their number.\n\nTheir oldest settlement, the Unicomplex, holds the queen core that binds the collective to this world. Destroy it and every drone on the surface is cut loose.</description>
+		<pawnSingular>drone</pawnSingular>
+		<pawnsPlural>drones</pawnsPlural>
+		<listOrderPriority>13</listOrderPriority>
+		<settlementGenerationWeight>0.6</settlementGenerationWeight>
+		<requiredCountAtGameStart>1</requiredCountAtGameStart>
+		<maxCountAtGameStart>1</maxCountAtGameStart>
+		<canMakeRandomly>true</canMakeRandomly>
+		<canSiege>false</canSiege>
+		<canStageAttacks>true</canStageAttacks>
+		<leaderTitle>queen</leaderTitle>
+		<fixedLeaderKinds>
+			<li>Slorg_QueenKind</li>
+		</fixedLeaderKinds>
+		<basicMemberKind>Slorg_DroneKind</basicMemberKind>
+		<factionIconPath>World/Slorg_FactionIcon</factionIconPath>
+		<settlementTexturePath>World/WorldObjects/DefaultSettlement</settlementTexturePath>
+		<factionNameMaker>NamerFactionPirate</factionNameMaker>
+		<settlementNameMaker>NamerSettlementPirate</settlementNameMaker>
+		<colorSpectrum>
+			<li>(0.35, 0.85, 0.40)</li>
+			<li>(0.20, 0.60, 0.28)</li>
+		</colorSpectrum>
+		<permanentEnemy>true</permanentEnemy>
+		<techLevel>Spacer</techLevel>
+		<earliestRaidDays>20</earliestRaidDays>
+		<allowedCultures>
+			<li>Astropolitan</li>
+		</allowedCultures>
+		<backstoryFilters>
+			<li>
+				<categories>
+					<li>Offworld</li>
+					<li>Outlander</li>
+				</categories>
+			</li>
+		</backstoryFilters>
+		<xenotypeSet>
+			<xenotypeChances>
+				<Slorg_Drone>1</Slorg_Drone>
+			</xenotypeChances>
+		</xenotypeSet>
+		<allowedArrivalTemperatureRange>-60~70</allowedArrivalTemperatureRange>
+		<raidLootMaker>Slorg_RaidLootMaker</raidLootMaker>
+		<maxPawnCostPerTotalPointsCurve>
+			<points>
+				<li>(0, 35)</li>
+				<li>(70, 50)</li>
+				<li>(700, 100)</li>
+				<li>(1300, 150)</li>
+				<li>(100000, 10000)</li>
+			</points>
+		</maxPawnCostPerTotalPointsCurve>
+		<pawnGroupMakers>
+			<li>
+				<kindDef>Combat</kindDef>
+				<commonality>60</commonality>
+				<options>
+					<Slorg_DroneKind>10</Slorg_DroneKind>
+					<Slorg_TacticalDroneKind>6</Slorg_TacticalDroneKind>
+				</options>
+			</li>
+			<li>
+				<!-- Assimilation party: heavy on melee drones to down and inject colonists. -->
+				<kindDef>Combat</kindDef>
+				<commonality>40</commonality>
+				<options>
+					<Slorg_DroneKind>10</Slorg_DroneKind>
+					<Slorg_TacticalDroneKind>2</Slorg_TacticalDroneKind>
+				</options>
+			</li>
+			<li>
+				<kindDef>Settlement</kindDef>
+				<options>
+					<Slorg_DroneKind>10</Slorg_DroneKind>
+					<Slorg_TacticalDroneKind>10</Slorg_TacticalDroneKind>
+				</options>
+			</li>
+		</pawnGroupMakers>
+		<maxConfigurableAtWorldCreation>1</maxConfigurableAtWorldCreation>
+		<configurationListOrderPriority>35</configurationListOrderPriority>
+	</FactionDef>
+
+	<ThingSetMakerDef>
+		<defName>Slorg_RaidLootMaker</defName>
+		<root Class="ThingSetMaker_MarketValue">
+			<fixedParams>
+				<filter>
+					<thingDefs>
+						<li>ComponentIndustrial</li>
+						<li>ComponentSpacer</li>
+						<li>Plasteel</li>
+						<li>MedicineIndustrial</li>
+					</thingDefs>
+				</filter>
+			</fixedParams>
+		</root>
+	</ThingSetMakerDef>
+
+</Defs>

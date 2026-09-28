@@ -101,8 +101,14 @@ namespace TheSlorg
         {
             get
             {
-                int drones = (int)Severity;
-                return drones <= 1 ? "isolated" : drones + " drones";
+                SlorgCollective collective = GameComponent_SlorgCollective.CollectiveOf(pawn);
+                int drones = collective?.DroneCount ?? 1;
+                string label = drones <= 1 ? "isolated" : drones + " drones";
+                if (collective?.queenMap != null && collective.queenMap == pawn.MapHeld)
+                {
+                    label += ", queen present";
+                }
+                return label;
             }
         }
 
