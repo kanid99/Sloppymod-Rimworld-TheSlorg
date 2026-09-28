@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>The Slorg</name>
+	<author>kanid99</author>
+	<packageId>kanid99.theslorg</packageId>
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+	<modDependencies>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+		</li>
+		<li>
+			<packageId>Ludeon.RimWorld.Biotech</packageId>
+			<displayName>Biotech</displayName>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>brrainz.harmony</li>
+		<li>Ludeon.RimWorld.Biotech</li>
+	</loadAfter>
+	<description>We are the Slorg. Your biological and technological distinctiveness will be added to our own.
+
+Adds the Slorg, a cybernetic hive-mind xenotype.
+
+- Assimilate: drones can inject a downed enemy or a prisoner with nanoprobes, turning them into a Slorg drone and adding them to the collective.
+- Collective knowledge: each drone works at the collective's best level in every skill. The collective only keeps a skill while the drone that knows it is alive and linked. If that drone dies, is captured or leaves, the collective loses that skill.
+- Collective strength: the more drones are linked, the stronger every drone gets. A lone drone is isolated and weakened.
+- Shared traits: useful traits such as industrious, tough or careful shooter spread from the drone that has them to the whole collective, for as long as that drone stays linked.
+
+Requires Biotech and Harmony.</description>
+</ModMetaData>

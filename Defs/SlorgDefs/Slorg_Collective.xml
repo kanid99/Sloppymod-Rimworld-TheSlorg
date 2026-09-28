@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!-- Tuning for the collective. Only the listed trait + degree pairs can spread between drones. -->
+	<TheSlorg.SlorgCollectiveDef>
+		<defName>Slorg_Collective</defName>
+		<label>slorg collective</label>
+		<refreshIntervalTicks>250</refreshIntervalTicks>
+		<shareableTraits>
+			<li><def>Industriousness</def><degree>1</degree></li>  <!-- industrious -->
+			<li><def>Industriousness</def><degree>2</degree></li>  <!-- hard worker -->
+			<li><def>Tough</def><degree>0</degree></li>
+			<li><def>Nimble</def><degree>0</degree></li>
+			<li><def>ShootingAccuracy</def><degree>1</degree></li> <!-- careful shooter -->
+			<li><def>FastLearner</def><degree>0</degree></li>
+			<li><def>GreatMemory</def><degree>0</degree></li>
+			<li><def>QuickSleeper</def><degree>0</degree></li>
+			<li><def>SpeedOffset</def><degree>1</degree></li>      <!-- fast walker -->
+			<li><def>SpeedOffset</def><degree>2</degree></li>      <!-- jogger -->
+			<li><def>Nerves</def><degree>1</degree></li>           <!-- steadfast -->
+			<li><def>Nerves</def><degree>2</degree></li>           <!-- iron-willed -->
+		</shareableTraits>
+	</TheSlorg.SlorgCollectiveDef>
+
+</Defs>

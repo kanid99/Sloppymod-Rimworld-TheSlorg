@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!-- Severity = number of linked drones in this drone's collective. Set by the collective every refresh. -->
+	<HediffDef>
+		<defName>Slorg_CollectiveLinkHediff</defName>
+		<hediffClass>TheSlorg.Hediff_CollectiveLink</hediffClass>
+		<label>collective link</label>
+		<description>This drone is linked to the Slorg collective. The more drones are linked, the stronger each one gets.</description>
+		<defaultLabelColor>(0.45, 0.9, 0.45)</defaultLabelColor>
+		<isBad>false</isBad>
+		<everCurableByItem>false</everCurableByItem>
+		<initialSeverity>1</initialSeverity>
+		<minSeverity>1</minSeverity>
+		<maxSeverity>100000</maxSeverity>
+		<stages>
+			<li>
+				<minSeverity>0</minSeverity>
+				<label>isolated</label>
+				<statFactors>
+					<GlobalLearningFactor>0.8</GlobalLearningFactor>
+					<WorkSpeedGlobal>0.9</WorkSpeedGlobal>
+				</statFactors>
+				<statOffsets>
+					<MentalBreakThreshold>0.10</MentalBreakThreshold>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>-0.10</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>2</minSeverity>
+				<label>cluster</label>
+				<statOffsets>
+					<WorkSpeedGlobal>0.05</WorkSpeedGlobal>
+					<MentalBreakThreshold>-0.03</MentalBreakThreshold>
+				</statOffsets>
+			</li>
+			<li>
+				<minSeverity>5</minSeverity>
+				<label>unimatrix</label>
+				<statOffsets>
+					<WorkSpeedGlobal>0.10</WorkSpeedGlobal>
+					<GlobalLearningFactor>0.10</GlobalLearningFactor>
+					<MentalBreakThreshold>-0.06</MentalBreakThreshold>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>0.05</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>10</minSeverity>
+				<label>cube</label>
+				<statOffsets>
+					<WorkSpeedGlobal>0.15</WorkSpeedGlobal>
+					<GlobalLearningFactor>0.20</GlobalLearningFactor>
+					<MentalBreakThreshold>-0.10</MentalBreakThreshold>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>0.10</offset>
+					</li>
+					<li>
+						<capacity>Manipulation</capacity>
+						<offset>0.05</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>20</minSeverity>
+				<label>full collective</label>
+				<statOffsets>
+					<WorkSpeedGlobal>0.25</WorkSpeedGlobal>
+					<GlobalLearningFactor>0.30</GlobalLearningFactor>
+					<MentalBreakThreshold>-0.15</MentalBreakThreshold>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>0.15</offset>
+					</li>
+					<li>
+						<capacity>Manipulation</capacity>
+						<offset>0.10</offset>
+					</li>
+					<li>
+						<capacity>Moving</capacity>
+						<offset>0.10</offset>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
+
+</Defs>

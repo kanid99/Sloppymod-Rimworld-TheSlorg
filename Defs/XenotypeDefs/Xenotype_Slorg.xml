@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<XenotypeDef>
+		<defName>Slorg_Drone</defName>
+		<label>slorg</label>
+		<description>The Slorg are a cybernetic collective. Each drone is a human body full of implants, nanoprobes and a neural transceiver that links it to every other drone. They don't negotiate or trade, and they don't breed. They grow by assimilating others.\n\nA drone alone is weak. Inside the collective, each drone can use everything the others know.</description>
+		<descriptionShort>Cybernetic hive-mind drones who grow their collective by assimilating others. Every drone shares the skills and strength of the whole.</descriptionShort>
+		<iconPath>UI/Icons/Xenotypes/Slorg</iconPath>
+		<inheritable>false</inheritable>
+		<genes>
+			<li>Slorg_CollectiveLink</li>
+			<li>Slorg_Exoplating</li>
+			<li>Slorg_OcularImplant</li>
+			<li>Slorg_Nanoprobes</li>
+			<li>Slorg_DroneConditioning</li>
+			<li>Slorg_DroneSkin</li>
+			<li>Hair_BaldOnly</li>
+			<li>Beard_NoBeardOnly</li>
+			<li>Head_Gaunt</li>
+			<li>Neversleep</li>
+			<li>Ageless</li>
+			<li>DiseaseFree</li>
+			<li>ToxResist_Total</li>
+			<li>Pain_Reduced</li>
+			<li>Aggression_DeadCalm</li>
+			<li>DarkVision</li>
+			<li>MoveSpeed_Slow</li>
+			<li>Beauty_Ugly</li>
+		</genes>
+	</XenotypeDef>
+
+</Defs>
