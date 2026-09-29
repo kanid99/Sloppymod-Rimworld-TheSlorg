@@ -73,7 +73,7 @@
 		<defName>Slorg_TacticalDroneKind</defName>
 		<label>tactical drone</label>
 		<combatPower>140</combatPower>
-		<weaponMoney>900~2200</weaponMoney>
+		<weaponMoney>1200~2400</weaponMoney>
 		<weaponTags>
 			<li>SpacerGun</li>
 		</weaponTags>

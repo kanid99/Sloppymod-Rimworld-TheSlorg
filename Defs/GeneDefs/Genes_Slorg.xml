@@ -4,7 +4,7 @@
 	<GeneCategoryDef>
 		<defName>Slorg_Cybernetics</defName>
 		<label>slorg cybernetics</label>
-		<displayPriorityInXenotype>500</displayPriorityInXenotype>
+		<displayPriorityInXenotype>437</displayPriorityInXenotype>
 	</GeneCategoryDef>
 
 	<GeneDef Name="Slorg_GeneBase" Abstract="True">
