@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -30,7 +31,8 @@ namespace TheSlorg
     }
 
     /// <summary>
-    /// A captured queen, held as a prisoner, can call drones to serve the colony. If she gets free, they turn on it.
+    /// A captured queen, held as a prisoner, can call drones to serve the colony. If she gets free, dies or is severed
+    /// while the queen core stands, they turn on it.
     /// </summary>
     public static class CaptiveQueen
     {
@@ -114,7 +116,7 @@ namespace TheSlorg
                 Find.TickManager.TicksGame + (int)(SlorgDefOf.Slorg_Collective.captiveQueenSummonCooldownDays * GenDate.TicksPerDay));
             Find.LetterStack.ReceiveLetter("A drone answers",
                 $"{queen.LabelShortCap} has called a drone to the colony. It will work for you as long as she stays captive.\n\n"
-                + "If she ever gets free, every drone bound to her will turn on the colony.",
+                + "If she escapes, dies or is severed from the hive, every drone bound to her will turn on the colony.",
                 LetterDefOf.PositiveEvent, drone);
         }
 
@@ -156,7 +158,20 @@ namespace TheSlorg
                     && queen.Faction != null && !queen.Faction.IsPlayer && !queen.IsPrisonerOfColony;
                 if (escaped)
                 {
-                    TurnHostile(queen, entry.Value);
+                    TurnHostile(queen, entry.Value, queen.Faction,
+                        $"{queen.LabelShortCap} has escaped. Every drone she called has answered her again: {entry.Value.Count} drone(s) have turned on the colony.");
+                    continue;
+                }
+
+                // Dead, severed or recruited: her hold is gone. While the queen core stands, the collective raises a new
+                // queen and takes her drones back. Only a world without Slorg control lets them go free.
+                Map anyMap = entry.Value.FirstOrDefault(p => p.Spawned)?.Map;
+                Faction collective = SlorgUtility.ResolveSlorgFaction(queen.Faction, anyMap?.Tile ?? PlanetTile.Invalid);
+                if (collective != null)
+                {
+                    TurnHostile(queen, entry.Value, collective,
+                        $"{queen.LabelShortCap}'s hold on her drones is gone, and the collective has already raised a new queen. "
+                        + $"The {entry.Value.Count} drone(s) she called have rejoined the hive and turned on the colony.");
                 }
                 else
                 {
@@ -164,7 +179,8 @@ namespace TheSlorg
                     {
                         Release(drone);
                     }
-                    Messages.Message($"{queen.LabelShortCap}'s hold is broken. Her drones are free and disconnected.", MessageTypeDefOf.NeutralEvent);
+                    Messages.Message($"{queen.LabelShortCap}'s hold is broken, and with the queen core gone there is no hive to answer. Her drones are free.",
+                        MessageTypeDefOf.PositiveEvent);
                 }
             }
         }
@@ -180,9 +196,8 @@ namespace TheSlorg
             SlorgUtility.MakeDisconnected(drone);
         }
 
-        private static void TurnHostile(Pawn queen, List<Pawn> drones)
+        private static void TurnHostile(Pawn queen, List<Pawn> drones, Faction faction, string letter)
         {
-            Faction faction = queen.Faction;
             Dictionary<Map, List<Pawn>> byMap = new Dictionary<Map, List<Pawn>>();
             foreach (Pawn drone in drones)
             {
@@ -212,9 +227,7 @@ namespace TheSlorg
             {
                 SlorgUtility.TurnOnColony(entry.Value, faction, entry.Key);
             }
-            Find.LetterStack.ReceiveLetter("The queen is free",
-                $"{queen.LabelShortCap} has escaped. Every drone she called has answered her again: {drones.Count} drone(s) have turned on the colony.",
-                LetterDefOf.ThreatBig, new LookTargets(drones));
+            Find.LetterStack.ReceiveLetter("Bound drones turn hostile", letter, LetterDefOf.ThreatBig, new LookTargets(drones));
             GameComponent_SlorgCollective.RefreshNow();
         }
     }
@@ -238,7 +251,7 @@ namespace TheSlorg
             {
                 defaultLabel = "Summon drone",
                 defaultDesc = $"Have {queen.LabelShortCap} call a drone to the colony. It will serve you as long as she stays captive. "
-                    + "If she escapes, every drone she called turns hostile.\n\n"
+                    + "If she escapes, dies or is severed (while the queen core stands), every drone she called turns hostile.\n\n"
                     + $"Drones bound to her: {CaptiveQueen.BoundTo(queen).Count()} / {SlorgDefOf.Slorg_Collective.captiveQueenMaxDrones}",
                 icon = ContentFinder<Texture2D>.Get("UI/Icons/Xenotypes/Slorg"),
                 action = () => CaptiveQueen.Summon(queen)

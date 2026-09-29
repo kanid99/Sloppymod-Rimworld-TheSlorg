@@ -10,10 +10,12 @@ namespace TheSlorg
         public static XenotypeDef Slorg_Queen;
         public static XenotypeDef Slorg_DisconnectedDrone;
         public static XenotypeDef Slorg_Thrall;
+        public static XenotypeDef Slorg_FreedQueen;
 
         public static GeneDef Slorg_CollectiveLink;
         public static GeneDef Slorg_HiveSovereign;
         public static GeneDef Slorg_Severed;
+        public static GeneDef Slorg_LiberatedSovereign;
 
         public static HediffDef Slorg_CollectiveLinkHediff;
         public static HediffDef Slorg_NanoprobeInfection;

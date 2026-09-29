@@ -72,8 +72,13 @@ namespace TheSlorg
         /// </summary>
         public static void MakeDisconnected(Pawn pawn)
         {
-            if (pawn?.genes == null || pawn.genes.Xenotype == SlorgDefOf.Slorg_DisconnectedDrone)
+            if (pawn?.genes == null || pawn.genes.Xenotype == SlorgDefOf.Slorg_DisconnectedDrone || pawn.genes.Xenotype == SlorgDefOf.Slorg_FreedQueen)
             {
+                return;
+            }
+            if (IsQueen(pawn))
+            {
+                MakeFreedQueen(pawn);
                 return;
             }
             if (pawn.genes.Xenotype == SlorgDefOf.Slorg_Thrall)
@@ -104,6 +109,37 @@ namespace TheSlorg
             {
                 pawn.health.RemoveHediff(link);
             }
+        }
+
+        /// <summary>
+        /// A queen cut from the hive keeps her gifts: her implants can't call her back, and they work as a mechlink,
+        /// making her a natural commander of machines.
+        /// </summary>
+        public static void MakeFreedQueen(Pawn pawn)
+        {
+            pawn.genes.SetXenotype(SlorgDefOf.Slorg_FreedQueen);
+            BodyPartRecord brain = pawn.health.hediffSet.GetBrain();
+            if (brain != null && !pawn.health.hediffSet.HasHediff(HediffDefOf.MechlinkImplant))
+            {
+                pawn.health.AddHediff(HediffDefOf.MechlinkImplant, brain);
+            }
+            Hediff link = pawn.health.hediffSet.GetFirstHediffOfDef(SlorgDefOf.Slorg_CollectiveLinkHediff);
+            if (link != null)
+            {
+                pawn.health.RemoveHediff(link);
+            }
+            GrowHairBack(pawn);
+            if (pawn.guest != null)
+            {
+                pawn.guest.resistance = UnityEngine.Mathf.Min(pawn.guest.resistance, 8f);
+                pawn.guest.will = UnityEngine.Mathf.Min(pawn.guest.will, 2f);
+            }
+            Find.LetterStack.ReceiveLetter("A queen set free",
+                $"{pawn.LabelShortCap} has been cut from the hive. For the first time she is alone in her own head.\n\n"
+                + "She keeps her implants with no risk of the collective calling her back, and they now work as a mechlink: "
+                + "she is a natural commander of machines, with extra mech bandwidth and control groups. She also keeps a queen's resilience.\n\n"
+                + "She's open to recruitment.",
+                LetterDefOf.PositiveEvent, pawn);
         }
 
         /// <summary>

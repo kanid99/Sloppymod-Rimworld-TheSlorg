@@ -196,7 +196,8 @@ namespace TheSlorg
             }
             foreach (Pawn pawn in map.mapPawns.FreeColonistsSpawned.ToList())
             {
-                if (pawn.Downed || pawn.InMentalState || !SlorgImplants.HasAnyImplant(pawn))
+                if (pawn.Downed || pawn.InMentalState || !SlorgImplants.HasAnyImplant(pawn)
+                    || (pawn.genes != null && pawn.genes.HasActiveGene(SlorgDefOf.Slorg_LiberatedSovereign)))
                 {
                     continue;
                 }

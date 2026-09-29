@@ -158,7 +158,12 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
   - A drone walks in from the map edge and **joins your colony** with *bound to queen*: full drone genes and implants, no clothes, no mental breaks.
   - Cooldown **3 days**, at most **6** bound drones per queen.
 - **If she escapes** (prison break, or you release her): **every bound drone turns hostile at once** and attacks the colony. You get a letter.
-- If she **dies**, is **recruited**, or has her link cut with **Sever link**, her drones are simply **freed** as disconnected drones.
+- If she **dies** or has her link cut with **Sever link** while the **queen core still stands**, the collective raises a new queen and **her bound drones turn hostile** too. Once the queen core is destroyed, they're freed instead.
+- **Freeing her is worth it.** A queen cut from the hive with **Sever link** (while she's severed, right after capture) or by the fall of the queen core becomes a **Freed queen**:
+  - She keeps her implants with **no risk of the collective's call**.
+  - Her implants work as a **mechlink**, so she's a mechanitor, with **+6 mech bandwidth**, **+2 control groups**, and **×1.5 mech repair speed**.
+  - She keeps being ageless, robust, extremely psychic, super-fast healing, disease-free and sleepless, plus her crown and violet skin.
+  - Her resistance drops, so she's recruitable.
 - Your drones can't use Assimilate. Only the collective itself assimilates.
 
 **Test:**
@@ -166,7 +171,8 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - [ ] Select her: **Summon drone** is there. Use it, and a drone arrives and joins the colony with *bound to queen*.
 - [ ] The button is disabled while she's downed, on cooldown, or at 6 drones.
 - [ ] Release her (or let her prison-break). The bound drones turn hostile and there's a letter.
-- [ ] Kill a captive queen instead: her drones become free disconnected drones.
+- [ ] Kill a captive queen instead: her bound drones turn hostile (the core still stands).
+- [ ] Capture a queen, then run **Sever link** on her while she's severed. She becomes a **Freed queen**: *A queen set free* letter, mechlink on her brain, and her bound drones turn hostile. Recruit her and check her mech bandwidth.
 
 ---
 

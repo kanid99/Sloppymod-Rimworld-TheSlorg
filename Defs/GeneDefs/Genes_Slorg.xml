@@ -147,6 +147,45 @@
 		<displayOrderInCategory>3400</displayOrderInCategory>
 	</GeneDef>
 
+	<!-- A queen severed from the hive. The reward for freeing her rather than killing her. -->
+	<GeneDef ParentName="Slorg_GeneBase">
+		<defName>Slorg_LiberatedSovereign</defName>
+		<label>liberated sovereign</label>
+		<description>A Slorg queen cut from the hive. The implants and instincts that once commanded thousands of drones are hers alone now, and they turn easily to commanding machines.\n\nNothing is left in her head to call her back to the collective.</description>
+		<iconPath>UI/Icons/Genes/Slorg_HiveSovereign</iconPath>
+		<displayOrderInCategory>3</displayOrderInCategory>
+		<biostatCpx>5</biostatCpx>
+		<biostatMet>-2</biostatMet>
+		<statOffsets>
+			<MechBandwidth>6</MechBandwidth>
+			<MechControlGroups>2</MechControlGroups>
+			<ArmorRating_Sharp>0.10</ArmorRating_Sharp>
+			<ArmorRating_Blunt>0.10</ArmorRating_Blunt>
+		</statOffsets>
+		<statFactors>
+			<MechRepairSpeed>1.5</MechRepairSpeed>
+		</statFactors>
+		<renderNodeProperties>
+			<li>
+				<nodeClass>PawnRenderNode_AttachmentHead</nodeClass>
+				<workerClass>PawnRenderNodeWorker_FlipWhenCrawling</workerClass>
+				<parentTagDef>Head</parentTagDef>
+				<texPath>Things/Pawn/Humanlike/HeadAttachments/Slorg/Slorg_QueenCrest</texPath>
+				<rotDrawMode>Fresh, Rotting</rotDrawMode>
+				<drawSize>1.35</drawSize>
+				<drawData>
+					<defaultData>
+						<layer>75</layer>
+					</defaultData>
+				</drawData>
+			</li>
+		</renderNodeProperties>
+		<customEffectDescriptions>
+			<li>Her implants work as a mechlink: she is a mechanitor.</li>
+			<li>Keeps Slorg implants with no risk of the collective's call.</li>
+		</customEffectDescriptions>
+	</GeneDef>
+
 	<GeneDef ParentName="GeneSkinColorOverride">
 		<defName>Slorg_QueenSkin</defName>
 		<label>queen skin</label>
