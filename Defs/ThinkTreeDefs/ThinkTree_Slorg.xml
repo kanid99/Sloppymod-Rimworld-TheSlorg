@@ -9,4 +9,12 @@
 		<thinkRoot Class="TheSlorg.JobGiver_SlorgAssimilate" />
 	</ThinkTreeDef>
 
+	<!-- Drones with a beam emitter fire it at the nearest standing enemy in sight. -->
+	<ThinkTreeDef>
+		<defName>Slorg_BeamSubtree</defName>
+		<insertTag>Humanlike_PostMentalState</insertTag>
+		<insertPriority>80</insertPriority>
+		<thinkRoot Class="TheSlorg.JobGiver_SlorgBeam" />
+	</ThinkTreeDef>
+
 </Defs>

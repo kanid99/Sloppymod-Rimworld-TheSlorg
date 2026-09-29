@@ -35,6 +35,9 @@ namespace TheSlorg
     public class SlorgImplantSetExtension : DefModExtension
     {
         public List<ImplantEntry> implants = new List<ImplantEntry>();
+
+        /// <summary>Slorg arrive with no clothes and no weapons: their implants are their gear.</summary>
+        public bool stripGear = true;
     }
 
     public class ImplantEntry
@@ -258,7 +261,13 @@ namespace TheSlorg
             SlorgImplantSetExtension set = request.KindDef?.GetModExtension<SlorgImplantSetExtension>();
             if (set != null && __result?.health != null && !__result.Dead)
             {
+                if (set.stripGear)
+                {
+                    __result.apparel?.DestroyAll();
+                    __result.equipment?.DestroyAllEquipment();
+                }
                 SlorgImplants.InstallSet(__result, set);
+                SlorgUtility.MakeHairless(__result);
             }
         }
     }

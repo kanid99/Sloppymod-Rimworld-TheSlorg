@@ -161,15 +161,21 @@
 						<capacities>
 							<li>Stab</li>
 						</capacities>
-						<power>7</power>
+						<power>3</power>
 						<cooldownTime>1.4</cooldownTime>
+						<extraMeleeDamages>
+							<li>
+								<def>Slorg_NeuralShock</def>
+								<amount>10</amount>
+							</li>
+						</extraMeleeDamages>
 					</li>
 				</tools>
 			</li>
 		</comps>
 		<modExtensions>
 			<li Class="TheSlorg.SlorgImplantExtension">
-				<assimilationStartSeverity>0.3</assimilationStartSeverity>
+				<assimilationStartSeverity>0.15</assimilationStartSeverity>
 				<removalWounds>2</removalWounds>
 				<removalWoundSize>3~6</removalWoundSize>
 			</li>
@@ -182,7 +188,7 @@
 		<defName>Slorg_BeamEmitter</defName>
 		<label>beam emitter</label>
 		<labelNoun>a beam emitter</labelNoun>
-		<description>A cutting beam projector fused into the forearm. Fires short bursts of focused energy.</description>
+		<description>A neural disruptor fused into the forearm. Its bolts overload the nerves and down targets without killing them.</description>
 		<comps>
 			<li Class="HediffCompProperties_GiveAbility">
 				<abilityDef>Slorg_CuttingBeam</abilityDef>
@@ -200,21 +206,25 @@
 	<HediffDef ParentName="Slorg_ImplantBase">
 		<hediffClass>HediffWithComps</hediffClass>
 		<defName>Slorg_ArmBlade</defName>
-		<label>arm blade</label>
-		<labelNoun>an arm blade</labelNoun>
-		<description>A serrated blade that slides out of the forearm.</description>
+		<label>neural lash</label>
+		<labelNoun>a neural lash</labelNoun>
+		<description>A forearm-mounted lash that delivers a neural jolt on contact. It is made to drop people, not to kill them.</description>
 		<comps>
 			<li Class="HediffCompProperties_VerbGiver">
 				<tools>
 					<li>
-						<label>arm blade</label>
+						<label>neural lash</label>
 						<capacities>
-							<li>Cut</li>
-							<li>Stab</li>
+							<li>Blunt</li>
 						</capacities>
-						<power>18</power>
-						<cooldownTime>1.7</cooldownTime>
-						<armorPenetration>0.35</armorPenetration>
+						<power>5</power>
+						<cooldownTime>1.6</cooldownTime>
+						<extraMeleeDamages>
+							<li>
+								<def>Slorg_NeuralShock</def>
+								<amount>18</amount>
+							</li>
+						</extraMeleeDamages>
 					</li>
 				</tools>
 			</li>

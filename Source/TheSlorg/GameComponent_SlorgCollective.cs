@@ -78,22 +78,24 @@ namespace TheSlorg
             announceChanges = true;
         }
 
-        private readonly List<HediffComp_NanoprobeInfection> pendingAssimilations = new List<HediffComp_NanoprobeInfection>();
+        private readonly List<KeyValuePair<HediffComp_NanoprobeInfection, InfectionAction>> pendingInfectionActions =
+            new List<KeyValuePair<HediffComp_NanoprobeInfection, InfectionAction>>();
 
-        public void QueueAssimilation(HediffComp_NanoprobeInfection infection)
+        /// <summary>Infection stage changes run here, outside the health tick that noticed them.</summary>
+        public void QueueInfectionAction(HediffComp_NanoprobeInfection infection, InfectionAction action)
         {
-            pendingAssimilations.Add(infection);
+            pendingInfectionActions.Add(new KeyValuePair<HediffComp_NanoprobeInfection, InfectionAction>(infection, action));
         }
 
         public override void GameComponentTick()
         {
-            if (pendingAssimilations.Count > 0)
+            if (pendingInfectionActions.Count > 0)
             {
-                List<HediffComp_NanoprobeInfection> ready = new List<HediffComp_NanoprobeInfection>(pendingAssimilations);
-                pendingAssimilations.Clear();
-                foreach (HediffComp_NanoprobeInfection infection in ready)
+                var ready = new List<KeyValuePair<HediffComp_NanoprobeInfection, InfectionAction>>(pendingInfectionActions);
+                pendingInfectionActions.Clear();
+                foreach (var entry in ready)
                 {
-                    infection.Complete();
+                    entry.Key.Run(entry.Value);
                 }
             }
             if (Find.TickManager.TicksGame % SlorgDefOf.Slorg_Collective.refreshIntervalTicks == 0)
@@ -123,7 +125,8 @@ namespace TheSlorg
             foreach (Pawn pawn in activePawns)
             {
                 SlorgImplants.UpdateSkillBonus(pawn);
-                if (pawn.Faction != null && pawn.Faction.IsPlayer && !pawn.IsPrisoner && SlorgUtility.HasLinkGene(pawn))
+                if (pawn.Faction != null && pawn.Faction.IsPlayer && !pawn.IsPrisoner && SlorgUtility.HasLinkGene(pawn)
+                    && !pawn.health.hediffSet.HasHediff(SlorgDefOf.Slorg_NanoprobeInfection))
                 {
                     // The collective cannot hold a drone that serves the player.
                     SlorgUtility.MakeDisconnected(pawn);
@@ -158,6 +161,10 @@ namespace TheSlorg
 
             foreach (SlorgCollective collective in collectives.Values)
             {
+                foreach (Pawn drone in collective.drones)
+                {
+                    SlorgUtility.NanoprobeHeal(drone);
+                }
                 GatherKnowledge(collective);
                 previous.TryGetValue(collective.faction, out SlorgCollective before);
                 AnnounceSkillChanges(before, collective);
@@ -375,7 +382,16 @@ namespace TheSlorg
                     }
                     else
                     {
-                        lastQueenMap[faction] = queen.MapHeld;
+                        lastQueenMap.TryGetValue(faction, out Map before);
+                        Map now = queen.MapHeld;
+                        if (now != null && now != before && queen.Spawned && now.IsPlayerHome && announceChanges)
+                        {
+                            Find.LetterStack.ReceiveLetter("The Slorg queen is here",
+                                $"{queen.LabelShortCap}, queen of {faction.Name}, has come with this assault. Her drones fight harder near her, "
+                                + "and anyone she injects becomes a drone on the spot.\n\nKill or capture her and every drone on the map is severed from the collective.",
+                                LetterDefOf.ThreatBig, queen);
+                        }
+                        lastQueenMap[faction] = now;
                     }
                 }
 

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<RulePackDef>
+		<defName>Slorg_NamerFaction</defName>
+		<rulePack>
+			<rulesStrings>
+				<li>r_name->The Slorg Collective</li>
+				<li>r_name->Slorg Collective [grid]</li>
+				<li>r_name->Unimatrix [num]</li>
+				<li>r_name->The Collective of Grid [num]</li>
+				<li>r_name->Slorg Hive [grid]</li>
+				<li>grid->Alpha</li>
+				<li>grid->Theta</li>
+				<li>grid->Sigma</li>
+				<li>grid->Omega</li>
+				<li>grid->Zero</li>
+				<li>num->[digit][digit]</li>
+				<li>digit->0</li>
+				<li>digit->1</li>
+				<li>digit->2</li>
+				<li>digit->3</li>
+				<li>digit->4</li>
+				<li>digit->5</li>
+				<li>digit->6</li>
+				<li>digit->7</li>
+				<li>digit->8</li>
+				<li>digit->9</li>
+			</rulesStrings>
+		</rulePack>
+	</RulePackDef>
+
+	<RulePackDef>
+		<defName>Slorg_NamerSettlement</defName>
+		<rulePack>
+			<rulesStrings>
+				<li>r_name->Cube [num]</li>
+				<li>r_name->Grid [num]</li>
+				<li>r_name->Node [letter]-[num]</li>
+				<li>r_name->Spire [num]</li>
+				<li>r_name->Sphere [num]</li>
+				<li>r_name->Maturation Hub [num]</li>
+				<li>r_name->Assimilation Nexus [letter][num]</li>
+				<li>letter->A</li>
+				<li>letter->C</li>
+				<li>letter->K</li>
+				<li>letter->Q</li>
+				<li>letter->T</li>
+				<li>letter->X</li>
+				<li>num->[digit][digit][digit]</li>
+				<li>digit->0</li>
+				<li>digit->1</li>
+				<li>digit->2</li>
+				<li>digit->3</li>
+				<li>digit->4</li>
+				<li>digit->5</li>
+				<li>digit->6</li>
+				<li>digit->7</li>
+				<li>digit->8</li>
+				<li>digit->9</li>
+			</rulesStrings>
+		</rulePack>
+	</RulePackDef>
+
+</Defs>

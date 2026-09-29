@@ -115,6 +115,72 @@ namespace TheSlorg
                 return;
             }
             pawn.genes.SetXenotype(SlorgDefOf.Slorg_Thrall);
+            MakeHairless(pawn);
+        }
+
+        /// <summary>Slorg are completely hairless.</summary>
+        public static void MakeHairless(Pawn pawn)
+        {
+            bool changed = false;
+            if (pawn.story != null && pawn.story.hairDef != HairDefOf.Bald)
+            {
+                pawn.story.hairDef = HairDefOf.Bald;
+                changed = true;
+            }
+            if (pawn.style != null && pawn.style.beardDef != BeardDefOf.NoBeard)
+            {
+                pawn.style.beardDef = BeardDefOf.NoBeard;
+                changed = true;
+            }
+            if (changed)
+            {
+                pawn.Drawer?.renderer?.SetAllGraphicsDirty();
+            }
+        }
+
+        /// <summary>Fully assimilated: drone genes, the standard drone implants, and nanoprobes that mend the body.</summary>
+        public static void MakeFullDrone(Pawn pawn)
+        {
+            if (pawn?.genes == null)
+            {
+                return;
+            }
+            pawn.genes.SetXenotype(SlorgDefOf.Slorg_Drone);
+            SlorgImplantSetExtension set = SlorgDefOf.Slorg_DroneKind.GetModExtension<SlorgImplantSetExtension>();
+            if (set != null)
+            {
+                foreach (ImplantEntry entry in set.implants)
+                {
+                    if (entry.chance >= 1f)
+                    {
+                        SlorgImplants.Install(pawn, entry.hediff, entry.part);
+                    }
+                }
+            }
+            Hediff dormant = pawn.health.hediffSet.GetFirstHediffOfDef(SlorgDefOf.Slorg_DormantNanoprobes);
+            if (dormant != null)
+            {
+                pawn.health.RemoveHediff(dormant);
+            }
+            MakeHairless(pawn);
+            NanoprobeHeal(pawn);
+        }
+
+        /// <summary>Linked nanoprobes clear out chronic conditions: dementia, cataracts, bad backs, blocked arteries and the like.</summary>
+        public static void NanoprobeHeal(Pawn pawn)
+        {
+            if (pawn?.health?.hediffSet == null || pawn.Dead)
+            {
+                return;
+            }
+            List<HediffDef> cures = SlorgDefOf.Slorg_Collective.nanoprobeCures;
+            foreach (Hediff hediff in pawn.health.hediffSet.hediffs.ToList())
+            {
+                if (hediff.def.chronic || cures.Contains(hediff.def))
+                {
+                    pawn.health.RemoveHediff(hediff);
+                }
+            }
         }
 
         /// <summary>The Slorg faction to hand a new thrall to, or null if the collective is gone from this world.</summary>

@@ -1,81 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-	<!-- Assimilation. Climbs about 0.33/day untended (about 3 days), 0.18/day tended.
-	     A tend of 105%+ quality (glitterworld medicine and a good doctor) purges 0.35. -->
+	<!-- Assimilation. Severity rises 4-6 per day, so it completes in about 4-6 hours.
+	     Stage 1 (below stage2Severity, ~1.5-2 hours): the host fights for the Slorg; any tend of 50%+ cures it.
+	     Stage 2: implants and Slorg genes form; only the Purge nanoprobes surgery cures it.
+	     Complete: full drone, no cure. Bleeding is stopped throughout. -->
 	<HediffDef>
 		<defName>Slorg_NanoprobeInfection</defName>
 		<label>nanoprobe infection</label>
-		<description>Slorg nanoprobes are rebuilding this person from the inside. Grey tubules spread under the skin and implants begin to form. When the process completes, they will be a Slorg drone.\n\nOrdinary tending only slows the nanoprobes. Only tends of exceptional quality, which need glitterworld medicine and a skilled doctor, can purge them.</description>
+		<description>Slorg nanoprobes are taking this person over. First they seize the nervous system, then they grow implants and rewrite the genes. When they finish, the host is a Slorg drone.\n\nWhile it spreads, the nanoprobes seal wounds so the host doesn't bleed out.</description>
 		<hediffClass>HediffWithComps</hediffClass>
 		<defaultLabelColor>(0.55, 0.95, 0.55)</defaultLabelColor>
 		<isBad>true</isBad>
 		<tendable>true</tendable>
-		<makesSickThought>true</makesSickThought>
 		<everCurableByItem>false</everCurableByItem>
-		<initialSeverity>0.05</initialSeverity>
+		<initialSeverity>0.01</initialSeverity>
 		<maxSeverity>1</maxSeverity>
 		<comps>
 			<li Class="HediffCompProperties_TendDuration">
-				<baseTendDurationHours>12</baseTendDurationHours>
-				<severityPerDayTended>-0.15</severityPerDayTended>
+				<baseTendDurationHours>2</baseTendDurationHours>
+				<severityPerDayTended>0</severityPerDayTended>
 			</li>
 			<li Class="HediffCompProperties_SeverityPerDay">
-				<severityPerDay>0.33</severityPerDay>
+				<severityPerDayRange>4~6</severityPerDayRange>
 			</li>
 			<li Class="TheSlorg.HediffCompProperties_NanoprobeInfection">
-				<purgeTendQuality>1.05</purgeTendQuality>
-				<purgeAmount>0.35</purgeAmount>
+				<stage2Severity>0.35</stage2Severity>
+				<stage1CureTendQuality>0.5</stage1CureTendQuality>
+				<stage2Genes>
+					<li>Slorg_CollectiveLink</li>
+					<li>Slorg_Nanoprobes</li>
+					<li>Slorg_DroneConditioning</li>
+					<li>Slorg_DroneSkin</li>
+				</stage2Genes>
+				<stage2Implants>
+					<li>
+						<hediff>Slorg_OcularImplant</hediff>
+						<part>Eye</part>
+					</li>
+					<li>
+						<hediff>Slorg_DermalPlating</hediff>
+					</li>
+				</stage2Implants>
 			</li>
 		</comps>
 		<stages>
 			<li>
-				<label>early</label>
+				<label>neural takeover</label>
+				<totalBleedFactor>0</totalBleedFactor>
 				<painOffset>0.05</painOffset>
 			</li>
 			<li>
-				<minSeverity>0.3</minSeverity>
-				<label>spreading</label>
+				<minSeverity>0.35</minSeverity>
+				<label>implants forming</label>
+				<totalBleedFactor>0</totalBleedFactor>
 				<painOffset>0.10</painOffset>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>-0.10</offset>
-					</li>
-				</capMods>
 			</li>
 			<li>
-				<minSeverity>0.6</minSeverity>
-				<label>implants forming</label>
-				<painOffset>0.15</painOffset>
+				<minSeverity>0.8</minSeverity>
+				<label>almost assimilated</label>
+				<totalBleedFactor>0</totalBleedFactor>
+				<painOffset>0.10</painOffset>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<!-- Neural shock from Slorg weapons. Builds up with each hit and wears off; it downs, it doesn't kill. -->
+	<HediffDef>
+		<defName>Slorg_NeuralDisruption</defName>
+		<label>neural shock</label>
+		<description>Slorg weapons overload the nervous system instead of tearing flesh. Enough of it and the victim collapses, ready to be assimilated. It fades on its own.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.5, 0.9, 1.0)</defaultLabelColor>
+		<isBad>true</isBad>
+		<maxSeverity>100</maxSeverity>
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-240</severityPerDay>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<label>tingling</label>
+				<painOffset>0.10</painOffset>
+			</li>
+			<li>
+				<minSeverity>25</minSeverity>
+				<label>disrupted</label>
+				<painOffset>0.20</painOffset>
 				<capMods>
 					<li>
 						<capacity>Consciousness</capacity>
-						<offset>-0.20</offset>
+						<offset>-0.15</offset>
 					</li>
 					<li>
 						<capacity>Moving</capacity>
-						<offset>-0.10</offset>
+						<offset>-0.15</offset>
 					</li>
 				</capMods>
 			</li>
 			<li>
-				<minSeverity>0.85</minSeverity>
-				<label>almost assimilated</label>
-				<painOffset>0.15</painOffset>
+				<minSeverity>50</minSeverity>
+				<label>severe</label>
+				<painOffset>0.30</painOffset>
 				<capMods>
 					<li>
 						<capacity>Consciousness</capacity>
+						<offset>-0.35</offset>
+					</li>
+					<li>
+						<capacity>Moving</capacity>
 						<offset>-0.30</offset>
 					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>75</minSeverity>
+				<label>collapsed</label>
+				<capMods>
 					<li>
-						<capacity>Moving</capacity>
-						<offset>-0.20</offset>
+						<capacity>Consciousness</capacity>
+						<setMax>0.1</setMax>
 					</li>
 				</capMods>
 			</li>
 		</stages>
 	</HediffDef>
+
+	<DamageDef>
+		<defName>Slorg_NeuralShock</defName>
+		<label>neural shock</label>
+		<workerClass>TheSlorg.DamageWorker_SlorgNeural</workerClass>
+		<hediff>Slorg_NeuralDisruption</hediff>
+		<externalViolence>true</externalViolence>
+		<harmsHealth>true</harmsHealth>
+		<makesBlood>false</makesBlood>
+		<deathMessage>{0} has died of neural shock.</deathMessage>
+	</DamageDef>
 
 	<!-- A drone cut off from the collective: its queen fell nearby, its queen core was destroyed, or it was just freed. -->
 	<HediffDef>

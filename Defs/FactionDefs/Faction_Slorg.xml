@@ -21,8 +21,8 @@
 		<basicMemberKind>Slorg_DroneKind</basicMemberKind>
 		<factionIconPath>World/Slorg_FactionIcon</factionIconPath>
 		<settlementTexturePath>World/WorldObjects/DefaultSettlement</settlementTexturePath>
-		<factionNameMaker>NamerFactionPirate</factionNameMaker>
-		<settlementNameMaker>NamerSettlementPirate</settlementNameMaker>
+		<factionNameMaker>Slorg_NamerFaction</factionNameMaker>
+		<settlementNameMaker>Slorg_NamerSettlement</settlementNameMaker>
 		<colorSpectrum>
 			<li>(0.35, 0.85, 0.40)</li>
 			<li>(0.20, 0.60, 0.28)</li>

@@ -12,7 +12,8 @@ namespace TheSlorg
     }
 
     /// <summary>
-    /// Injects a downed or imprisoned humanlike with nanoprobes. Assimilation then plays out as an infection.
+    /// Injects a downed or imprisoned humanlike with nanoprobes. Assimilation then plays out as a staged infection,
+    /// except when the queen does it: her drones rise at once.
     /// </summary>
     public class CompAbilityEffect_Assimilate : CompAbilityEffect
     {
@@ -57,28 +58,7 @@ namespace TheSlorg
                 return;
             }
 
-            Hediff infection = HediffMaker.MakeHediff(SlorgDefOf.Slorg_NanoprobeInfection, victim);
-            infection.TryGetComp<HediffComp_NanoprobeInfection>().sourceFaction = caster.Faction;
-            victim.health.AddHediff(infection);
-            // Assimilation tubules inject a far bigger dose.
-            float boosted = SlorgImplants.AssimilationStartSeverity(caster);
-            if (boosted > infection.Severity)
-            {
-                infection.Severity = boosted;
-            }
-
-            if (victim.Faction != null && victim.Faction.IsPlayer)
-            {
-                Find.LetterStack.ReceiveLetter("Nanoprobe infection",
-                    $"{caster.LabelShortCap} has injected {victim.LabelShortCap} with Slorg nanoprobes.\n\n"
-                    + $"In about three days {victim.LabelShortCap} will become a Slorg drone. Normal tending only slows the infection. "
-                    + "To purge it you need tends of exceptional quality: glitterworld medicine and a skilled doctor.",
-                    LetterDefOf.ThreatBig, victim);
-            }
-            else
-            {
-                Messages.Message($"{victim.LabelShortCap} has been injected with nanoprobes. Resistance is futile.", victim, MessageTypeDefOf.NeutralEvent);
-            }
+            InfectionUtility.Infect(victim, caster.Faction, caster);
         }
     }
 }

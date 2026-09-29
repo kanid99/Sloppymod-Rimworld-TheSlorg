@@ -21,6 +21,7 @@ How every mechanic works, and how to test each one quickly with dev mode.
 |---|---|
 | **Infect with nanoprobes** | Click a pawn to give them the visible nanoprobe infection |
 | **Advance infection +30%** | Pushes an infection along |
+| **Advance infection to stage 2** | Jumps an infection straight to stage 2 (implants and genes form) |
 | **Complete infection now** | Finishes the infection immediately (turns them into a thrall) |
 | **Make sleeper agent (active now)** | Gives a colonist hidden dormant nanoprobes, active immediately |
 | **Force uprising on this map** | All sleepers on the map rise up now |
@@ -44,10 +45,12 @@ Useful vanilla dev tools:
 
 | Xenotype | Where it comes from | Looks | Key genes |
 |---|---|---|---|
-| **Slorg drone** | Slorg raids and settlements | Pale grey, bald, gaunt | Collective link (Assimilate), nanoprobes, drone conditioning, plus vanilla: never sleep, ageless, disease-free and more |
-| **Slorg queen** | Faction leader; big raids | Like a drone | Drone genes plus **Hive sovereign**, robust, super-fast healing, extreme psychic ability |
+| **Slorg drone** | Slorg raids and settlements, and completed infections | Pale grey, hairless, gaunt | Collective link (Assimilate), nanoprobes, drone conditioning, plus vanilla: never sleep, disease-free, tox resistance and more. **Not ageless.** |
+| **Slorg queen** | Faction leader; very large raids | **Dark violet skin, glowing spined crown** | Drone genes plus **Hive sovereign**, queen skin, ageless, robust, super-fast healing, extreme psychic ability |
 | **Slorg thrall** | Anyone who succumbs to the infection or rises up as a sleeper | **Keeps their own look** | Collective link, nanoprobes, drone conditioning, reduced pain, dead calm, partial tox resistance |
 | **Disconnected drone** | Freed drones (surgery, the core falls, or joining you) | Like a drone | Drone genes minus link and conditioning, plus **Severed link** |
+
+**Drone conditioning** sets social impact, negotiation and trade to 0 and disables Social work. **Linked drones never have mental breaks.**
 
 Genes are only the biology. **All Slorg technology is implants** (section 9). Thralls never have implants. Freed **thralls** lose their Slorg genes entirely and keep only *Severed link*.
 
@@ -61,7 +64,9 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 ## 2. The faction and raids
 
 - **Slorg Collective**: permanent enemy, spacer tech, no trade.
-- Raids mix **slorg drones** (melee) and **tactical drones** (spacer guns). They can't show up before day 20 on the storyteller's own schedule. Debug raids ignore that.
+- Raids mix **slorg drones** (melee: neural lash) and **tactical drones** (ranged: disruptor beam). **Slorg spawn with no clothes and no weapons.** Their implants are their gear.
+- Faction and settlement names are Slorg-style ("Unimatrix 42", "Cube 317", "Node K-204").
+- **Slorg weapons down rather than kill.** They cause **neural shock**, which builds up per hit: pain, then −15%/−35% consciousness, then collapse. It fades over a few hours and does no physical damage. They can't show up before day 20 on the storyteller's own schedule. Debug raids ignore that.
 - The faction's oldest surface settlement is renamed **Unicomplex**.
 
 **Test:**
@@ -75,30 +80,29 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 ## 3. Assimilation: the nanoprobe infection
 
 **How it works**
-- Enemy drones look for **downed** enemies within 40 cells and use **Assimilate** on them: touch range, about 3 seconds, a 1-hour cooldown per drone.
-- The victim gets a **nanoprobe infection** and you get a red letter.
-- Severity rises **0.33/day** (about 3 days). While tended it rises **0.18/day** (about 5–6 days).
-- Stages: early → spreading (−10% consciousness) → implants forming → almost assimilated (−30% consciousness, −20% moving).
-- **Purging:** a tend of **105% quality or more** removes 35% severity. Two or three of those clear it. Normal and industrial medicine cap tend quality at 100%, so you need **glitterworld medicine** plus a decent doctor. Watch for the *"The tend purged part of…"* message.
-- **Too late:** at 100%, the pawn becomes a **Slorg thrall**:
-  - On your **home map**: they turn hostile *right there* and attack the colony, trying to down and inject others.
-  - **Elsewhere** (kidnapped, on another map): they join the Slorg and leave.
-  - If they're **your prisoner or slave**, 50/50:
-    - they **break out** as a hostile thrall and attack (*Captive assimilated* letter), or
-    - they become a **hidden sleeper**. The infection just vanishes with *"…seems unchanged"*. Recruit them later and you've let a sleeper agent into the colony.
+- Enemy drones look for **downed** enemies within 40 cells and use **Assimilate** on them.
+- The infection runs in **three stages** and completes in about **4–6 in-game hours**. Bleeding is stopped the whole time, so the victim can't bleed out.
+
+| Stage | When | What happens | Cure |
+|---|---|---|---|
+| **1. Neural takeover** | First ~1.5–2 h | The victim **switches to the Slorg** and fights like a drone, with no implants | **Any tend of 50%+ quality** cures it: capture them (they're hostile now), then tend |
+| **2. Implants forming** | Until done | Ocular implant and dermal plating grow, and Slorg genes are written in. Tending does nothing. | **Purge nanoprobes** surgery (Medicine 8, 1 glitterworld medicine). Slorg genes are removed, but the **implants stay** and must be cut out. |
+| **3. Complete** | ~4–6 h | Full **Slorg drone**: drone xenotype, drone implants, hairless. Nanoprobes **heal chronic conditions** (Alzheimer's, dementia, cataracts, bad back, frailty, artery blockage, asthma, carcinoma). | **None.** Only disconnection (queen death, queen core) frees them. |
+
+- **The queen's injection is instant**: her victim is a full drone on the spot.
+- A cure returns the pawn to its original faction. **40% of cures only look cured** and leave a hidden sleeper agent (section 7).
+- On completion:
+  - **On your home map**: they attack the colony.
+  - **Elsewhere**: they join the Slorg and leave.
+  - **Your prisoner or slave**: 50/50 they break out hostile, or become a hidden sleeper (implants and genes silently dissolve).
 
 **Test:**
-- [ ] Raid, then down a colonist next to a drone (vanilla *Down pawn* tool). The drone should walk over and inject them, and a *Nanoprobe infection* letter appears.
-- [ ] Health tab: **nanoprobe infection** with a stage and a tend tooltip.
-- [ ] Tend with **industrial** medicine: the rise slows and there's no purge message.
-- [ ] Tend with **glitterworld** medicine and a skilled doctor: you see *purged part of*, and severity drops.
-- [ ] **Complete infection now** on a colonist at home: they become a thrall, keep their look, turn hostile and attack. You get an *Assimilated* letter.
-- [ ] Down that thrall. Other drones or thralls should try to inject your downed colonists.
-- [ ] Capture a raider, **Infect** them, then **Complete infection now** a few times on different prisoners. Some break out hostile and some go quiet (*"seems unchanged"*). Recruit a quiet one: **Log collective state** should count them as a sleeper once they're a colonist.
-
-> If the purge never triggers even with glitterworld medicine and a 15+ doctor, tell me the tend quality shown. My threshold assumes glitterworld medicine can go past 100%.
-
----
+- [ ] Raid, then down a colonist next to a drone. It injects them, you get a letter, and the colonist **turns hostile**.
+- [ ] Health tab: *nanoprobe infection (neural takeover)*. Wounds should stop bleeding.
+- [ ] **Stage 1 cure**: arrest the downed victim, tend them with any medicine and a decent doctor. They're cured and rejoin your colony.
+- [ ] **Stage 2**: **Advance infection to stage 2**. Ocular implant and dermal plating appear, plus Slorg genes. Tending says it can't help. Run **Purge nanoprobes**: cured, genes gone, implants still there (cut them out with the removal bills).
+- [ ] **Complete infection now**: full drone. Check it's hairless and that any chronic condition is gone.
+- [ ] Spawn a raid with the queen, down a colonist near her. She injects them and they rise as a drone at once.
 
 ## 4. The collective (skills, stats, traits)
 
@@ -130,8 +134,10 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 
 **How it works**
 - She's the faction leader: *Slorg queen* xenotype, female, spacer gear, high skills.
-- She joins **Combat raids of 5000+ points, 50% of the time**. The debug action forces it.
-- **Killed or captured** on a map: every Slorg drone on that map gets **severed from collective**. They're downed (consciousness capped at 10%) for **about 1.7–2.3 days**. You get a *Slorg queen fallen* letter.
+- She joins **Combat raids of 5000+ points, 50% of the time**. The debug action forces it. When she's on your map you get a **"The Slorg queen is here"** letter.
+- She's easy to spot: violet skin and a tall glowing crown.
+- **Anyone she injects becomes a full drone immediately.**
+- **Killed** on a map: every Slorg drone on that map is **severed from collective immediately**. **Captured**: it happens at the next collective refresh, within about 8 seconds. They're downed (consciousness capped at 10%) for **about 1.7–2.3 days**. You get a *Slorg queen fallen* letter.
 - A **new queen** is raised straight away. She's a new pawn, not the same one.
 - Severed drones that aren't operated on reconnect when it wears off.
 
@@ -213,20 +219,21 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 | **Ocular implant** | Eye | +15% sight, aiming time ×0.8 | Eyepiece with a red laser | 2 wounds near the eye |
 | **Dermal plating** | Whole body | +35% sharp, +18% blunt, +20% heat armor, −5% moving | Bolted plates on the body and a cranial plate | **10 wounds all over, 80% scar, 25% death** |
 | **Shield emitter** | Torso | Blocks ranged and explosive damage (60 pts), recharges, overloads for 15 s | Flash on hit | 3 wounds |
-| **Assimilation tubules** | Hand | Tubule stab attack. Infections start at 30% instead of 5%. | none | 2 wounds |
-| **Beam emitter** | Arm | **Cutting beam** ability: 14 burn damage, range 25, 4 s cooldown. The AI uses it in combat. | Green bolt | 3 wounds |
-| **Arm blade** | Arm | Melee attack: 18 cut/stab, 35% armor penetration | none | 3 wounds |
+| **Assimilation tubules** | Hand | Tubule stab (3 plus 10 neural shock). Infections start at 15% (well into stage 1). | none | 2 wounds |
+| **Beam emitter** | Arm | **Disruptor beam** ability: 22 neural shock, range 25, 4 s cooldown. Drones fire it at the nearest enemy in sight. | Green bolt | 3 wounds |
+| **Neural lash** | Arm | Melee: 5 blunt plus 18 neural shock | none | 3 wounds |
 | **Tactical cortex** | Brain | **+4 Shooting, +4 Melee** (on top of collective skills), +4 melee dodge | none | 2 wounds on the head, 10% death |
 
 What each pawn kind gets:
-- **Drone** (melee): plating, eye, tubules, blade. 30% chance each of shield and cortex.
+- **Drone** (melee): plating, eye, tubules, neural lash. 30% chance each of shield and cortex.
 - **Tactical drone**: plating, eye, shield, beam. Cortex 60%, tubules 50%.
 - **Queen**: all seven.
 
 **Test:**
 - [ ] Raid, then select drones. The health tab lists the implants, and the drones show plates on their bodies plus a head plate and eyepiece.
 - [ ] Shoot a shielded drone. There's a flash, no damage, and the shield % drops, then *Shield overloaded* and it recharges.
-- [ ] Tactical drones fire **cutting beam** bolts. If they only punch, the AI isn't picking the ability up, so tell me.
+- [ ] Tactical drones fire **disruptor beam** bolts. Colonists they hit build up *neural shock* and collapse instead of dying. If drones only punch, tell me.
+- [ ] Drones arrive naked and unarmed, and are hairless.
 - [ ] The skills tab of a drone with a tactical cortex shows +4 Shooting and Melee.
 - [ ] Use **Install full drone implant set** on a prisoner, then run each *cut out* bill. The implant is gone and never drops as an item, and the patient takes wounds (many scars for the plating, sometimes death).
 

@@ -3,6 +3,7 @@ using System.Linq;
 using HarmonyLib;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace TheSlorg
 {
@@ -83,6 +84,37 @@ namespace TheSlorg
                 return false;
             }
             return true;
+        }
+    }
+
+    /// <summary>The queen's fall severs her drones at once, not at the next collective refresh.</summary>
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
+    public static class Pawn_Kill_Patch
+    {
+        public static void Prefix(Pawn __instance, out bool __state)
+        {
+            __state = SlorgUtility.IsQueen(__instance);
+        }
+
+        public static void Postfix(Pawn __instance, bool __state)
+        {
+            if (__state && __instance.Dead)
+            {
+                GameComponent_SlorgCollective.RefreshNow();
+            }
+        }
+    }
+
+    /// <summary>Drones linked to the hive don't have mental breaks.</summary>
+    [HarmonyPatch(typeof(MentalBreaker), nameof(MentalBreaker.CanDoRandomMentalBreaks), MethodType.Getter)]
+    public static class MentalBreaker_CanDoRandomMentalBreaks_Patch
+    {
+        public static void Postfix(Pawn ___pawn, ref bool __result)
+        {
+            if (__result && ___pawn != null && ___pawn.health.hediffSet.HasHediff(SlorgDefOf.Slorg_CollectiveLinkHediff))
+            {
+                __result = false;
+            }
         }
     }
 }

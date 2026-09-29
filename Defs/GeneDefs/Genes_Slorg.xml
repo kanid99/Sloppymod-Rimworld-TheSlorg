@@ -57,7 +57,23 @@
 				<degree>2</degree>
 			</li>
 		</forcedTraits>
+		<renderNodeProperties>
+			<li>
+				<nodeClass>PawnRenderNode_AttachmentHead</nodeClass>
+				<workerClass>PawnRenderNodeWorker_FlipWhenCrawling</workerClass>
+				<parentTagDef>Head</parentTagDef>
+				<texPath>Things/Pawn/Humanlike/HeadAttachments/Slorg/Slorg_QueenCrest</texPath>
+				<rotDrawMode>Fresh, Rotting</rotDrawMode>
+				<drawSize>1.35</drawSize>
+				<drawData>
+					<defaultData>
+						<layer>75</layer>
+					</defaultData>
+				</drawData>
+			</li>
+		</renderNodeProperties>
 		<customEffectDescriptions>
+			<li>Anyone she injects becomes a full drone immediately.</li>
 			<li>Drones on the same map count as a much larger collective.</li>
 			<li>If she is killed or captured, every drone on her map is severed from the collective for about two days.</li>
 			<li>When she falls, the collective raises a new queen.</li>
@@ -99,19 +115,25 @@
 	<GeneDef ParentName="Slorg_GeneBase">
 		<defName>Slorg_DroneConditioning</defName>
 		<label>drone conditioning</label>
-		<description>Individuality is irrelevant. Carriers barely register stress, but have little interest in persuading or bargaining with anyone outside the collective.</description>
+		<description>Individuality is irrelevant. Carriers barely register stress and have no interest at all in persuading, befriending or bargaining with anyone outside the collective.</description>
 		<iconPath>UI/Icons/Genes/Slorg_DroneConditioning</iconPath>
 		<displayOrderInCategory>40</displayOrderInCategory>
 		<biostatCpx>1</biostatCpx>
 		<biostatMet>2</biostatMet>
+		<disabledWorkTags>
+			<li>Social</li>
+		</disabledWorkTags>
 		<statOffsets>
 			<MentalBreakThreshold>-0.10</MentalBreakThreshold>
 		</statOffsets>
 		<statFactors>
-			<SocialImpact>0.5</SocialImpact>
-			<NegotiationAbility>0.5</NegotiationAbility>
-			<TradePriceImprovement>0.5</TradePriceImprovement>
+			<SocialImpact>0</SocialImpact>
+			<NegotiationAbility>0</NegotiationAbility>
+			<TradePriceImprovement>0</TradePriceImprovement>
 		</statFactors>
+		<customEffectDescriptions>
+			<li>No mental breaks while linked to the hive.</li>
+		</customEffectDescriptions>
 	</GeneDef>
 
 	<GeneDef ParentName="GeneSkinColorOverride">
@@ -123,6 +145,17 @@
 		<randomBrightnessFactor>0</randomBrightnessFactor>
 		<skinColorOverride>(176, 181, 174)</skinColorOverride>
 		<displayOrderInCategory>3400</displayOrderInCategory>
+	</GeneDef>
+
+	<GeneDef ParentName="GeneSkinColorOverride">
+		<defName>Slorg_QueenSkin</defName>
+		<label>queen skin</label>
+		<labelShortAdj>queen-dark</labelShortAdj>
+		<description>Carriers have the dark, metallic violet skin of a Slorg queen.</description>
+		<displayCategory>Cosmetic_Skin</displayCategory>
+		<randomBrightnessFactor>0</randomBrightnessFactor>
+		<skinColorOverride>(92, 70, 112)</skinColorOverride>
+		<displayOrderInCategory>3401</displayOrderInCategory>
 	</GeneDef>
 
 </Defs>

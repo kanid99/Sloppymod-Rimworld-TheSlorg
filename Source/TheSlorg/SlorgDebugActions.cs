@@ -23,9 +23,13 @@ namespace TheSlorg
             {
                 return;
             }
-            Hediff infection = HediffMaker.MakeHediff(SlorgDefOf.Slorg_NanoprobeInfection, pawn);
-            infection.TryGetComp<HediffComp_NanoprobeInfection>().sourceFaction = SlorgFaction;
-            pawn.health.AddHediff(infection);
+            InfectionUtility.Infect(pawn, SlorgFaction, null);
+        }
+
+        [DebugAction(Category, "Advance infection to stage 2", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void InfectionStage2(Pawn pawn)
+        {
+            pawn.health.hediffSet.GetFirstHediffOfDef(SlorgDefOf.Slorg_NanoprobeInfection)?.TryGetComp<HediffComp_NanoprobeInfection>()?.ForceStage2();
         }
 
         [DebugAction(Category, "Advance infection +30%", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]

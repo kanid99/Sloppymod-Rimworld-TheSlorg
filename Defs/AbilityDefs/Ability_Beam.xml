@@ -4,8 +4,8 @@
 	<!-- Granted by the beam emitter implant. aiCanUse lets drones fire it in combat. -->
 	<AbilityDef>
 		<defName>Slorg_CuttingBeam</defName>
-		<label>cutting beam</label>
-		<description>Fire a short burst from the arm-mounted beam emitter.</description>
+		<label>disruptor beam</label>
+		<description>Fire a neural disruptor bolt from the arm-mounted emitter. It doesn't burn or cut: it overloads the target's nerves until they collapse.</description>
 		<iconPath>UI/Abilities/Slorg_CuttingBeam</iconPath>
 		<cooldownTicksRange>240</cooldownTicksRange>
 		<aiCanUse>true</aiCanUse>
@@ -36,8 +36,8 @@
 			<shaderType>TransparentPostLight</shaderType>
 		</graphicData>
 		<projectile>
-			<damageDef>Burn</damageDef>
-			<damageAmountBase>14</damageAmountBase>
+			<damageDef>Slorg_NeuralShock</damageDef>
+			<damageAmountBase>22</damageAmountBase>
 			<armorPenetrationBase>0.4</armorPenetrationBase>
 			<speed>100</speed>
 		</projectile>

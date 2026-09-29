@@ -17,6 +17,7 @@
 		<maxGenerationAge>60</maxGenerationAge>
 		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
 		<apparelMoney>0~0</apparelMoney>
+		<weaponMoney>0~0</weaponMoney>
 		<!-- Drones can't be talked round. Freeing one takes surgery. -->
 		<initialResistanceRange>60~90</initialResistanceRange>
 		<initialWillRange>6~10</initialWillRange>
@@ -26,10 +27,6 @@
 		<defName>Slorg_DroneKind</defName>
 		<label>slorg drone</label>
 		<combatPower>90</combatPower>
-		<weaponMoney>300~700</weaponMoney>
-		<weaponTags>
-			<li>MedievalMeleeDecent</li>
-		</weaponTags>
 		<skills>
 			<li>
 				<skill>Melee</skill>
@@ -73,10 +70,6 @@
 		<defName>Slorg_TacticalDroneKind</defName>
 		<label>tactical drone</label>
 		<combatPower>140</combatPower>
-		<weaponMoney>1200~2400</weaponMoney>
-		<weaponTags>
-			<li>SpacerGun</li>
-		</weaponTags>
 		<skills>
 			<li>
 				<skill>Shooting</skill>
@@ -128,10 +121,6 @@
 				<Slorg_Queen>1</Slorg_Queen>
 			</xenotypeChances>
 		</xenotypeSet>
-		<weaponMoney>3000~5000</weaponMoney>
-		<weaponTags>
-			<li>SpacerGun</li>
-		</weaponTags>
 		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
 		<initialResistanceRange>150~200</initialResistanceRange>
 		<skills>

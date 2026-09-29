@@ -52,6 +52,9 @@ namespace TheSlorg
         /// <summary>Colonists carrying Slorg implants: mean days between the collective's call (a mental break to rejoin it).</summary>
         public float collectiveCallMtbDays = 60f;
 
+        /// <summary>Conditions nanoprobes cure in linked drones, on top of anything marked chronic.</summary>
+        public List<HediffDef> nanoprobeCures = new List<HediffDef>();
+
         /// <summary>Traits a drone can share with the whole collective. A trait only spreads while a drone that naturally has it is linked.</summary>
         public List<ShareableTrait> shareableTraits = new List<ShareableTrait>();
 

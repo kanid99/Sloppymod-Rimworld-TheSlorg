@@ -27,6 +27,9 @@ namespace TheSlorg
         public static ThingDef Slorg_QueenCore;
         public static AbilityDef Slorg_Assimilate;
 
+        public static PawnKindDef Slorg_DroneKind;
+        public static AbilityDef Slorg_CuttingBeam;
+
         public static SlorgCollectiveDef Slorg_Collective;
 
         static SlorgDefOf()
