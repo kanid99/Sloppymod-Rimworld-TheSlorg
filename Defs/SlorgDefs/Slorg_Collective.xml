@@ -28,6 +28,10 @@
 		<uprisingRaidChance>0.5</uprisingRaidChance>
 		<uprisingRaidDelayTicks>2500</uprisingRaidDelayTicks>
 		<uprisingRaidPointsFactor>0.7</uprisingRaidPointsFactor>
+		<!-- A captive queen can call a drone every this many days, up to this many at once. -->
+		<captiveQueenSummonCooldownDays>3</captiveQueenSummonCooldownDays>
+		<captiveQueenMaxDrones>6</captiveQueenMaxDrones>
+
 		<!-- Linked nanoprobes cure these (plus anything the game marks chronic). -->
 		<nanoprobeCures>
 			<li>Alzheimers</li>

@@ -127,6 +127,20 @@
 		</stages>
 	</HediffDef>
 
+	<!-- A drone summoned by a captive queen. Serves the colony only while she stays captive. -->
+	<HediffDef>
+		<defName>Slorg_QueenBound</defName>
+		<label>bound to queen</label>
+		<description>This drone answered a captive queen's call. It serves the colony through her, and it has no will of its own to break. If she ever gets free, it will answer her again.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.8, 0.6, 1.0)</defaultLabelColor>
+		<isBad>false</isBad>
+		<everCurableByItem>false</everCurableByItem>
+		<comps>
+			<li Class="TheSlorg.HediffCompProperties_QueenBound" />
+		</comps>
+	</HediffDef>
+
 	<DamageDef>
 		<defName>Slorg_NeuralShock</defName>
 		<label>neural shock</label>

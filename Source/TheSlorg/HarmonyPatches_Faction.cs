@@ -105,13 +105,14 @@ namespace TheSlorg
         }
     }
 
-    /// <summary>Drones linked to the hive don't have mental breaks.</summary>
+    /// <summary>Drones linked to the hive, or bound to a captive queen, don't have mental breaks.</summary>
     [HarmonyPatch(typeof(MentalBreaker), nameof(MentalBreaker.CanDoRandomMentalBreaks), MethodType.Getter)]
     public static class MentalBreaker_CanDoRandomMentalBreaks_Patch
     {
         public static void Postfix(Pawn ___pawn, ref bool __result)
         {
-            if (__result && ___pawn != null && ___pawn.health.hediffSet.HasHediff(SlorgDefOf.Slorg_CollectiveLinkHediff))
+            if (__result && ___pawn != null
+                && (___pawn.health.hediffSet.HasHediff(SlorgDefOf.Slorg_CollectiveLinkHediff) || CaptiveQueen.IsBound(___pawn)))
             {
                 __result = false;
             }

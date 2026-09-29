@@ -19,6 +19,7 @@ namespace TheSlorg
         public static HediffDef Slorg_NanoprobeInfection;
         public static HediffDef Slorg_Severance;
         public static HediffDef Slorg_DormantNanoprobes;
+        public static HediffDef Slorg_QueenBound;
 
         public static JobDef Slorg_SecretInject;
         public static MentalStateDef Slorg_CollectiveCall;

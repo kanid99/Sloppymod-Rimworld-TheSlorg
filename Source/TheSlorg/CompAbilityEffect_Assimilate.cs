@@ -31,6 +31,14 @@ namespace TheSlorg
                 }
                 return false;
             }
+            if (caster.Faction != null && caster.Faction.IsPlayer)
+            {
+                if (throwMessages)
+                {
+                    Messages.Message("Only the collective itself can assimilate.", caster, MessageTypeDefOf.RejectInput, historical: false);
+                }
+                return false;
+            }
             bool helpless = victim.Downed || (victim.IsPrisoner && victim.HostFaction == caster.Faction);
             if (!helpless)
             {

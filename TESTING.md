@@ -27,6 +27,7 @@ How every mechanic works, and how to test each one quickly with dev mode.
 | **Force uprising on this map** | All sleepers on the map rise up now |
 | **Sever from collective** | Click a drone to collapse it as if its queen fell |
 | **Install full drone implant set** | Click a pawn to give them every Slorg implant |
+| **Summon drone** (not a debug action) | Button on a captive queen's prisoner panel |
 | **Trigger collective's call** | Click a colonist to start the "rejoin the collective" mental break |
 | **Slorg raid (1500 pts)** | Normal Slorg raid |
 | **Slorg raid with queen (6000 pts)** | Big raid that always includes the queen, if she's available |
@@ -146,6 +147,26 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - [ ] Kill her. All drones on the map collapse, and the letter appears.
 - [ ] **Log collective state**: there should be a new queen (off map).
 - [ ] Run the raid with queen again: the new queen shows up.
+
+---
+
+## 5b. The captive queen
+
+**How it works**
+- **Capture the queen** (down her and arrest her). The drones on the map collapse as usual, and a new queen rises elsewhere, but **you keep her**.
+- Once she's no longer downed (the capture collapse lasts about 2 days), her panel shows a **Summon drone** button:
+  - A drone walks in from the map edge and **joins your colony** with *bound to queen*: full drone genes and implants, no clothes, no mental breaks.
+  - Cooldown **3 days**, at most **6** bound drones per queen.
+- **If she escapes** (prison break, or you release her): **every bound drone turns hostile at once** and attacks the colony. You get a letter.
+- If she **dies**, is **recruited**, or has her link cut with **Sever link**, her drones are simply **freed** as disconnected drones.
+- Your drones can't use Assimilate. Only the collective itself assimilates.
+
+**Test:**
+- [ ] Raid with queen, then down and arrest her. Wait for the collapse to end (or use dev mode to heal her).
+- [ ] Select her: **Summon drone** is there. Use it, and a drone arrives and joins the colony with *bound to queen*.
+- [ ] The button is disabled while she's downed, on cooldown, or at 6 drones.
+- [ ] Release her (or let her prison-break). The bound drones turn hostile and there's a letter.
+- [ ] Kill a captive queen instead: her drones become free disconnected drones.
 
 ---
 

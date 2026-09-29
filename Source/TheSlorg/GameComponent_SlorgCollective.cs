@@ -19,6 +19,9 @@ namespace TheSlorg
         // Saved state.
         private Dictionary<Faction, Pawn> queens = new Dictionary<Faction, Pawn>();
         private List<Faction> surfaceControlLost = new List<Faction>();
+        private Dictionary<Pawn, int> queenSummonReady = new Dictionary<Pawn, int>();
+        private List<Pawn> tmpSummonKeys;
+        private List<int> tmpSummonValues;
 
         // Rebuilt every refresh.
         private readonly Dictionary<Faction, SlorgCollective> collectives = new Dictionary<Faction, SlorgCollective>();
@@ -53,6 +56,16 @@ namespace TheSlorg
         public static void RefreshNow()
         {
             instance?.Refresh();
+        }
+
+        public int QueenSummonReadyTick(Pawn queen)
+        {
+            return queenSummonReady.TryGetValue(queen, out int tick) ? tick : 0;
+        }
+
+        public void SetQueenSummonReady(Pawn queen, int tick)
+        {
+            queenSummonReady[queen] = tick;
         }
 
         public bool SurfaceControlLost(Faction faction)
@@ -115,6 +128,7 @@ namespace TheSlorg
         public void Refresh()
         {
             CheckQueens();
+            CaptiveQueen.CheckBonds();
             GatherActivePawns();
 
             Dictionary<Faction, SlorgCollective> previous = new Dictionary<Faction, SlorgCollective>(collectives);
@@ -126,7 +140,8 @@ namespace TheSlorg
             {
                 SlorgImplants.UpdateSkillBonus(pawn);
                 if (pawn.Faction != null && pawn.Faction.IsPlayer && !pawn.IsPrisoner && SlorgUtility.HasLinkGene(pawn)
-                    && !pawn.health.hediffSet.HasHediff(SlorgDefOf.Slorg_NanoprobeInfection))
+                    && !pawn.health.hediffSet.HasHediff(SlorgDefOf.Slorg_NanoprobeInfection)
+                    && !CaptiveQueen.IsBound(pawn))
                 {
                     // The collective cannot hold a drone that serves the player.
                     SlorgUtility.MakeDisconnected(pawn);
@@ -553,12 +568,15 @@ namespace TheSlorg
         {
             Scribe_Collections.Look(ref queens, "queens", LookMode.Reference, LookMode.Reference, ref tmpQueenKeys, ref tmpQueenValues);
             Scribe_Collections.Look(ref surfaceControlLost, "surfaceControlLost", LookMode.Reference);
+            Scribe_Collections.Look(ref queenSummonReady, "queenSummonReady", LookMode.Reference, LookMode.Value, ref tmpSummonKeys, ref tmpSummonValues);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 queens ??= new Dictionary<Faction, Pawn>();
                 surfaceControlLost ??= new List<Faction>();
                 queens.RemoveAll(kv => kv.Key == null || kv.Value == null);
                 surfaceControlLost.RemoveAll(f => f == null);
+                queenSummonReady ??= new Dictionary<Pawn, int>();
+                queenSummonReady.RemoveAll(kv => kv.Key == null);
             }
         }
     }

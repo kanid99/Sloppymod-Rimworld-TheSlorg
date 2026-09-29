@@ -52,6 +52,10 @@ namespace TheSlorg
         /// <summary>Colonists carrying Slorg implants: mean days between the collective's call (a mental break to rejoin it).</summary>
         public float collectiveCallMtbDays = 60f;
 
+        /// <summary>A captive queen can call a drone this often, up to this many at once.</summary>
+        public float captiveQueenSummonCooldownDays = 3f;
+        public int captiveQueenMaxDrones = 6;
+
         /// <summary>Conditions nanoprobes cure in linked drones, on top of anything marked chronic.</summary>
         public List<HediffDef> nanoprobeCures = new List<HediffDef>();
 
