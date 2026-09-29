@@ -75,7 +75,7 @@
 	<XenotypeDef>
 		<defName>Slorg_DisconnectedDrone</defName>
 		<label>disconnected drone</label>
-		<description>A former Slorg drone whose link to the collective has been cut, whether by surgery, the fall of their queen core, or by joining another faction. They keep any implants they had and their nanoprobes, but they are individuals again, slowly relearning how to be alone in their own head.\n\nSlorg nanoprobes destroy any genetic material taken from them, and their genes can't be passed on to children.</description>
+		<description>A former Slorg drone whose link to the collective has been cut, whether by surgery, the fall of their queen core, or by joining another faction. They keep any implants they had and their nanoprobes, but they are individuals again, and even their hair grows back, slowly relearning how to be alone in their own head.\n\nSlorg nanoprobes destroy any genetic material taken from them, and their genes can't be passed on to children.</description>
 		<descriptionShort>Former Slorg drones cut off from the collective. They keep their implants, but they are individuals again.</descriptionShort>
 		<iconPath>UI/Icons/Xenotypes/Slorg_Disconnected</iconPath>
 		<inheritable>false</inheritable>
@@ -83,8 +83,6 @@
 			<li>Slorg_Severed</li>
 			<li>Slorg_Nanoprobes</li>
 			<li>Slorg_DroneSkin</li>
-			<li>Hair_BaldOnly</li>
-			<li>Beard_NoBeardOnly</li>
 			<li>Head_Gaunt</li>
 			<li>Neversleep</li>
 			<li>DiseaseFree</li>

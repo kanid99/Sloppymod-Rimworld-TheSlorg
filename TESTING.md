@@ -48,7 +48,7 @@ Useful vanilla dev tools:
 | **Slorg drone** | Slorg raids and settlements, and completed infections | Pale grey, hairless, gaunt | Collective link (Assimilate), nanoprobes, drone conditioning, plus vanilla: never sleep, disease-free, tox resistance and more. **Not ageless.** |
 | **Slorg queen** | Faction leader; very large raids | **Dark violet skin, glowing spined crown** | Drone genes plus **Hive sovereign**, queen skin, ageless, robust, super-fast healing, extreme psychic ability |
 | **Slorg thrall** | Anyone who succumbs to the infection or rises up as a sleeper | **Keeps their own look** | Collective link, nanoprobes, drone conditioning, reduced pain, dead calm, partial tox resistance |
-| **Disconnected drone** | Freed drones (surgery, the core falls, or joining you) | Like a drone | Drone genes minus link and conditioning, plus **Severed link** |
+| **Disconnected drone** | Freed drones (surgery, the core falls, or joining you) | Like a drone, but **hair grows back** (random hairstyle, and a beard where that fits) | Drone genes minus link and conditioning, plus **Severed link** |
 
 **Drone conditioning** sets social impact, negotiation and trade to 0 and disables Social work. **Linked drones never have mental breaks.**
 

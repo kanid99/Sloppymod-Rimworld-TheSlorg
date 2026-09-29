@@ -92,6 +92,7 @@ namespace TheSlorg
             {
                 pawn.genes.SetXenotype(SlorgDefOf.Slorg_DisconnectedDrone);
             }
+            GrowHairBack(pawn);
             if (pawn.guest != null)
             {
                 // Without the collective's voice in their head, a freed drone is open to persuasion.
@@ -136,6 +137,24 @@ namespace TheSlorg
             {
                 pawn.Drawer?.renderer?.SetAllGraphicsDirty();
             }
+        }
+
+        /// <summary>A freed drone is an individual again: the hive's enforced baldness ends and hair grows back.</summary>
+        public static void GrowHairBack(Pawn pawn)
+        {
+            if (pawn.story == null)
+            {
+                return;
+            }
+            if (pawn.story.hairDef == HairDefOf.Bald)
+            {
+                pawn.story.hairDef = PawnStyleItemChooser.RandomHairFor(pawn);
+            }
+            if (pawn.style != null && pawn.style.beardDef == BeardDefOf.NoBeard)
+            {
+                pawn.style.beardDef = PawnStyleItemChooser.RandomBeardFor(pawn);
+            }
+            pawn.Drawer?.renderer?.SetAllGraphicsDirty();
         }
 
         /// <summary>Fully assimilated: drone genes, the standard drone implants, and nanoprobes that mend the body.</summary>
