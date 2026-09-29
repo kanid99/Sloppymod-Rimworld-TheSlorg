@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
+using Verse.AI.Group;
 
 namespace TheSlorg
 {
@@ -63,14 +66,32 @@ namespace TheSlorg
             return tile.Valid && tile.LayerDef != null && tile.LayerDef.isSpace;
         }
 
-        /// <summary>Turns any Slorg into a disconnected drone: implants stay, the link and Assimilate go.</summary>
+        /// <summary>
+        /// Turns any Slorg into a disconnected drone. Full drones keep their implants; thralls, who never had any,
+        /// lose their Slorg genes and keep only the severed-link marker.
+        /// </summary>
         public static void MakeDisconnected(Pawn pawn)
         {
             if (pawn?.genes == null || pawn.genes.Xenotype == SlorgDefOf.Slorg_DisconnectedDrone)
             {
                 return;
             }
-            pawn.genes.SetXenotype(SlorgDefOf.Slorg_DisconnectedDrone);
+            if (pawn.genes.Xenotype == SlorgDefOf.Slorg_Thrall)
+            {
+                foreach (Gene gene in pawn.genes.Xenogenes.ToList())
+                {
+                    if (gene.def.defName.StartsWith("Slorg_"))
+                    {
+                        pawn.genes.RemoveGene(gene);
+                    }
+                }
+                pawn.genes.AddGene(SlorgDefOf.Slorg_Severed, xenogene: true);
+                pawn.genes.SetXenotypeDirect(SlorgDefOf.Slorg_DisconnectedDrone);
+            }
+            else
+            {
+                pawn.genes.SetXenotype(SlorgDefOf.Slorg_DisconnectedDrone);
+            }
             if (pawn.guest != null)
             {
                 // Without the collective's voice in their head, a freed drone is open to persuasion.
@@ -82,6 +103,49 @@ namespace TheSlorg
             {
                 pawn.health.RemoveHediff(link);
             }
+        }
+
+        /// <summary>
+        /// Half-assimilated: the collective's genes without the cybernetics. Keeps the pawn's own body and looks.
+        /// </summary>
+        public static void MakeThrall(Pawn pawn)
+        {
+            if (pawn?.genes == null)
+            {
+                return;
+            }
+            pawn.genes.SetXenotype(SlorgDefOf.Slorg_Thrall);
+        }
+
+        /// <summary>The Slorg faction to hand a new thrall to, or null if the collective is gone from this world.</summary>
+        public static Faction ResolveSlorgFaction(Faction preferred, PlanetTile tile)
+        {
+            GameComponent_SlorgCollective collective = GameComponent_SlorgCollective.Instance;
+            bool Usable(Faction f) => f != null && !f.defeated && IsSlorgFaction(f)
+                && !(collective != null && collective.SurfaceControlLost(f) && !IsSpace(tile));
+            if (Usable(preferred))
+            {
+                return preferred;
+            }
+            Faction any = Find.FactionManager.FirstFactionOfDef(SlorgDefOf.Slorg_CollectiveFaction);
+            return Usable(any) ? any : null;
+        }
+
+        /// <summary>New thralls on a colony map turn on it instead of leaving.</summary>
+        public static void TurnOnColony(List<Pawn> pawns, Faction faction, Map map)
+        {
+            foreach (Pawn pawn in pawns)
+            {
+                if (pawn.Faction != faction)
+                {
+                    pawn.SetFaction(faction);
+                }
+                pawn.GetLord()?.RemovePawn(pawn);
+            }
+            LordMaker.MakeNewLord(faction,
+                new LordJob_AssaultColony(faction, canKidnap: false, canTimeoutOrFlee: false, sappers: false,
+                    useAvoidGridSmart: false, canSteal: false, breachers: false, canPickUpOpportunisticWeapons: true),
+                map, pawns);
         }
 
         public static void AddSeverance(Pawn pawn)

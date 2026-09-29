@@ -12,6 +12,22 @@
 		<queenRaidMinPoints>5000</queenRaidMinPoints>
 		<queenRaidChance>0.5</queenRaidChance>
 		<unicomplexName>Unicomplex</unicomplexName>
+
+		<!-- Sleeper agents: chance a "purged" infection goes dormant, incubation, and time between injections. -->
+		<dormantChanceOnPurge>0.4</dormantChanceOnPurge>
+		<!-- A prisoner or slave who succumbs: this chance to become a hidden sleeper, otherwise they break out hostile. -->
+		<captiveSleeperChance>0.5</captiveSleeperChance>
+		<sleeperIncubationTicks>60000</sleeperIncubationTicks>
+		<sleeperInjectIntervalDays>0.5~1.5</sleeperInjectIntervalDays>
+		<witnessChanceObserved>0.6</witnessChanceObserved>
+		<witnessChanceUnobserved>0.1</witnessChanceUnobserved>
+		<!-- Uprising once sleepers >= min and >= this share of free colonists. -->
+		<uprisingMinSleepers>3</uprisingMinSleepers>
+		<uprisingColonistFraction>0.34</uprisingColonistFraction>
+		<!-- Chance the collective raids to back up an uprising, delay in ticks, and raid size vs a normal big threat. -->
+		<uprisingRaidChance>0.5</uprisingRaidChance>
+		<uprisingRaidDelayTicks>2500</uprisingRaidDelayTicks>
+		<uprisingRaidPointsFactor>0.7</uprisingRaidPointsFactor>
 		<shareableTraits>
 			<li><def>Industriousness</def><degree>1</degree></li>  <!-- industrious -->
 			<li><def>Industriousness</def><degree>2</degree></li>  <!-- hard worker -->

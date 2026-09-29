@@ -18,4 +18,16 @@
 		<researchViewY>0</researchViewY>
 	</ResearchProjectDef>
 
+	<ResearchProjectDef>
+		<defName>Slorg_NanoprobeDetection</defName>
+		<label>nanoprobe detection</label>
+		<description>Learn to find Slorg nanoprobes that have gone dormant in a host. Unlocks the Nanoprobe scan surgery, the only way to catch a sleeper agent before they rise up.</description>
+		<baseCost>1500</baseCost>
+		<techLevel>Spacer</techLevel>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<tab>Slorg_ResearchTab</tab>
+		<researchViewX>0</researchViewX>
+		<researchViewY>1</researchViewY>
+	</ResearchProjectDef>
+
 </Defs>

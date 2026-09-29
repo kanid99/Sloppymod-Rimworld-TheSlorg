@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!-- Sleeper agent secretly injecting another colonist. The report string is the disguise. -->
+	<JobDef>
+		<defName>Slorg_SecretInject</defName>
+		<driverClass>TheSlorg.JobDriver_SlorgSecretInject</driverClass>
+		<reportString>checking on TargetA.</reportString>
+		<casualInterruptible>false</casualInterruptible>
+	</JobDef>
+
+</Defs>

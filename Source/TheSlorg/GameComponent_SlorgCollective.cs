@@ -98,6 +98,13 @@ namespace TheSlorg
             }
             if (Find.TickManager.TicksGame % SlorgDefOf.Slorg_Collective.refreshIntervalTicks == 0)
             {
+                foreach (Map map in Find.Maps.ToList())
+                {
+                    if (map.IsPlayerHome)
+                    {
+                        SleeperUtility.TickMap(map);
+                    }
+                }
                 Refresh();
             }
         }

@@ -59,6 +59,24 @@
 		</genes>
 	</XenotypeDef>
 
+	<!-- Half-assimilated: the collective's genes, none of its hardware. Keeps the pawn's own body and looks. -->
+	<XenotypeDef>
+		<defName>Slorg_Thrall</defName>
+		<label>slorg thrall</label>
+		<description>Someone the nanoprobes finished with before the collective could take them to a maturation chamber. A thrall has no implants and no exoplating, and still looks like the person they were. But the collective link is in their brainstem and nanoprobes run in their blood, and they serve the collective completely.\n\nA thrall shares the collective's knowledge and can inject others. Free one and they lose the Slorg genes, keeping only a dead transceiver.</description>
+		<descriptionShort>Half-assimilated: linked to the collective and full of nanoprobes, but without the cybernetics of a full drone.</descriptionShort>
+		<iconPath>UI/Icons/Xenotypes/Slorg_Thrall</iconPath>
+		<inheritable>false</inheritable>
+		<genes>
+			<li>Slorg_CollectiveLink</li>
+			<li>Slorg_Nanoprobes</li>
+			<li>Slorg_DroneConditioning</li>
+			<li>Pain_Reduced</li>
+			<li>Aggression_DeadCalm</li>
+			<li>ToxResist_Partial</li>
+		</genes>
+	</XenotypeDef>
+
 	<XenotypeDef>
 		<defName>Slorg_DisconnectedDrone</defName>
 		<label>disconnected drone</label>

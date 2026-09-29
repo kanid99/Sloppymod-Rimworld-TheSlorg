@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using Verse.AI.Group;
@@ -41,6 +42,11 @@ namespace TheSlorg
                 // Zero severity makes the health tracker remove the hediff on its own.
                 parent.Severity = 0f;
                 Messages.Message($"{Pawn.LabelShortCap}'s nanoprobe infection has been completely purged.", Pawn, MessageTypeDefOf.PositiveEvent);
+                // ...or so it seems. Some nanoprobes go dormant and turn the pawn into a hidden sleeper agent.
+                if (Pawn.Faction != null && Pawn.Faction.IsPlayer && Rand.Chance(SlorgDefOf.Slorg_Collective.dormantChanceOnPurge))
+                {
+                    HediffComp_DormantNanoprobes.Implant(Pawn, sourceFaction);
+                }
             }
             else
             {
@@ -75,37 +81,71 @@ namespace TheSlorg
                 return;
             }
 
-            GameComponent_SlorgCollective collective = GameComponent_SlorgCollective.Instance;
-            bool collectiveGone = sourceFaction == null
-                || sourceFaction.defeated
-                || (collective != null && collective.SurfaceControlLost(sourceFaction) && !SlorgUtility.IsSpace(pawn.Tile));
-            if (collectiveGone || pawn.genes == null)
+            Faction faction = SlorgUtility.ResolveSlorgFaction(sourceFaction, pawn.Tile);
+            if (faction == null)
             {
                 SlorgUtility.MakeDisconnected(pawn);
-                Messages.Message($"The nanoprobes have rebuilt {pawn.LabelShortCap}, but there is no collective left to answer. They are a disconnected drone.",
+                Messages.Message($"The nanoprobes have finished with {pawn.LabelShortCap}, but there is no collective left to answer. They are a disconnected drone.",
                     pawn, MessageTypeDefOf.NeutralEvent);
                 return;
             }
 
-            bool wasPlayers = pawn.Faction != null && pawn.Faction.IsPlayer;
-            pawn.genes.SetXenotype(SlorgDefOf.Slorg_Drone);
-            if (pawn.Faction != sourceFaction)
+            bool held = pawn.IsPrisonerOfColony || pawn.IsSlaveOfColony;
+            if (held && Rand.Chance(SlorgDefOf.Slorg_Collective.captiveSleeperChance))
             {
-                pawn.SetFaction(sourceFaction);
+                // The nanoprobes hide instead: a sleeper waiting to be recruited into the colony.
+                HediffComp_DormantNanoprobes.Implant(pawn, faction);
+                Messages.Message($"{pawn.LabelShortCap}'s nanoprobe infection has run its course. {pawn.LabelShortCap} seems... unchanged.",
+                    pawn, MessageTypeDefOf.NeutralEvent);
+                return;
             }
 
-            if (pawn.Spawned && pawn.GetLord() == null)
+            bool wasPlayers = pawn.Faction != null && pawn.Faction.IsPlayer && !held;
+            SlorgUtility.MakeThrall(pawn);
+
+            if (held)
             {
-                LordMaker.MakeNewLord(sourceFaction, new LordJob_ExitMapBest(Verse.AI.LocomotionUrgency.Jog, canDig: true, canDefendSelf: true),
-                    pawn.Map, new[] { pawn });
+                // Breaks out as a thrall and turns on the colony.
+                pawn.guest?.SetGuestStatus(null);
+                if (pawn.Spawned)
+                {
+                    SlorgUtility.TurnOnColony(new List<Pawn> { pawn }, faction, pawn.Map);
+                }
+                else if (pawn.Faction != faction)
+                {
+                    pawn.SetFaction(faction);
+                }
+                Find.LetterStack.ReceiveLetter("Captive assimilated",
+                    $"The nanoprobes have finished with {pawn.LabelShortCap}. They are a Slorg thrall now, and they have turned on their captors.",
+                    LetterDefOf.ThreatBig, pawn);
+            }
+            else if (pawn.Spawned && pawn.Map.IsPlayerHome)
+            {
+                // Rescued but not saved: the new thrall turns on the colony and tries to assimilate it from inside.
+                SlorgUtility.TurnOnColony(new List<Pawn> { pawn }, faction, pawn.Map);
+            }
+            else
+            {
+                if (pawn.Faction != faction)
+                {
+                    pawn.SetFaction(faction);
+                }
+                if (pawn.Spawned && pawn.GetLord() == null)
+                {
+                    LordMaker.MakeNewLord(faction, new LordJob_ExitMapBest(Verse.AI.LocomotionUrgency.Jog, canDig: true, canDefendSelf: true),
+                        pawn.Map, new[] { pawn });
+                }
             }
 
             if (wasPlayers)
             {
                 Find.LetterStack.ReceiveLetter("Assimilated",
-                    $"{pawn.LabelShortCap} could not be saved. The nanoprobes have finished their work, and {pawn.LabelShortCap} is now a Slorg drone.\n\n"
-                    + "Everything they knew now belongs to the collective, for as long as they live.",
-                    LetterDefOf.NegativeEvent, pawn);
+                    $"{pawn.LabelShortCap} could not be saved. The nanoprobes have finished their work, and {pawn.LabelShortCap} is now a Slorg thrall, "
+                    + "with the collective's genes if not yet its implants.\n\n"
+                    + (pawn.Spawned && pawn.Map.IsPlayerHome
+                        ? $"{pawn.LabelShortCap} has turned on the colony and will try to down and inject anyone they can."
+                        : "Everything they knew now belongs to the collective, for as long as they live."),
+                    LetterDefOf.ThreatBig, pawn);
             }
             GameComponent_SlorgCollective.RefreshNow();
         }

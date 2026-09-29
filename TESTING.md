@@ -1,0 +1,229 @@
+# The Slorg: testing guide
+
+How every mechanic works, and how to test each one quickly with dev mode.
+
+> **Status:** everything compiles and every XML file is valid, but nothing has been run in RimWorld yet. Expect some bugs on the first load. When you find one, copy the **red lines from the debug log** (and what you were doing) back to me.
+
+---
+
+## 0. Setup
+
+1. **Mods** (in this load order): Harmony → Core → Biotech → any other DLCs → **The Slorg**.
+   - Put the repo folder in `RimWorld/Mods/` (the folder containing `About/`, `Defs/`, `1.6/` and so on).
+2. **Options → Development mode: on.** This adds the bug icon (debug log) and the wrench icon (debug actions) to the top of the screen.
+3. Start the game and **open the debug log right away**. Look for red errors that mention `Slorg`, `TheSlorg` or `kanid99.theslorg`.
+   - Yellow warnings are usually harmless. Red errors are what I need.
+4. **New colony:** on the faction screen, check that **Slorg Collective** is listed. It should be there by default.
+
+### Debug actions (wrench icon → "The Slorg")
+
+| Action | What it does |
+|---|---|
+| **Infect with nanoprobes** | Click a pawn to give them the visible nanoprobe infection |
+| **Advance infection +30%** | Pushes an infection along |
+| **Complete infection now** | Finishes the infection immediately (turns them into a thrall) |
+| **Make sleeper agent (active now)** | Gives a colonist hidden dormant nanoprobes, active immediately |
+| **Force uprising on this map** | All sleepers on the map rise up now |
+| **Sever from collective** | Click a drone to collapse it as if its queen fell |
+| **Slorg raid (1500 pts)** | Normal Slorg raid |
+| **Slorg raid with queen (6000 pts)** | Big raid that always includes the queen, if she's available |
+| **Spawn queen core** | Places a queen core at the mouse position |
+| **Log collective state** | Writes each Slorg faction, its queen, Unicomplex and shared skills to the debug log |
+
+Useful vanilla dev tools:
+- **Tool: "Down pawn"** to down a colonist.
+- **Research: "Finish all"** or the Slorg research tab.
+- **Spawn thing: MedicineUltratech** (glitterworld medicine).
+- **Time speed:** the dev-mode ultra speed button.
+
+---
+
+## 1. Xenotypes
+
+| Xenotype | Where it comes from | Looks | Key genes |
+|---|---|---|---|
+| **Slorg drone** | Slorg raids and settlements | Pale grey, bald, gaunt | Collective link (Assimilate), exoplating, ocular implant, nanoprobes, drone conditioning, plus vanilla: never sleep, ageless, disease-free and more |
+| **Slorg queen** | Faction leader; big raids | Like a drone | Drone genes plus **Hive sovereign**, robust, super-fast healing, extreme psychic ability |
+| **Slorg thrall** | Anyone who succumbs to the infection or rises up as a sleeper | **Keeps their own look** | Collective link, nanoprobes, drone conditioning, reduced pain, dead calm, partial tox resistance. **No cybernetics.** |
+| **Disconnected drone** | Freed drones (surgery, the core falls, or joining you) | Like a drone | Drone genes minus link and conditioning, plus **Severed link** |
+
+Freed **thralls** lose their Slorg genes entirely and keep only *Severed link*.
+
+**Test:**
+- [ ] In the gene library (Xenotype editor on the colonist screen), check that all 4 xenotypes show with icons and readable descriptions.
+- [ ] Start with a colonist set to **Slorg drone**. Within a few seconds a message should say their link has *burned out*, and they become a **disconnected drone**. Player Slorg are never linked.
+- [ ] Put a disconnected drone in a **gene extractor**. It should refuse: *"Slorg nanoprobes destroy any extracted genetic material."*
+
+---
+
+## 2. The faction and raids
+
+- **Slorg Collective**: permanent enemy, spacer tech, no trade.
+- Raids mix **slorg drones** (melee) and **tactical drones** (spacer guns). They can't show up before day 20 on the storyteller's own schedule. Debug raids ignore that.
+- The faction's oldest surface settlement is renamed **Unicomplex**.
+
+**Test:**
+- [ ] World map: find the Slorg settlements. One should be called **Unicomplex**.
+- [ ] Debug action **Slorg raid (1500 pts)**. Drones arrive and are grey, bald, and armed and dressed sensibly.
+- [ ] Select a drone. The health tab should show **collective link (N drones)**, and the tooltip lists collective knowledge (skill, level, source drone).
+- [ ] Their skills tab should show boosted levels (see section 4).
+
+---
+
+## 3. Assimilation: the nanoprobe infection
+
+**How it works**
+- Enemy drones look for **downed** enemies within 40 cells and use **Assimilate** on them: touch range, about 3 seconds, a 1-hour cooldown per drone.
+- The victim gets a **nanoprobe infection** and you get a red letter.
+- Severity rises **0.33/day** (about 3 days). While tended it rises **0.18/day** (about 5–6 days).
+- Stages: early → spreading (−10% consciousness) → implants forming → almost assimilated (−30% consciousness, −20% moving).
+- **Purging:** a tend of **105% quality or more** removes 35% severity. Two or three of those clear it. Normal and industrial medicine cap tend quality at 100%, so you need **glitterworld medicine** plus a decent doctor. Watch for the *"The tend purged part of…"* message.
+- **Too late:** at 100%, the pawn becomes a **Slorg thrall**:
+  - On your **home map**: they turn hostile *right there* and attack the colony, trying to down and inject others.
+  - **Elsewhere** (kidnapped, on another map): they join the Slorg and leave.
+  - If they're **your prisoner or slave**, 50/50:
+    - they **break out** as a hostile thrall and attack (*Captive assimilated* letter), or
+    - they become a **hidden sleeper**. The infection just vanishes with *"…seems unchanged"*. Recruit them later and you've let a sleeper agent into the colony.
+
+**Test:**
+- [ ] Raid, then down a colonist next to a drone (vanilla *Down pawn* tool). The drone should walk over and inject them, and a *Nanoprobe infection* letter appears.
+- [ ] Health tab: **nanoprobe infection** with a stage and a tend tooltip.
+- [ ] Tend with **industrial** medicine: the rise slows and there's no purge message.
+- [ ] Tend with **glitterworld** medicine and a skilled doctor: you see *purged part of*, and severity drops.
+- [ ] **Complete infection now** on a colonist at home: they become a thrall, keep their look, turn hostile and attack. You get an *Assimilated* letter.
+- [ ] Down that thrall. Other drones or thralls should try to inject your downed colonists.
+- [ ] Capture a raider, **Infect** them, then **Complete infection now** a few times on different prisoners. Some break out hostile and some go quiet (*"seems unchanged"*). Recruit a quiet one: **Log collective state** should count them as a sleeper once they're a colonist.
+
+> If the purge never triggers even with glitterworld medicine and a 15+ doctor, tell me the tend quality shown. My threshold assumes glitterworld medicine can go past 100%.
+
+---
+
+## 4. The collective (skills, stats, traits)
+
+**How it works** (refreshes every 500 ticks, about 8 seconds)
+- **Skills:** every linked drone of a faction uses the **highest level** any linked drone has, including drones off the map. Their own levels are unchanged underneath. Kill the source drone and the collective drops to the next best. You get a message when a skill is gained or lost in front of you.
+- **Stats:** the *collective link* effect scales with drones on the **same map**:
+
+  | Drones | Stage | Effect |
+  |---|---|---|
+  | 1 | isolated | −10% consciousness, −10% work speed, −20% learning, easier breaks |
+  | 2+ | cluster | +5% work speed |
+  | 5+ | unimatrix | +10% work, +10% learning, +5% consciousness |
+  | 10+ | cube | +15% work, +20% learning, +10% consciousness, +5% manipulation |
+  | 20+ | full collective | +25% work, +30% learning, +15% consciousness, +10% manipulation and moving |
+
+  A **queen on the map counts as 10 extra drones.**
+- **Traits:** these spread from the drone that naturally has them to all the others, unless they clash with a trait the drone already has: industrious, hard worker, tough, nimble, careful shooter, fast learner, great memory, quick sleeper, fast walker, jogger, steadfast, iron-willed. They're taken back when the source is gone.
+- **Prisoners, slaves and severed drones are cut off.**
+
+**Test:**
+- [ ] Raid, then **Log collective state**: the log lists skills, their sources and shared traits.
+- [ ] Compare one drone's Shooting against the best shooter's. They should match (or be higher).
+- [ ] Kill the drone that provides a skill. You get a *"collective has lost…"* message, and the others drop.
+- [ ] Hover the collective link label. It shows the drone count and *queen present* when she's there.
+
+---
+
+## 5. The queen
+
+**How it works**
+- She's the faction leader: *Slorg queen* xenotype, female, spacer gear, high skills.
+- She joins **Combat raids of 5000+ points, 50% of the time**. The debug action forces it.
+- **Killed or captured** on a map: every Slorg drone on that map gets **severed from collective**. They're downed (consciousness capped at 10%) for **about 1.7–2.3 days**. You get a *Slorg queen fallen* letter.
+- A **new queen** is raised straight away. She's a new pawn, not the same one.
+- Severed drones that aren't operated on reconnect when it wears off.
+
+**Test:**
+- [ ] **Slorg raid with queen (6000 pts)**. A queen appears with the raid.
+- [ ] Kill her. All drones on the map collapse, and the letter appears.
+- [ ] **Log collective state**: there should be a new queen (off map).
+- [ ] Run the raid with queen again: the new queen shows up.
+
+---
+
+## 6. Sever link surgery (freeing drones)
+
+**How it works**
+- Research **Neural severance** (Slorg research tab, hi-tech bench, 2500).
+- Surgery **Sever collective link**: needs Medicine 10 and 2 glitterworld medicine. It's only offered while the drone is **severed**.
+- On success: **disconnected drone**, resistance drops to ≤8 and will to ≤2, so they're easy to recruit.
+
+**Test:**
+- [ ] Kill the queen, capture a severed drone (arrest it while it's downed), and check the bill appears on the prisoner.
+- [ ] Also try **Sever from collective** on any captured drone.
+- [ ] After surgery: xenotype *disconnected drone*, no Assimilate ability, low resistance. Recruit them.
+- [ ] Once recruited: no *burned out* message (already disconnected), and the gene extractor refuses them.
+
+---
+
+## 7. Sleeper agents and uprisings
+
+**How it works**
+- When a purge clears an infection completely, there's a **40% chance** it only *looks* cured. The pawn gets hidden **dormant nanoprobes**, which don't show on the health tab.
+- After **1 day** of incubation, the sleeper starts injecting a colonist every **0.5–1.5 days**:
+  - Target preference: **asleep or downed** colonists first, otherwise one who is alone (no awake colonist with line of sight within 12 cells).
+  - The job shows as **"checking on [name]"**.
+  - The victim becomes a sleeper too (with their own 1-day incubation).
+  - **Clue:** a yellow message *"X was seen leaning over sleeping Y…"*. That's a 60% chance if someone awake could see, otherwise 10%.
+- **Uprising:** when sleepers are **3 or more and at least 34% of free colonists**, they all become **thralls** at once and attack together. You get a *Slorg uprising* letter.
+  - **50% chance** the collective backs them up with a raid **about 1 hour later** at 70% of a normal big-threat size.
+- **Counter:** research **Nanoprobe detection** (1500), then the **Nanoprobe scan** surgery (Medicine 6, 1 glitterworld medicine, no anesthetic). It finds and purges dormant nanoprobes.
+
+**Test:**
+- [ ] **Make sleeper agent** on one colonist. Their health tab looks normal.
+- [ ] Let time pass (at night is best). Watch their job report for *checking on…* and a possible witness message.
+- [ ] **Log collective state**: shows the number of hidden sleepers on the map.
+- [ ] Make 2 more sleepers, or wait. The uprising should fire on its own at the next refresh when the threshold is met, or use **Force uprising**.
+- [ ] During an uprising: former colonists keep their looks, are now thralls, and attack. There's a letter, sometimes with *"A Slorg force is on its way"*, and then a raid about an hour later.
+- [ ] **Nanoprobe scan** a sleeper: *Sleeper found* letter. Scan a clean pawn: *no nanoprobes*.
+
+---
+
+## 8. The queen core and planetary collapse
+
+**How it works**
+- When the **Unicomplex** map is generated (attack it with a caravan), a **queen core** (3×3, 4000 HP, glowing) spawns at the map center.
+- It can't be claimed or deconstructed, so it has to be destroyed by damage.
+- **When it's destroyed:**
+  - every Slorg (drone, queen, thrall) on the **planet surface** becomes a **disconnected drone** with **no faction**, and the ones on maps are severed (downed about 2 days);
+  - all other Slorg **surface** settlements are destroyed;
+  - the Slorg can no longer raid surface maps (space maps are still allowed);
+  - you get a *Queen core destroyed* letter.
+
+**Test** (quick way):
+- [ ] **Spawn queen core** on your own map, then destroy it with the dev *Destroy* tool or weapons.
+- [ ] Letter appears, any Slorg on your map collapse and lose their faction, and the world map loses the Slorg surface settlements.
+- [ ] Try a Slorg raid via the vanilla incident menu (Raid → Slorg). The faction should no longer be an option on a surface map.
+
+**Test** (real way):
+- [ ] Caravan to the Unicomplex and attack it. The core is at the map center.
+
+---
+
+## 9. Known risks (please watch for these)
+
+| Risk | What you'd see |
+|---|---|
+| The queen goes missing | After a big raid is generated but never spawns, *Log collective state* shows no queen, or a new one keeps being made |
+| Freed drones behave strangely | After the core falls, factionless drones stand still or act oddly |
+| Skill boost not applied | A drone's skills tab shows its own low level instead of the collective's |
+| Drones don't inject | Downed colonists near drones never get infected (the AI hook didn't load) |
+| Purge never possible | Glitterworld tends never reach 105% |
+| Trait names | A red error mentioning `Tough` or `SpeedOffset` in `Slorg_Collective` |
+| Colonist converting in a caravan | A colonist who completes the infection while travelling turns hostile inside your caravan |
+
+---
+
+## 10. Tuning without recompiling
+
+| File | What's in it |
+|---|---|
+| `Defs/SlorgDefs/Slorg_Collective.xml` | Refresh rate, queen raid threshold and chance, queen bonus, **sleeper, captive and uprising numbers**, shareable traits |
+| `Defs/HediffDefs/Hediffs_Slorg.xml` | Infection speed, purge threshold and amount, severance length |
+| `Defs/HediffDefs/Hediff_CollectiveLink.xml` | Collective stat stages |
+| `Defs/FactionDefs/Faction_Slorg.xml` | Raid composition, earliest raid day |
+| `Defs/PawnKindDefs/PawnKinds_Slorg.xml` | Drone and queen gear, skills, resistance |
+| `Defs/RecipeDefs/Recipes_Slorg.xml` | Surgery costs and skill requirements |
+| `Defs/ResearchProjectDefs/Research_Slorg.xml` | Research costs |
+
+After editing XML, restart RimWorld. There's no need to rebuild the DLL.

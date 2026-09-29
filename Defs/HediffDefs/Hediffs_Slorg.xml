@@ -104,4 +104,23 @@
 		</stages>
 	</HediffDef>
 
+	<!-- Hidden sleeper agent. The stage never becomes visible, so it doesn't show on the health tab.
+	     Only the nanoprobe scan surgery finds it. Behavior lives in SleeperUtility. -->
+	<HediffDef>
+		<defName>Slorg_DormantNanoprobes</defName>
+		<label>dormant nanoprobes</label>
+		<description>Slorg nanoprobes lying low in the bloodstream. The carrier seems perfectly healthy, but they now quietly serve the collective.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<isBad>false</isBad>
+		<everCurableByItem>false</everCurableByItem>
+		<comps>
+			<li Class="TheSlorg.HediffCompProperties_DormantNanoprobes" />
+		</comps>
+		<stages>
+			<li>
+				<becomeVisible>false</becomeVisible>
+			</li>
+		</stages>
+	</HediffDef>
+
 </Defs>

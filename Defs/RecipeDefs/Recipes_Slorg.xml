@@ -35,4 +35,39 @@
 		</fixedIngredientFilter>
 	</RecipeDef>
 
+	<RecipeDef ParentName="SurgeryFlesh">
+		<defName>Slorg_NanoprobeScan</defName>
+		<label>nanoprobe scan</label>
+		<description>Flush the patient's blood through glitterworld medicine and look for dormant Slorg nanoprobes. If any are found they are purged, and a hidden sleeper agent is freed.</description>
+		<workerClass>TheSlorg.Recipe_NanoprobeScan</workerClass>
+		<jobString>Scanning for nanoprobes.</jobString>
+		<workAmount>1500</workAmount>
+		<targetsBodyPart>false</targetsBodyPart>
+		<hideBodyPartNames>true</hideBodyPartNames>
+		<anesthetize>false</anesthetize>
+		<surgerySuccessChanceFactor>1.2</surgerySuccessChanceFactor>
+		<researchPrerequisite>Slorg_NanoprobeDetection</researchPrerequisite>
+		<skillRequirements>
+			<Medicine>6</Medicine>
+		</skillRequirements>
+		<recipeUsers>
+			<li>Human</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MedicineUltratech</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MedicineUltratech</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
 </Defs>

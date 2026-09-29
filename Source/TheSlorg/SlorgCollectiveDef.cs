@@ -24,6 +24,31 @@ namespace TheSlorg
         /// <summary>Name given to the settlement that holds the queen core.</summary>
         public string unicomplexName = "Unicomplex";
 
+        /// <summary>Chance that a "purged" infection actually goes dormant, leaving a hidden sleeper agent.</summary>
+        public float dormantChanceOnPurge = 0.4f;
+
+        /// <summary>Chance a prisoner or slave who succumbs becomes a hidden sleeper instead of breaking out as a hostile thrall.</summary>
+        public float captiveSleeperChance = 0.5f;
+
+        /// <summary>How long a new sleeper waits before it starts injecting others.</summary>
+        public int sleeperIncubationTicks = 60000;
+
+        /// <summary>Days between a sleeper's injections.</summary>
+        public FloatRange sleeperInjectIntervalDays = new FloatRange(0.5f, 1.5f);
+
+        /// <summary>Chance an injection is noticed when another colonist is awake nearby, and when nobody is.</summary>
+        public float witnessChanceObserved = 0.6f;
+        public float witnessChanceUnobserved = 0.1f;
+
+        /// <summary>Sleepers rise up once there are at least this many and they make up this share of the colony.</summary>
+        public int uprisingMinSleepers = 3;
+        public float uprisingColonistFraction = 0.34f;
+
+        /// <summary>Chance the collective sends a raid to back up an uprising, and when it arrives.</summary>
+        public float uprisingRaidChance = 0.5f;
+        public int uprisingRaidDelayTicks = 2500;
+        public float uprisingRaidPointsFactor = 0.7f;
+
         /// <summary>Traits a drone can share with the whole collective. A trait only spreads while a drone that naturally has it is linked.</summary>
         public List<ShareableTrait> shareableTraits = new List<ShareableTrait>();
 

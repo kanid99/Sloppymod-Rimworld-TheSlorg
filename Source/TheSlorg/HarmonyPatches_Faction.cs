@@ -39,7 +39,7 @@ namespace TheSlorg
             if (!SlorgUtility.IsSlorgFaction(faction)
                 || parms.groupKind != PawnGroupKindDefOf.Combat
                 || parms.points < tuning.queenRaidMinPoints
-                || !Rand.Chance(tuning.queenRaidChance))
+                || !(SlorgDebugActions.forceQueenNextRaid || Rand.Chance(tuning.queenRaidChance)))
             {
                 return;
             }
