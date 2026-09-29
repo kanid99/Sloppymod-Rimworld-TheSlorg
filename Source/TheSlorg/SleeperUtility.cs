@@ -159,9 +159,32 @@ namespace TheSlorg
                 }
                 SlorgUtility.MakeThrall(sleeper);
             }
-            SlorgUtility.TurnOnColony(sleepers, faction, map);
+            // A captive queen's drones join the rising, and she breaks out of her cell.
+            List<Pawn> risers = new List<Pawn>(sleepers);
+            Pawn captiveQueen = map.mapPawns.PrisonersOfColonySpawned.FirstOrDefault(CaptiveQueen.IsCaptiveQueen);
+            if (captiveQueen != null)
+            {
+                foreach (Pawn drone in CaptiveQueen.BoundTo(captiveQueen).Where(d => d.Spawned && d.Map == map).ToList())
+                {
+                    Hediff bond = drone.health.hediffSet.GetFirstHediffOfDef(SlorgDefOf.Slorg_QueenBound);
+                    if (bond != null)
+                    {
+                        drone.health.RemoveHediff(bond);
+                    }
+                    if (drone.Drafted)
+                    {
+                        drone.drafter.Drafted = false;
+                    }
+                    risers.Add(drone);
+                }
+            }
+            SlorgUtility.TurnOnColony(risers, faction, map);
+            if (captiveQueen != null && !captiveQueen.Downed)
+            {
+                PrisonBreakUtility.StartPrisonBreak(captiveQueen);
+            }
 
-            string names = string.Join(", ", sleepers.Select(p => p.LabelShortCap));
+            string names = string.Join(", ", risers.Select(p => p.LabelShortCap));
             string text = $"Dormant Slorg nanoprobes have woken. {names} have revealed themselves as Slorg thralls and turned on the colony.\n\n"
                 + "They will try to down and inject everyone they can.";
 

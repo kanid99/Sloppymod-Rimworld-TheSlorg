@@ -67,9 +67,11 @@ namespace TheSlorg
             BodyPartRecord part = null;
             if (partDef != null)
             {
-                part = pawn.health.hediffSet.GetNotMissingParts()
-                    .Where(p => p.def == partDef)
-                    .FirstOrDefault(p => !pawn.health.hediffSet.hediffs.Any(h => h.Part == p && IsSlorgImplant(h)));
+                // Prefer a part with no Slorg implant yet (so the beam and the lash end up on different arms),
+                // otherwise any part that doesn't already have this implant.
+                List<BodyPartRecord> parts = pawn.health.hediffSet.GetNotMissingParts().Where(p => p.def == partDef).ToList();
+                part = parts.FirstOrDefault(p => !pawn.health.hediffSet.hediffs.Any(h => h.Part == p && IsSlorgImplant(h)))
+                    ?? parts.FirstOrDefault(p => !pawn.health.hediffSet.hediffs.Any(h => h.Part == p && h.def == def));
                 if (part == null)
                 {
                     return;

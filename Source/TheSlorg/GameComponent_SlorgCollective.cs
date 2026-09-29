@@ -20,6 +20,7 @@ namespace TheSlorg
         private Dictionary<Faction, Pawn> queens = new Dictionary<Faction, Pawn>();
         private List<Faction> surfaceControlLost = new List<Faction>();
         private Dictionary<Pawn, int> queenSummonReady = new Dictionary<Pawn, int>();
+        private List<Faction> unicomplexRevealed = new List<Faction>();
         private List<Pawn> tmpSummonKeys;
         private List<int> tmpSummonValues;
 
@@ -56,6 +57,21 @@ namespace TheSlorg
         public static void RefreshNow()
         {
             instance?.Refresh();
+        }
+
+        /// <summary>The queen core stays hidden until someone traces the hive signal with a control implant.</summary>
+        public bool UnicomplexRevealed(Faction faction)
+        {
+            return faction != null && unicomplexRevealed.Contains(faction);
+        }
+
+        public void RevealUnicomplex(Faction faction)
+        {
+            if (faction != null && !unicomplexRevealed.Contains(faction))
+            {
+                unicomplexRevealed.Add(faction);
+                NameUnicomplexes();
+            }
         }
 
         public int QueenSummonReadyTick(Pawn queen)
@@ -117,6 +133,11 @@ namespace TheSlorg
                 {
                     if (map.IsPlayerHome)
                     {
+                        foreach (Pawn prisoner in map.mapPawns.PrisonersOfColonySpawned.ToList())
+                        {
+                            QueenSuppression.Maintain(prisoner);
+                        }
+                        QueenSuppression.TickMap(map);
                         SleeperUtility.TickMap(map);
                         CheckCollectiveCall(map);
                     }
@@ -479,11 +500,11 @@ namespace TheSlorg
             return best;
         }
 
-        private void NameUnicomplexes()
+        public void NameUnicomplexes()
         {
             foreach (Faction faction in Find.FactionManager.AllFactionsListForReading)
             {
-                if (!SlorgUtility.IsSlorgFaction(faction) || SurfaceControlLost(faction))
+                if (!SlorgUtility.IsSlorgFaction(faction) || SurfaceControlLost(faction) || !UnicomplexRevealed(faction))
                 {
                     continue;
                 }
@@ -570,6 +591,7 @@ namespace TheSlorg
             Scribe_Collections.Look(ref queens, "queens", LookMode.Reference, LookMode.Reference, ref tmpQueenKeys, ref tmpQueenValues);
             Scribe_Collections.Look(ref surfaceControlLost, "surfaceControlLost", LookMode.Reference);
             Scribe_Collections.Look(ref queenSummonReady, "queenSummonReady", LookMode.Reference, LookMode.Value, ref tmpSummonKeys, ref tmpSummonValues);
+            Scribe_Collections.Look(ref unicomplexRevealed, "unicomplexRevealed", LookMode.Reference);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 queens ??= new Dictionary<Faction, Pawn>();
@@ -577,6 +599,8 @@ namespace TheSlorg
                 queens.RemoveAll(kv => kv.Key == null || kv.Value == null);
                 surfaceControlLost.RemoveAll(f => f == null);
                 queenSummonReady ??= new Dictionary<Pawn, int>();
+                unicomplexRevealed ??= new List<Faction>();
+                unicomplexRevealed.RemoveAll(f => f == null);
                 queenSummonReady.RemoveAll(kv => kv.Key == null);
             }
         }

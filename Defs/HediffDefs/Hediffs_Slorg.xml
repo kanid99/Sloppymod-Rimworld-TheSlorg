@@ -141,6 +141,40 @@
 		</comps>
 	</HediffDef>
 
+	<!-- A captive queen's suppression (0-1). Drains ~0.25/day; wardens raise it. Low values let her drones
+	     secretly seed sleeper agents. Tuning in Slorg_Collective.xml. -->
+	<HediffDef>
+		<defName>Slorg_QueenSuppression</defName>
+		<label>queen suppression</label>
+		<description>How firmly the colony holds this queen's will. Wardens have to suppress her regularly. If it slips, the drones she called start working for her again in secret, quietly seeding nanoprobes through the colony.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defaultLabelColor>(0.8, 0.6, 1.0)</defaultLabelColor>
+		<isBad>false</isBad>
+		<everCurableByItem>false</everCurableByItem>
+		<alwaysShowSeverity>true</alwaysShowSeverity>
+		<initialSeverity>0.5</initialSeverity>
+		<minSeverity>0.001</minSeverity>
+		<maxSeverity>1</maxSeverity>
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-0.25</severityPerDay>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<label>defiant</label>
+			</li>
+			<li>
+				<minSeverity>0.3</minSeverity>
+				<label>restless</label>
+			</li>
+			<li>
+				<minSeverity>0.5</minSeverity>
+				<label>suppressed</label>
+			</li>
+		</stages>
+	</HediffDef>
+
 	<DamageDef>
 		<defName>Slorg_NeuralShock</defName>
 		<label>neural shock</label>

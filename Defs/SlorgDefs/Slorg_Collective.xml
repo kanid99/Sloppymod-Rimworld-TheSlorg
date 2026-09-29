@@ -32,6 +32,17 @@
 		<captiveQueenSummonCooldownDays>3</captiveQueenSummonCooldownDays>
 		<captiveQueenMaxDrones>6</captiveQueenMaxDrones>
 
+		<!-- Captive queen suppression (0-1). Drain rate is on the Slorg_QueenSuppression hediff. -->
+		<queenSuppressionStart>0.5</queenSuppressionStart>
+		<queenSuppressionPerSession>0.15</queenSuppressionPerSession>
+		<queenSuppressionPerSocialLevel>0.015</queenSuppressionPerSocialLevel>
+		<queenSuppressionWorkBelow>0.8</queenSuppressionWorkBelow>
+		<queenSuppressionToSummon>0.5</queenSuppressionToSummon>
+		<queenSuppressionDangerLevel>0.3</queenSuppressionDangerLevel>
+		<!-- Mean days between hidden infections by her drones: just under the danger level, and at zero. -->
+		<queenSeedingMtbDaysAtDanger>3</queenSeedingMtbDaysAtDanger>
+		<queenSeedingMtbDaysAtZero>0.5</queenSeedingMtbDaysAtZero>
+
 		<!-- Linked nanoprobes cure these (plus anything the game marks chronic). -->
 		<nanoprobeCures>
 			<li>Alzheimers</li>

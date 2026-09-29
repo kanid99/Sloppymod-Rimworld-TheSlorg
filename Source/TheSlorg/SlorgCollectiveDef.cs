@@ -56,6 +56,19 @@ namespace TheSlorg
         public float captiveQueenSummonCooldownDays = 3f;
         public int captiveQueenMaxDrones = 6;
 
+        /// <summary>Captive queen suppression (0-1): starting level, how much a warden session adds (plus per Social level),
+        /// when wardens start working on it, the minimum to summon, and the level below which her drones seed sleepers.</summary>
+        public float queenSuppressionStart = 0.5f;
+        public float queenSuppressionPerSession = 0.15f;
+        public float queenSuppressionPerSocialLevel = 0.015f;
+        public float queenSuppressionWorkBelow = 0.8f;
+        public float queenSuppressionToSummon = 0.5f;
+        public float queenSuppressionDangerLevel = 0.3f;
+
+        /// <summary>Mean days between hidden infections by her drones, just under the danger level and at zero suppression.</summary>
+        public float queenSeedingMtbDaysAtDanger = 3f;
+        public float queenSeedingMtbDaysAtZero = 0.5f;
+
         /// <summary>Conditions nanoprobes cure in linked drones, on top of anything marked chronic.</summary>
         public List<HediffDef> nanoprobeCures = new List<HediffDef>();
 

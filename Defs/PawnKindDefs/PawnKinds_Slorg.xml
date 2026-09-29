@@ -163,6 +163,10 @@
 						<hediff>Slorg_TacticalCortex</hediff>
 						<part>Brain</part>
 					</li>
+					<li>
+						<hediff>Slorg_ControlImplant</hediff>
+						<part>Brain</part>
+					</li>
 				</implants>
 			</li>
 		</modExtensions>

@@ -9,4 +9,23 @@
 		<casualInterruptible>false</casualInterruptible>
 	</JobDef>
 
+	<JobDef>
+		<defName>Slorg_SuppressQueen</defName>
+		<driverClass>TheSlorg.JobDriver_SuppressQueen</driverClass>
+		<reportString>suppressing TargetA.</reportString>
+	</JobDef>
+
+	<WorkGiverDef>
+		<defName>Slorg_SuppressQueen</defName>
+		<label>suppress captive queen</label>
+		<giverClass>TheSlorg.WorkGiver_Warden_SuppressQueen</giverClass>
+		<workType>Warden</workType>
+		<verb>suppress</verb>
+		<gerund>suppressing</gerund>
+		<priorityInType>60</priorityInType>
+		<requiredCapacities>
+			<li>Talking</li>
+		</requiredCapacities>
+	</WorkGiverDef>
+
 </Defs>

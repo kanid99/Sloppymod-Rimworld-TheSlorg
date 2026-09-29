@@ -269,4 +269,26 @@
 		</modExtensions>
 	</HediffDef>
 
+	<!-- Queens only. Commands drones. Extracted intact (Recipe_ExtractControlImplant) and installable in other pawns,
+	     who can use it to trace the hive signal to the Unicomplex. -->
+	<HediffDef ParentName="Slorg_ImplantBase">
+		<defName>Slorg_ControlImplant</defName>
+		<label>control implant</label>
+		<labelNoun>a control implant</labelNoun>
+		<description>A queen's command node: a dense lattice of transceivers that lets her direct her drones. It still carries the collective's signal, so whoever holds it can trace that signal back to its source, the Slorg Unicomplex.\n\nUnlike other Slorg implants it can be extracted intact. Anyone but a freed queen who carries it risks hearing the collective's call.</description>
+		<descriptionHyperlinks>
+			<ThingDef>Slorg_ControlImplantItem</ThingDef>
+		</descriptionHyperlinks>
+		<stages>
+			<li>
+				<statOffsets>
+					<MechBandwidth>2</MechBandwidth>
+				</statOffsets>
+			</li>
+		</stages>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantExtension" />
+		</modExtensions>
+	</HediffDef>
+
 </Defs>

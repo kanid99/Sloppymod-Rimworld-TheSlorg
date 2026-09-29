@@ -76,6 +76,14 @@ namespace TheSlorg
             {
                 return $"{queen.LabelShortCap} is too weak to call her drones.";
             }
+            if (!ControlImplant.Has(queen))
+            {
+                return $"{queen.LabelShortCap} has no control implant. She can't call drones without it.";
+            }
+            if (QueenSuppression.Level(queen) < tuning.queenSuppressionToSummon)
+            {
+                return $"{queen.LabelShortCap} isn't suppressed enough to obey. Have your wardens suppress her.";
+            }
             int bound = BoundTo(queen).Count();
             if (bound >= tuning.captiveQueenMaxDrones)
             {
@@ -150,7 +158,7 @@ namespace TheSlorg
             foreach (KeyValuePair<Pawn, List<Pawn>> entry in byQueen)
             {
                 Pawn queen = entry.Key;
-                if (IsCaptiveQueen(queen))
+                if (IsCaptiveQueen(queen) && ControlImplant.Has(queen))
                 {
                     continue;
                 }
@@ -163,7 +171,7 @@ namespace TheSlorg
                     continue;
                 }
 
-                // Dead, severed or recruited: her hold is gone. While the queen core stands, the collective raises a new
+                // Dead, severed, recruited or stripped of her control implant: her hold is gone. While the queen core stands, the collective raises a new
                 // queen and takes her drones back. Only a world without Slorg control lets them go free.
                 Map anyMap = entry.Value.FirstOrDefault(p => p.Spawned)?.Map;
                 Faction collective = SlorgUtility.ResolveSlorgFaction(queen.Faction, anyMap?.Tile ?? PlanetTile.Invalid);
@@ -242,6 +250,24 @@ namespace TheSlorg
             {
                 yield return gizmo;
             }
+            if (ControlImplant.CanUse(__instance))
+            {
+                Pawn holder = __instance;
+                Command_Action trace = new Command_Action
+                {
+                    defaultLabel = "Trace hive signal",
+                    defaultDesc = "Use the control implant to follow the collective's signal back to its source: the Slorg Unicomplex and its queen core. "
+                        + "Destroy the core and the Slorg lose this world.",
+                    icon = ContentFinder<Texture2D>.Get("UI/Icons/Genes/Slorg_CollectiveLink"),
+                    action = () => ControlImplant.TraceHiveSignal(holder)
+                };
+                AcceptanceReport canTrace = ControlImplant.CanTrace();
+                if (!canTrace.Accepted)
+                {
+                    trace.Disable(canTrace.Reason);
+                }
+                yield return trace;
+            }
             if (!CaptiveQueen.IsCaptiveQueen(__instance))
             {
                 yield break;
@@ -252,7 +278,9 @@ namespace TheSlorg
                 defaultLabel = "Summon drone",
                 defaultDesc = $"Have {queen.LabelShortCap} call a drone to the colony. It will serve you as long as she stays captive. "
                     + "If she escapes, dies or is severed (while the queen core stands), every drone she called turns hostile.\n\n"
-                    + $"Drones bound to her: {CaptiveQueen.BoundTo(queen).Count()} / {SlorgDefOf.Slorg_Collective.captiveQueenMaxDrones}",
+                    + $"Drones bound to her: {CaptiveQueen.BoundTo(queen).Count()} / {SlorgDefOf.Slorg_Collective.captiveQueenMaxDrones}\n"
+                    + $"Suppression: {QueenSuppression.Level(queen).ToStringPercent()} (needs {SlorgDefOf.Slorg_Collective.queenSuppressionToSummon.ToStringPercent()}). "
+                    + $"Below {SlorgDefOf.Slorg_Collective.queenSuppressionDangerLevel.ToStringPercent()}, her drones start quietly infecting your colonists.",
                 icon = ContentFinder<Texture2D>.Get("UI/Icons/Xenotypes/Slorg"),
                 action = () => CaptiveQueen.Summon(queen)
             };

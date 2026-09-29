@@ -31,6 +31,7 @@ How every mechanic works, and how to test each one quickly with dev mode.
 | **Trigger collective's call** | Click a colonist to start the "rejoin the collective" mental break |
 | **Slorg raid (1500 pts)** | Normal Slorg raid |
 | **Slorg raid with queen (6000 pts)** | Big raid that always includes the queen, if she's available |
+| **Reveal Unicomplex** | Marks the Unicomplex as found (same as tracing the hive signal) |
 | **Spawn queen core** | Places a queen core at the mouse position |
 | **Log collective state** | Writes each Slorg faction, its queen, Unicomplex and shared skills to the debug log |
 
@@ -71,7 +72,7 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - The faction's oldest surface settlement is renamed **Unicomplex**.
 
 **Test:**
-- [ ] World map: find the Slorg settlements. One should be called **Unicomplex**.
+- [ ] World map: find the Slorg settlements, with Slorg-style names. None is marked Unicomplex until someone traces the hive signal (section 5c).
 - [ ] Debug action **Slorg raid (1500 pts)**. Drones arrive and are grey, bald, and armed and dressed sensibly.
 - [ ] Select a drone. The health tab should show **collective link (N drones)**, and the tooltip lists collective knowledge (skill, level, source drone).
 - [ ] Their skills tab should show boosted levels (see section 4).
@@ -154,9 +155,13 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 
 **How it works**
 - **Capture the queen** (down her and arrest her). The drones on the map collapse as usual, and a new queen rises elsewhere, but **you keep her**.
+- **Hold her like a dangerous entity.** She has a **queen suppression** meter that drains about 25% a day. Wardens automatically do the new **Suppress captive queen** job whenever she's under 80%. Each session adds 15%, plus 1.5% per Social level of the warden.
+  - **50%+:** she obeys and can summon.
+  - **Under 30% (*defiant*):** her bound drones start **silently and invisibly** implanting dormant nanoprobes into your colonists. It happens every ~3 days just under 30% and every ~12 hours at 0%. There's no message; only a **nanoprobe scan** finds it.
+  - When enough sleepers build up, the **uprising** fires. Her bound drones join it, and **she breaks out of her cell**.
 - Once she's no longer downed (the capture collapse lasts about 2 days), her panel shows a **Summon drone** button:
   - A drone walks in from the map edge and **joins your colony** with *bound to queen*: full drone genes and implants, no clothes, no mental breaks.
-  - Cooldown **3 days**, at most **6** bound drones per queen.
+  - Cooldown **3 days**, at most **6** bound drones per queen. It needs **50%+ suppression** and her **control implant**.
 - **If she escapes** (prison break, or you release her): **every bound drone turns hostile at once** and attacks the colony. You get a letter.
 - If she **dies** or has her link cut with **Sever link** while the **queen core still stands**, the collective raises a new queen and **her bound drones turn hostile** too. Once the queen core is destroyed, they're freed instead.
 - **Freeing her is worth it.** A queen cut from the hive with **Sever link** (while she's severed, right after capture) or by the fall of the queen core becomes a **Freed queen**:
@@ -169,10 +174,32 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 **Test:**
 - [ ] Raid with queen, then down and arrest her. Wait for the collapse to end (or use dev mode to heal her).
 - [ ] Select her: **Summon drone** is there. Use it, and a drone arrives and joins the colony with *bound to queen*.
-- [ ] The button is disabled while she's downed, on cooldown, or at 6 drones.
+- [ ] The button is disabled while she's downed, on cooldown, at 6 drones, under 50% suppression, or without her control implant.
+- [ ] Her health tab shows *queen suppression* draining. Wardens visit her ("suppressing …") and it goes up.
+- [ ] Let suppression drop below 30% with bound drones on the map. Over time, **Log collective state** shows hidden sleepers appearing, then an uprising: sleepers, bound drones and the queen all turn on you.
 - [ ] Release her (or let her prison-break). The bound drones turn hostile and there's a letter.
 - [ ] Kill a captive queen instead: her bound drones turn hostile (the core still stands).
 - [ ] Capture a queen, then run **Sever link** on her while she's severed. She becomes a **Freed queen**: *A queen set free* letter, mechlink on her brain, and her bound drones turn hostile. Recruit her and check her mech bandwidth.
+
+---
+
+## 5c. The control implant and the hidden Unicomplex
+
+**How it works**
+- Every queen carries a **control implant** in her brain. It's what lets her command drones.
+- **Extract control implant** surgery (Medicine 8, 2 industrial medicine) takes it out **intact** as an item, leaving a small head wound. Taking it from a captive queen **breaks her hold**: her bound drones turn hostile.
+- **Install control implant** puts it in any pawn. A colonist carrying it (or a **Freed queen** keeping her own) gets a **Trace hive signal** button.
+- **The queen core is hidden** until then. No settlement is marked as the Unicomplex and no core spawns. **Trace hive signal** reveals which settlement is the Unicomplex (renamed, with a letter pointing at it on the world map). Then the core spawns when you attack it, and destroying it is the final victory.
+- Anyone except a Freed queen who carries it risks **the collective's call**, as with any Slorg implant.
+
+**Test:**
+- [ ] Capture a queen, run **Extract control implant**. The item drops, and any bound drones turn hostile.
+- [ ] Install it in a colonist. **Trace hive signal** appears. Use it: a letter, and a settlement renamed *Unicomplex*.
+- [ ] Attack the Unicomplex (or **Spawn queen core** plus **Reveal Unicomplex** for a quick test). The core is there.
+- [ ] Before tracing, attacking the oldest Slorg settlement should show **no** core.
+- [ ] Sever a captive queen who still has her implant: as a Freed queen she can Trace hive signal herself.
+
+> Queens generated before this update don't have a control implant. Start a new game, or wait for a new queen to rise.
 
 ---
 
@@ -217,7 +244,7 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 ## 8. The queen core and planetary collapse
 
 **How it works**
-- When the **Unicomplex** map is generated (attack it with a caravan), a **queen core** (3×3, 4000 HP, glowing) spawns at the map center.
+- **Once the Unicomplex has been located** with a control implant (section 5c), generating its map (attack it with a caravan) spawns a **queen core** (3×3, 4000 HP, glowing) spawns at the map center.
 - It can't be claimed or deconstructed, so it has to be destroyed by damage.
 - **When it's destroyed:**
   - every Slorg (drone, queen, thrall) on the **planet surface** becomes a **disconnected drone** with **no faction**, and the ones on maps are severed (downed about 2 days);

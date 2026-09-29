@@ -104,6 +104,84 @@
 		</fixedIngredientFilter>
 	</RecipeDef>
 
+	<RecipeDef ParentName="SurgeryFlesh">
+		<defName>Slorg_ExtractControlImplant</defName>
+		<label>extract control implant</label>
+		<description>Carefully extract the control implant intact. Taken from a captive queen, it breaks her hold on any drones she called.</description>
+		<workerClass>TheSlorg.Recipe_ExtractControlImplant</workerClass>
+		<jobString>Extracting control implant.</jobString>
+		<workAmount>3500</workAmount>
+		<targetsBodyPart>false</targetsBodyPart>
+		<hideBodyPartNames>true</hideBodyPartNames>
+		<skillRequirements>
+			<Medicine>8</Medicine>
+		</skillRequirements>
+		<recipeUsers>
+			<li>Human</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MedicineIndustrial</li>
+					</thingDefs>
+				</filter>
+				<count>2</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MedicineIndustrial</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
+	<RecipeDef ParentName="SurgeryFlesh">
+		<defName>Slorg_InstallControlImplant</defName>
+		<label>install control implant</label>
+		<description>Install a Slorg control implant. The patient can use it to trace the hive signal back to the Unicomplex.</description>
+		<workerClass>Recipe_InstallImplant</workerClass>
+		<jobString>Installing control implant.</jobString>
+		<workAmount>3500</workAmount>
+		<addsHediff>Slorg_ControlImplant</addsHediff>
+		<appliedOnFixedBodyParts>
+			<li>Brain</li>
+		</appliedOnFixedBodyParts>
+		<skillRequirements>
+			<Medicine>8</Medicine>
+		</skillRequirements>
+		<recipeUsers>
+			<li>Human</li>
+		</recipeUsers>
+		<descriptionHyperlinks>
+			<ThingDef>Slorg_ControlImplantItem</ThingDef>
+		</descriptionHyperlinks>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MedicineIndustrial</li>
+					</thingDefs>
+				</filter>
+				<count>2</count>
+			</li>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>Slorg_ControlImplantItem</li>
+					</thingDefs>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MedicineIndustrial</li>
+				<li>Slorg_ControlImplantItem</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
 	<!-- Slorg implant removal. Always destroys the implant and injures the patient. -->
 	<RecipeDef Name="Slorg_RemoveImplantBase" ParentName="SurgeryFlesh" Abstract="True">
 		<workerClass>TheSlorg.Recipe_RemoveSlorgImplant</workerClass>

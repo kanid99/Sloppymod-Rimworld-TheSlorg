@@ -22,12 +22,16 @@ namespace TheSlorg
         public static HediffDef Slorg_Severance;
         public static HediffDef Slorg_DormantNanoprobes;
         public static HediffDef Slorg_QueenBound;
+        public static HediffDef Slorg_QueenSuppression;
+        public static HediffDef Slorg_ControlImplant;
 
         public static JobDef Slorg_SecretInject;
+        public static JobDef Slorg_SuppressQueen;
         public static MentalStateDef Slorg_CollectiveCall;
 
         public static FactionDef Slorg_CollectiveFaction;
         public static ThingDef Slorg_QueenCore;
+        public static ThingDef Slorg_ControlImplantItem;
         public static AbilityDef Slorg_Assimilate;
 
         public static PawnKindDef Slorg_DroneKind;

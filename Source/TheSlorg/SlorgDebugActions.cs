@@ -148,6 +148,17 @@ namespace TheSlorg
             GenSpawn.Spawn(core, UI.MouseCell(), Find.CurrentMap, WipeMode.Vanish);
         }
 
+        [DebugAction(Category, "Reveal Unicomplex", allowedGameStates = AllowedGameStates.Playing)]
+        private static void RevealUnicomplex()
+        {
+            Faction faction = SlorgFaction;
+            if (faction != null)
+            {
+                GameComponent_SlorgCollective.Instance?.RevealUnicomplex(faction);
+                Messages.Message($"Unicomplex revealed: {GameComponent_SlorgCollective.UnicomplexOf(faction)?.Label ?? "none"}", MessageTypeDefOf.NeutralEvent, historical: false);
+            }
+        }
+
         [DebugAction(Category, "Log collective state", allowedGameStates = AllowedGameStates.Playing)]
         private static void LogCollective()
         {

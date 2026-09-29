@@ -25,6 +25,7 @@ namespace TheSlorg
             if (!SlorgUtility.IsSlorgFaction(faction)
                 || collective == null
                 || collective.SurfaceControlLost(faction)
+                || !collective.UnicomplexRevealed(faction)
                 || GameComponent_SlorgCollective.UnicomplexOf(faction) != settlement)
             {
                 return;
