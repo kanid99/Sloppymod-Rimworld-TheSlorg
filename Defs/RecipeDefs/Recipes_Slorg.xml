@@ -70,4 +70,108 @@
 		</fixedIngredientFilter>
 	</RecipeDef>
 
+
+	<!-- Slorg implant removal. Always destroys the implant and injures the patient. -->
+	<RecipeDef Name="Slorg_RemoveImplantBase" ParentName="SurgeryFlesh" Abstract="True">
+		<workerClass>TheSlorg.Recipe_RemoveSlorgImplant</workerClass>
+		<targetsBodyPart>false</targetsBodyPart>
+		<hideBodyPartNames>true</hideBodyPartNames>
+		<workAmount>3000</workAmount>
+		<recipeUsers>
+			<li>Human</li>
+		</recipeUsers>
+		<ingredients>
+			<li>
+				<filter>
+					<thingDefs>
+						<li>MedicineIndustrial</li>
+					</thingDefs>
+				</filter>
+				<count>2</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<thingDefs>
+				<li>MedicineIndustrial</li>
+			</thingDefs>
+		</fixedIngredientFilter>
+	</RecipeDef>
+
+	<RecipeDef ParentName="Slorg_RemoveImplantBase">
+		<defName>Slorg_RemoveOcularImplant</defName>
+		<label>cut out ocular implant</label>
+		<description>Cut the Slorg ocular implant out of the patient. The implant is destroyed, and the patient will be badly hurt.</description>
+		<jobString>Cutting out ocular implant.</jobString>
+		<removesHediff>Slorg_OcularImplant</removesHediff>
+		<skillRequirements>
+			<Medicine>6</Medicine>
+		</skillRequirements>
+	</RecipeDef>
+
+	<RecipeDef ParentName="Slorg_RemoveImplantBase">
+		<defName>Slorg_RemoveDermalPlating</defName>
+		<label>cut out dermal plating</label>
+		<description>Cut the Slorg dermal plating out of the patient. The implant is destroyed, and the patient will be badly hurt.</description>
+		<jobString>Cutting out dermal plating.</jobString>
+		<removesHediff>Slorg_DermalPlating</removesHediff>
+		<skillRequirements>
+			<Medicine>10</Medicine>
+		</skillRequirements>
+	</RecipeDef>
+
+	<RecipeDef ParentName="Slorg_RemoveImplantBase">
+		<defName>Slorg_RemoveShieldEmitter</defName>
+		<label>cut out shield emitter</label>
+		<description>Cut the Slorg shield emitter out of the patient. The implant is destroyed, and the patient will be badly hurt.</description>
+		<jobString>Cutting out shield emitter.</jobString>
+		<removesHediff>Slorg_ShieldEmitter</removesHediff>
+		<skillRequirements>
+			<Medicine>8</Medicine>
+		</skillRequirements>
+	</RecipeDef>
+
+	<RecipeDef ParentName="Slorg_RemoveImplantBase">
+		<defName>Slorg_RemoveAssimilationTubules</defName>
+		<label>cut out assimilation tubules</label>
+		<description>Cut the Slorg assimilation tubules out of the patient. The implant is destroyed, and the patient will be badly hurt.</description>
+		<jobString>Cutting out assimilation tubules.</jobString>
+		<removesHediff>Slorg_AssimilationTubules</removesHediff>
+		<skillRequirements>
+			<Medicine>6</Medicine>
+		</skillRequirements>
+	</RecipeDef>
+
+	<RecipeDef ParentName="Slorg_RemoveImplantBase">
+		<defName>Slorg_RemoveBeamEmitter</defName>
+		<label>cut out beam emitter</label>
+		<description>Cut the Slorg beam emitter out of the patient. The implant is destroyed, and the patient will be badly hurt.</description>
+		<jobString>Cutting out beam emitter.</jobString>
+		<removesHediff>Slorg_BeamEmitter</removesHediff>
+		<skillRequirements>
+			<Medicine>8</Medicine>
+		</skillRequirements>
+	</RecipeDef>
+
+	<RecipeDef ParentName="Slorg_RemoveImplantBase">
+		<defName>Slorg_RemoveArmBlade</defName>
+		<label>cut out arm blade</label>
+		<description>Cut the Slorg arm blade out of the patient. The implant is destroyed, and the patient will be badly hurt.</description>
+		<jobString>Cutting out arm blade.</jobString>
+		<removesHediff>Slorg_ArmBlade</removesHediff>
+		<skillRequirements>
+			<Medicine>6</Medicine>
+		</skillRequirements>
+	</RecipeDef>
+
+	<RecipeDef ParentName="Slorg_RemoveImplantBase">
+		<defName>Slorg_RemoveTacticalCortex</defName>
+		<label>cut out tactical cortex</label>
+		<description>Cut the Slorg tactical cortex out of the patient. The implant is destroyed, and the patient will be badly hurt.</description>
+		<jobString>Cutting out tactical cortex.</jobString>
+		<removesHediff>Slorg_TacticalCortex</removesHediff>
+		<skillRequirements>
+			<Medicine>10</Medicine>
+		</skillRequirements>
+	</RecipeDef>
+
 </Defs>

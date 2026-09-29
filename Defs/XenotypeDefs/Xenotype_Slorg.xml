@@ -4,14 +4,12 @@
 	<XenotypeDef>
 		<defName>Slorg_Drone</defName>
 		<label>slorg</label>
-		<description>The Slorg are a cybernetic collective. Each drone is a human body full of implants, nanoprobes and a neural transceiver that links it to every other drone. They don't negotiate or trade, and they don't breed. They grow by assimilating others.\n\nA drone alone is weak. Inside the collective, each drone can use everything the others know.\n\nDrones only exist in the Slorg faction. A drone that joins you becomes a disconnected drone.</description>
+		<description>The Slorg are a cybernetic collective. Each drone is a human body bolted full of implants, run through with nanoprobes, and wired to a neural transceiver that links it to every other drone. They don't negotiate or trade, and they don't breed. They grow by assimilating others.\n\nA drone alone is weak. Inside the collective, each drone can use everything the others know.\n\nDrones only exist in the Slorg faction. A drone that joins you becomes a disconnected drone.</description>
 		<descriptionShort>Cybernetic hive-mind drones who grow their collective by assimilating others. Every drone shares the skills and strength of the whole.</descriptionShort>
 		<iconPath>UI/Icons/Xenotypes/Slorg</iconPath>
 		<inheritable>false</inheritable>
 		<genes>
 			<li>Slorg_CollectiveLink</li>
-			<li>Slorg_Exoplating</li>
-			<li>Slorg_OcularImplant</li>
 			<li>Slorg_Nanoprobes</li>
 			<li>Slorg_DroneConditioning</li>
 			<li>Slorg_DroneSkin</li>
@@ -40,8 +38,6 @@
 		<genes>
 			<li>Slorg_CollectiveLink</li>
 			<li>Slorg_HiveSovereign</li>
-			<li>Slorg_Exoplating</li>
-			<li>Slorg_OcularImplant</li>
 			<li>Slorg_Nanoprobes</li>
 			<li>Slorg_DroneSkin</li>
 			<li>Hair_BaldOnly</li>
@@ -80,14 +76,12 @@
 	<XenotypeDef>
 		<defName>Slorg_DisconnectedDrone</defName>
 		<label>disconnected drone</label>
-		<description>A former Slorg drone whose link to the collective has been cut, whether by surgery, the fall of their queen core, or by joining another faction. They keep the implants, armor and nanoprobes, but they are individuals again, slowly relearning how to be alone in their own head.\n\nSlorg nanoprobes destroy any genetic material taken from them, and their genes can't be passed on to children.</description>
+		<description>A former Slorg drone whose link to the collective has been cut, whether by surgery, the fall of their queen core, or by joining another faction. They keep any implants they had and their nanoprobes, but they are individuals again, slowly relearning how to be alone in their own head.\n\nSlorg nanoprobes destroy any genetic material taken from them, and their genes can't be passed on to children.</description>
 		<descriptionShort>Former Slorg drones cut off from the collective. They keep their implants, but they are individuals again.</descriptionShort>
 		<iconPath>UI/Icons/Xenotypes/Slorg_Disconnected</iconPath>
 		<inheritable>false</inheritable>
 		<genes>
 			<li>Slorg_Severed</li>
-			<li>Slorg_Exoplating</li>
-			<li>Slorg_OcularImplant</li>
 			<li>Slorg_Nanoprobes</li>
 			<li>Slorg_DroneSkin</li>
 			<li>Hair_BaldOnly</li>

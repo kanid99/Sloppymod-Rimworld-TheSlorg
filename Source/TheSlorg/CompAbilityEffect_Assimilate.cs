@@ -60,6 +60,12 @@ namespace TheSlorg
             Hediff infection = HediffMaker.MakeHediff(SlorgDefOf.Slorg_NanoprobeInfection, victim);
             infection.TryGetComp<HediffComp_NanoprobeInfection>().sourceFaction = caster.Faction;
             victim.health.AddHediff(infection);
+            // Assimilation tubules inject a far bigger dose.
+            float boosted = SlorgImplants.AssimilationStartSeverity(caster);
+            if (boosted > infection.Severity)
+            {
+                infection.Severity = boosted;
+            }
 
             if (victim.Faction != null && victim.Faction.IsPlayer)
             {

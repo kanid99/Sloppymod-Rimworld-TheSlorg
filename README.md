@@ -49,14 +49,27 @@ The player can't have linked drones. Any drone that joins you burns out into a *
 
 **Slorg genes can't be passed on.** They are xenogenes (not inherited by children), the gene extractor refuses Slorg pawns, and Slorg pawns can't reimplant a xenogerm.
 
-## Xenotypes
+## Xenotypes and implants
+Genes are the biology. All Slorg technology is **implants**, and implants can only be cut out by surgery, which destroys them and injures the pawn.
 
 | Xenotype | Key genes |
 | --- | --- |
-| **Slorg drone** | Collective link (grants Assimilate), subdermal exoplating, ocular implant, nanoprobe swarm, drone conditioning, drone skin, plus never sleep, ageless, disease-free, total tox resistance, reduced pain, dead calm, dark vision, slow runner, ugly |
-| **Slorg queen** | Drone genes (without drone conditioning) plus **Hive sovereign** (extra armor, iron-willed, powers the queen mechanics), robust, super-fast healing, extreme psychic ability |
-| **Slorg thrall** | Collective link, nanoprobe swarm, drone conditioning, reduced pain, dead calm, partial tox resistance. Keeps their own look, no cybernetics. |
-| **Disconnected drone** | Drone genes without collective link, drone conditioning or dead calm, plus **Severed link** (a slightly lower breaking point, genes can't be taken) |
+| **Slorg drone** | Collective link (grants Assimilate), nanoprobe swarm, drone conditioning, drone skin, plus never sleep, ageless, disease-free, total tox resistance, reduced pain, dead calm, dark vision, slow runner, ugly |
+| **Slorg queen** | Drone genes (without drone conditioning) plus **Hive sovereign**, robust, super-fast healing, extreme psychic ability |
+| **Slorg thrall** | Collective link, nanoprobe swarm, drone conditioning, reduced pain, dead calm, partial tox resistance. Keeps their own look. **No implants.** |
+| **Disconnected drone** | Drone genes without collective link or drone conditioning, plus **Severed link**. Keeps whatever implants they had. |
+
+| Implant | Effect |
+| --- | --- |
+| Ocular implant (eye) | Better sight, faster aiming |
+| Dermal plating (body) | Bolted-on armor plates. Removal: massive scarring, 25% death |
+| Shield emitter (torso) | Blocks ranged and explosive damage until it overloads |
+| Assimilation tubules (hand) | Infections start much further along |
+| Beam emitter (arm) | Cutting beam ranged ability |
+| Arm blade (arm) | Built-in melee weapon |
+| Tactical cortex (brain) | +4 Shooting, +4 Melee |
+
+Colonists who still carry implants very rarely hear **the collective's call** and try to walk off to rejoin it.
 
 ## Testing
 See **[TESTING.md](TESTING.md)**: setup, dev-mode debug actions ("The Slorg" category), and a checklist for every mechanic.

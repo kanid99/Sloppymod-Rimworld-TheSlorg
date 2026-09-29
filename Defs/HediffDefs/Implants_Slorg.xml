@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!-- Slorg implants. None can be installed by the player. Removal (see Recipes_Slorg.xml) always destroys the
+	     implant and injures the pawn; the SlorgImplantExtension sets how badly. -->
+
+	<HediffDef Name="Slorg_ImplantBase" Abstract="True">
+		<hediffClass>Hediff_Implant</hediffClass>
+		<defaultLabelColor>(0.55, 0.9, 0.6)</defaultLabelColor>
+		<isBad>false</isBad>
+		<countsAsAddedPartOrImplant>true</countsAsAddedPartOrImplant>
+		<everCurableByItem>false</everCurableByItem>
+		<keepOnBodyPartRestoration>true</keepOnBodyPartRestoration>
+	</HediffDef>
+
+	<!-- Vision -->
+	<HediffDef ParentName="Slorg_ImplantBase">
+		<defName>Slorg_OcularImplant</defName>
+		<label>ocular implant</label>
+		<labelNoun>an ocular implant</labelNoun>
+		<description>A targeting laser and multi-spectrum sensor bolted over the eye. The drone sees further and aims faster.</description>
+		<stages>
+			<li>
+				<capMods>
+					<li>
+						<capacity>Sight</capacity>
+						<offset>0.15</offset>
+					</li>
+				</capMods>
+				<statFactors>
+					<AimingDelayFactor>0.8</AimingDelayFactor>
+				</statFactors>
+			</li>
+		</stages>
+		<renderNodeProperties>
+			<li>
+				<nodeClass>PawnRenderNode_AttachmentHead</nodeClass>
+				<workerClass>PawnRenderNodeWorker_FlipWhenCrawling</workerClass>
+				<parentTagDef>Head</parentTagDef>
+				<texPath>Things/Pawn/Humanlike/HeadAttachments/Slorg/Slorg_OcularImplant</texPath>
+				<rotDrawMode>Fresh, Rotting</rotDrawMode>
+				<visibleFacing>
+					<li>East</li>
+					<li>South</li>
+					<li>West</li>
+				</visibleFacing>
+				<drawData>
+					<defaultData>
+						<layer>69</layer>
+					</defaultData>
+				</drawData>
+			</li>
+		</renderNodeProperties>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantExtension">
+				<removalWounds>2</removalWounds>
+				<removalWoundSize>3~7</removalWoundSize>
+				<removalScarChance>0.7</removalScarChance>
+				<removalDeathChance>0.01</removalDeathChance>
+			</li>
+		</modExtensions>
+	</HediffDef>
+
+	<!-- Armor: bolted-on plating that covers the skin. The warcasket of the Slorg. -->
+	<HediffDef ParentName="Slorg_ImplantBase">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Slorg_DermalPlating</defName>
+		<label>dermal plating</label>
+		<labelNoun>dermal plating</labelNoun>
+		<description>Armor plates bolted straight into the bone and grown over by the skin, with a cranial plate anchoring the whole lattice to the skull. It stops blades and bullets well.\n\nIt was never meant to come off. Cutting it away leaves massive scarring all over the body, and many patients don't survive.</description>
+		<stages>
+			<li>
+				<statOffsets>
+					<ArmorRating_Sharp>0.35</ArmorRating_Sharp>
+					<ArmorRating_Blunt>0.18</ArmorRating_Blunt>
+					<ArmorRating_Heat>0.20</ArmorRating_Heat>
+					<PawnBeauty>-1</PawnBeauty>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Moving</capacity>
+						<offset>-0.05</offset>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+		<renderNodeProperties>
+			<li>
+				<debugLabel>Slorg dermal plating</debugLabel>
+				<nodeClass>TheSlorg.PawnRenderNode_SlorgPlating</nodeClass>
+				<parentTagDef>Body</parentTagDef>
+				<texPath>Things/Pawn/Humanlike/Slorg/DermalPlating/Slorg_DermalPlating</texPath>
+				<baseLayer>8</baseLayer>
+				<rotDrawMode>Fresh, Rotting</rotDrawMode>
+			</li>
+			<li>
+				<nodeClass>PawnRenderNode_AttachmentHead</nodeClass>
+				<workerClass>PawnRenderNodeWorker_FlipWhenCrawling</workerClass>
+				<parentTagDef>Head</parentTagDef>
+				<texPath>Things/Pawn/Humanlike/HeadAttachments/Slorg/Slorg_CranialPlate</texPath>
+				<rotDrawMode>Fresh, Rotting</rotDrawMode>
+				<visibleFacing>
+					<li>North</li>
+					<li>East</li>
+					<li>South</li>
+					<li>West</li>
+				</visibleFacing>
+				<drawData>
+					<defaultData>
+						<layer>68</layer>
+					</defaultData>
+				</drawData>
+			</li>
+		</renderNodeProperties>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantExtension">
+				<removalWounds>10</removalWounds>
+				<removalWoundSize>5~10</removalWoundSize>
+				<removalScarChance>0.8</removalScarChance>
+				<removalDeathChance>0.25</removalDeathChance>
+				<removalWoundsWholeBody>true</removalWoundsWholeBody>
+			</li>
+		</modExtensions>
+	</HediffDef>
+
+	<!-- Shield -->
+	<HediffDef ParentName="Slorg_ImplantBase">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Slorg_ShieldEmitter</defName>
+		<label>shield emitter</label>
+		<labelNoun>a shield emitter</labelNoun>
+		<description>A personal field generator grown around the spine. It stops bullets, beams and blast fragments until it overloads, then needs a moment to come back.\n\nMelee attacks pass straight through.</description>
+		<comps>
+			<li Class="TheSlorg.HediffCompProperties_SlorgShield">
+				<maxEnergy>60</maxEnergy>
+				<rechargePerTick>0.1</rechargePerTick>
+				<resetDelayTicks>900</resetDelayTicks>
+			</li>
+		</comps>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantExtension">
+				<removalWounds>3</removalWounds>
+				<removalWoundSize>4~8</removalWoundSize>
+				<removalDeathChance>0.03</removalDeathChance>
+			</li>
+		</modExtensions>
+	</HediffDef>
+
+	<!-- Nanoprobe injection -->
+	<HediffDef ParentName="Slorg_ImplantBase">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Slorg_AssimilationTubules</defName>
+		<label>assimilation tubules</label>
+		<labelNoun>assimilation tubules</labelNoun>
+		<description>Two retractable tubules in the back of the hand. They inject a far larger dose of nanoprobes than skin contact, so assimilation starts well advanced.</description>
+		<comps>
+			<li Class="HediffCompProperties_VerbGiver">
+				<tools>
+					<li>
+						<label>tubules</label>
+						<capacities>
+							<li>Stab</li>
+						</capacities>
+						<power>7</power>
+						<cooldownTime>1.4</cooldownTime>
+					</li>
+				</tools>
+			</li>
+		</comps>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantExtension">
+				<assimilationStartSeverity>0.3</assimilationStartSeverity>
+				<removalWounds>2</removalWounds>
+				<removalWoundSize>3~6</removalWoundSize>
+			</li>
+		</modExtensions>
+	</HediffDef>
+
+	<!-- Beam weapon -->
+	<HediffDef ParentName="Slorg_ImplantBase">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Slorg_BeamEmitter</defName>
+		<label>beam emitter</label>
+		<labelNoun>a beam emitter</labelNoun>
+		<description>A cutting beam projector fused into the forearm. Fires short bursts of focused energy.</description>
+		<comps>
+			<li Class="HediffCompProperties_GiveAbility">
+				<abilityDef>Slorg_CuttingBeam</abilityDef>
+			</li>
+		</comps>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantExtension">
+				<removalWounds>3</removalWounds>
+				<removalWoundSize>4~8</removalWoundSize>
+			</li>
+		</modExtensions>
+	</HediffDef>
+
+	<!-- Melee weapon -->
+	<HediffDef ParentName="Slorg_ImplantBase">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Slorg_ArmBlade</defName>
+		<label>arm blade</label>
+		<labelNoun>an arm blade</labelNoun>
+		<description>A serrated blade that slides out of the forearm.</description>
+		<comps>
+			<li Class="HediffCompProperties_VerbGiver">
+				<tools>
+					<li>
+						<label>arm blade</label>
+						<capacities>
+							<li>Cut</li>
+							<li>Stab</li>
+						</capacities>
+						<power>18</power>
+						<cooldownTime>1.7</cooldownTime>
+						<armorPenetration>0.35</armorPenetration>
+					</li>
+				</tools>
+			</li>
+		</comps>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantExtension">
+				<removalWounds>3</removalWounds>
+				<removalWoundSize>4~8</removalWoundSize>
+			</li>
+		</modExtensions>
+	</HediffDef>
+
+	<!-- Brain: combat skills -->
+	<HediffDef ParentName="Slorg_ImplantBase">
+		<defName>Slorg_TacticalCortex</defName>
+		<label>tactical cortex</label>
+		<labelNoun>a tactical cortex</labelNoun>
+		<description>A combat co-processor wired into the motor cortex. It feeds the drone firing solutions and fighting patterns faster than thought.</description>
+		<stages>
+			<li>
+				<statOffsets>
+					<MeleeDodgeChance>4</MeleeDodgeChance>
+				</statOffsets>
+			</li>
+		</stages>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantExtension">
+				<skillOffsets>
+					<li>
+						<skill>Shooting</skill>
+						<offset>4</offset>
+					</li>
+					<li>
+						<skill>Melee</skill>
+						<offset>4</offset>
+					</li>
+				</skillOffsets>
+				<removalWounds>2</removalWounds>
+				<removalWoundSize>2~5</removalWoundSize>
+				<removalDeathChance>0.1</removalDeathChance>
+			</li>
+		</modExtensions>
+	</HediffDef>
+
+</Defs>

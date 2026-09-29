@@ -103,6 +103,7 @@ namespace TheSlorg
                     if (map.IsPlayerHome)
                     {
                         SleeperUtility.TickMap(map);
+                        CheckCollectiveCall(map);
                     }
                 }
                 Refresh();
@@ -118,8 +119,10 @@ namespace TheSlorg
             collectives.Clear();
             droneLookup.Clear();
 
+            SlorgImplants.PruneSkillCache();
             foreach (Pawn pawn in activePawns)
             {
+                SlorgImplants.UpdateSkillBonus(pawn);
                 if (pawn.Faction != null && pawn.Faction.IsPlayer && !pawn.IsPrisoner && SlorgUtility.HasLinkGene(pawn))
                 {
                     // The collective cannot hold a drone that serves the player.
@@ -159,6 +162,33 @@ namespace TheSlorg
                 previous.TryGetValue(collective.faction, out SlorgCollective before);
                 AnnounceSkillChanges(before, collective);
                 ApplyToDrones(collective);
+            }
+        }
+
+        /// <summary>Freed Slorg who still carry implants can hear the collective again, very rarely.</summary>
+        private static void CheckCollectiveCall(Map map)
+        {
+            if (SlorgUtility.ResolveSlorgFaction(null, map.Tile) == null)
+            {
+                return;
+            }
+            foreach (Pawn pawn in map.mapPawns.FreeColonistsSpawned.ToList())
+            {
+                if (pawn.Downed || pawn.InMentalState || !SlorgImplants.HasAnyImplant(pawn))
+                {
+                    continue;
+                }
+                if (!Rand.MTBEventOccurs(SlorgDefOf.Slorg_Collective.collectiveCallMtbDays, GenDate.TicksPerDay, SlorgDefOf.Slorg_Collective.refreshIntervalTicks))
+                {
+                    continue;
+                }
+                if (pawn.mindState.mentalStateHandler.TryStartMentalState(SlorgDefOf.Slorg_CollectiveCall, "the collective's call", forceWake: true))
+                {
+                    Find.LetterStack.ReceiveLetter("The collective's call",
+                        $"{pawn.LabelShortCap}'s implants have picked up the collective again. {pawn.LabelShortCap} is walking away from the colony to rejoin it.\n\n"
+                        + "Arrest them or down them before they leave the map, or they are gone for good.",
+                        LetterDefOf.ThreatSmall, pawn);
+                }
             }
         }
 

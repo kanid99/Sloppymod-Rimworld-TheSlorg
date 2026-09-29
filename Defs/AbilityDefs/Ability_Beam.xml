@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!-- Granted by the beam emitter implant. aiCanUse lets drones fire it in combat. -->
+	<AbilityDef>
+		<defName>Slorg_CuttingBeam</defName>
+		<label>cutting beam</label>
+		<description>Fire a short burst from the arm-mounted beam emitter.</description>
+		<iconPath>UI/Abilities/Slorg_CuttingBeam</iconPath>
+		<cooldownTicksRange>240</cooldownTicksRange>
+		<aiCanUse>true</aiCanUse>
+		<ai_IsOffensive>true</ai_IsOffensive>
+		<verbProperties>
+			<verbClass>Verb_CastAbility</verbClass>
+			<range>25</range>
+			<warmupTime>0.8</warmupTime>
+			<soundCast>ChargeLance_Fire</soundCast>
+			<targetParams>
+				<canTargetLocations>false</canTargetLocations>
+				<canTargetBuildings>true</canTargetBuildings>
+			</targetParams>
+		</verbProperties>
+		<comps>
+			<li Class="CompProperties_AbilityLaunchProjectile">
+				<projectileDef>Slorg_BeamBolt</projectileDef>
+			</li>
+		</comps>
+	</AbilityDef>
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Slorg_BeamBolt</defName>
+		<label>cutting beam</label>
+		<graphicData>
+			<texPath>Things/Projectile/Slorg_BeamBolt</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+		</graphicData>
+		<projectile>
+			<damageDef>Burn</damageDef>
+			<damageAmountBase>14</damageAmountBase>
+			<armorPenetrationBase>0.4</armorPenetrationBase>
+			<speed>100</speed>
+		</projectile>
+	</ThingDef>
+
+</Defs>

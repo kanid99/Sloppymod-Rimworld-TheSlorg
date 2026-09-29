@@ -67,6 +67,35 @@ namespace TheSlorg
             SleeperUtility.StartUprising(map, sleepers);
         }
 
+        [DebugAction(Category, "Install full drone implant set", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void InstallImplants(Pawn pawn)
+        {
+            SlorgImplantSetExtension set = DefDatabase<PawnKindDef>.GetNamed("Slorg_TacticalDroneKind").GetModExtension<SlorgImplantSetExtension>();
+            if (set == null)
+            {
+                return;
+            }
+            foreach (ImplantEntry entry in set.implants)
+            {
+                SlorgImplants.Install(pawn, entry.hediff, entry.part);
+            }
+            // The tactical kind rolls some implants by chance; the debug tool installs the melee ones too.
+            SlorgImplantSetExtension melee = DefDatabase<PawnKindDef>.GetNamed("Slorg_DroneKind").GetModExtension<SlorgImplantSetExtension>();
+            if (melee != null)
+            {
+                foreach (ImplantEntry entry in melee.implants)
+                {
+                    SlorgImplants.Install(pawn, entry.hediff, entry.part);
+                }
+            }
+        }
+
+        [DebugAction(Category, "Trigger collective's call", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]
+        private static void CollectiveCall(Pawn pawn)
+        {
+            pawn.mindState.mentalStateHandler.TryStartMentalState(SlorgDefOf.Slorg_CollectiveCall, "debug", forced: true, forceWake: true);
+        }
+
         [DebugAction(Category, "Sever from collective", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap)]
         private static void Sever(Pawn pawn)
         {

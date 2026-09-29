@@ -25,6 +25,8 @@ How every mechanic works, and how to test each one quickly with dev mode.
 | **Make sleeper agent (active now)** | Gives a colonist hidden dormant nanoprobes, active immediately |
 | **Force uprising on this map** | All sleepers on the map rise up now |
 | **Sever from collective** | Click a drone to collapse it as if its queen fell |
+| **Install full drone implant set** | Click a pawn to give them every Slorg implant |
+| **Trigger collective's call** | Click a colonist to start the "rejoin the collective" mental break |
 | **Slorg raid (1500 pts)** | Normal Slorg raid |
 | **Slorg raid with queen (6000 pts)** | Big raid that always includes the queen, if she's available |
 | **Spawn queen core** | Places a queen core at the mouse position |
@@ -42,12 +44,12 @@ Useful vanilla dev tools:
 
 | Xenotype | Where it comes from | Looks | Key genes |
 |---|---|---|---|
-| **Slorg drone** | Slorg raids and settlements | Pale grey, bald, gaunt | Collective link (Assimilate), exoplating, ocular implant, nanoprobes, drone conditioning, plus vanilla: never sleep, ageless, disease-free and more |
+| **Slorg drone** | Slorg raids and settlements | Pale grey, bald, gaunt | Collective link (Assimilate), nanoprobes, drone conditioning, plus vanilla: never sleep, ageless, disease-free and more |
 | **Slorg queen** | Faction leader; big raids | Like a drone | Drone genes plus **Hive sovereign**, robust, super-fast healing, extreme psychic ability |
-| **Slorg thrall** | Anyone who succumbs to the infection or rises up as a sleeper | **Keeps their own look** | Collective link, nanoprobes, drone conditioning, reduced pain, dead calm, partial tox resistance. **No cybernetics.** |
+| **Slorg thrall** | Anyone who succumbs to the infection or rises up as a sleeper | **Keeps their own look** | Collective link, nanoprobes, drone conditioning, reduced pain, dead calm, partial tox resistance |
 | **Disconnected drone** | Freed drones (surgery, the core falls, or joining you) | Like a drone | Drone genes minus link and conditioning, plus **Severed link** |
 
-Freed **thralls** lose their Slorg genes entirely and keep only *Severed link*.
+Genes are only the biology. **All Slorg technology is implants** (section 9). Thralls never have implants. Freed **thralls** lose their Slorg genes entirely and keep only *Severed link*.
 
 **Test:**
 - [ ] In the gene library (Xenotype editor on the colonist screen), check that all 4 xenotypes show with icons and readable descriptions.
@@ -200,7 +202,50 @@ Freed **thralls** lose their Slorg genes entirely and keep only *Severed link*.
 
 ---
 
-## 9. Known risks (please watch for these)
+## 9. Implants
+
+**How it works**
+- All Slorg tech is **implants**, which show on the health tab. Drones and queens are generated with them. **Players can't install them.**
+- **Every implant can only come out by surgery** ("cut out …" bills, Medicine 6–10, 2 industrial medicine). Removal **always destroys the implant and injures the patient.**
+
+| Implant | Part | Effect | Visual | Removal |
+|---|---|---|---|---|
+| **Ocular implant** | Eye | +15% sight, aiming time ×0.8 | Eyepiece with a red laser | 2 wounds near the eye |
+| **Dermal plating** | Whole body | +35% sharp, +18% blunt, +20% heat armor, −5% moving | Bolted plates on the body and a cranial plate | **10 wounds all over, 80% scar, 25% death** |
+| **Shield emitter** | Torso | Blocks ranged and explosive damage (60 pts), recharges, overloads for 15 s | Flash on hit | 3 wounds |
+| **Assimilation tubules** | Hand | Tubule stab attack. Infections start at 30% instead of 5%. | none | 2 wounds |
+| **Beam emitter** | Arm | **Cutting beam** ability: 14 burn damage, range 25, 4 s cooldown. The AI uses it in combat. | Green bolt | 3 wounds |
+| **Arm blade** | Arm | Melee attack: 18 cut/stab, 35% armor penetration | none | 3 wounds |
+| **Tactical cortex** | Brain | **+4 Shooting, +4 Melee** (on top of collective skills), +4 melee dodge | none | 2 wounds on the head, 10% death |
+
+What each pawn kind gets:
+- **Drone** (melee): plating, eye, tubules, blade. 30% chance each of shield and cortex.
+- **Tactical drone**: plating, eye, shield, beam. Cortex 60%, tubules 50%.
+- **Queen**: all seven.
+
+**Test:**
+- [ ] Raid, then select drones. The health tab lists the implants, and the drones show plates on their bodies plus a head plate and eyepiece.
+- [ ] Shoot a shielded drone. There's a flash, no damage, and the shield % drops, then *Shield overloaded* and it recharges.
+- [ ] Tactical drones fire **cutting beam** bolts. If they only punch, the AI isn't picking the ability up, so tell me.
+- [ ] The skills tab of a drone with a tactical cortex shows +4 Shooting and Melee.
+- [ ] Use **Install full drone implant set** on a prisoner, then run each *cut out* bill. The implant is gone and never drops as an item, and the patient takes wounds (many scars for the plating, sometimes death).
+
+---
+
+## 10. The collective's call
+
+**How it works**
+- A **colonist who still carries any Slorg implant** (a freed drone you didn't strip of implants) sometimes hears the collective. It's about **once per 60 days per pawn**, and only while a Slorg faction still controls the world.
+- They get the **Answering the collective** mental break and walk off the map to rejoin the Slorg (like a vanilla *give up and leave*). You get a letter. Arrest or down them before they leave.
+- Cutting out all their implants makes them immune.
+
+**Test:**
+- [ ] Recruit a disconnected drone (or use **Install full drone implant set** on a colonist), then **Trigger collective's call**. They walk to the map edge.
+- [ ] Cut out every implant, then leave them for a long time. It should never happen.
+
+---
+
+## 11. Known risks (please watch for these)
 
 | Risk | What you'd see |
 |---|---|
@@ -211,19 +256,23 @@ Freed **thralls** lose their Slorg genes entirely and keep only *Severed link*.
 | Purge never possible | Glitterworld tends never reach 105% |
 | Trait names | A red error mentioning `Tough` or `SpeedOffset` in `Slorg_Collective` |
 | Colonist converting in a caravan | A colonist who completes the infection while travelling turns hostile inside your caravan |
+| Plating not drawn or misplaced | Drones look plain, or plates float off the body. The body-overlay renderer is custom. |
+| Beam never used by the AI | Tactical drones never fire cutting beams |
+| Shield blocks too much or too little | Tell me what got through or what didn't |
 
 ---
 
-## 10. Tuning without recompiling
+## 12. Tuning without recompiling
 
 | File | What's in it |
 |---|---|
-| `Defs/SlorgDefs/Slorg_Collective.xml` | Refresh rate, queen raid threshold and chance, queen bonus, **sleeper, captive and uprising numbers**, shareable traits |
+| `Defs/SlorgDefs/Slorg_Collective.xml` | Refresh rate, queen raid threshold and chance, queen bonus, **sleeper, captive and uprising numbers**, collective's call frequency, shareable traits |
 | `Defs/HediffDefs/Hediffs_Slorg.xml` | Infection speed, purge threshold and amount, severance length |
 | `Defs/HediffDefs/Hediff_CollectiveLink.xml` | Collective stat stages |
 | `Defs/FactionDefs/Faction_Slorg.xml` | Raid composition, earliest raid day |
 | `Defs/PawnKindDefs/PawnKinds_Slorg.xml` | Drone and queen gear, skills, resistance |
-| `Defs/RecipeDefs/Recipes_Slorg.xml` | Surgery costs and skill requirements |
+| `Defs/RecipeDefs/Recipes_Slorg.xml` | Surgery costs and skill requirements, including implant removal |
+| `Defs/HediffDefs/Implants_Slorg.xml` | Implant stats, shield strength, weapon damage, removal wounds and death chance |
 | `Defs/ResearchProjectDefs/Research_Slorg.xml` | Research costs |
 
 After editing XML, restart RimWorld. There's no need to rebuild the DLL.

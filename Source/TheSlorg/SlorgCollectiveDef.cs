@@ -49,6 +49,9 @@ namespace TheSlorg
         public int uprisingRaidDelayTicks = 2500;
         public float uprisingRaidPointsFactor = 0.7f;
 
+        /// <summary>Colonists carrying Slorg implants: mean days between the collective's call (a mental break to rejoin it).</summary>
+        public float collectiveCallMtbDays = 60f;
+
         /// <summary>Traits a drone can share with the whole collective. A trait only spreads while a drone that naturally has it is linked.</summary>
         public List<ShareableTrait> shareableTraits = new List<ShareableTrait>();
 

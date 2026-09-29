@@ -14,7 +14,8 @@ namespace TheSlorg
     }
 
     /// <summary>
-    /// A linked drone uses the collective's level for any skill where the collective knows more than the drone.
+    /// A linked drone uses the collective's level for any skill where the collective knows more than the drone,
+    /// and brain implants add a flat bonus on top.
     /// The drone's own level and XP are untouched, so the bonus disappears the moment the source drone is lost.
     /// </summary>
     [HarmonyPatch(typeof(SkillRecord), nameof(SkillRecord.GetLevel))]
@@ -32,14 +33,19 @@ namespace TheSlorg
                 return;
             }
             SlorgCollective collective = GameComponent_SlorgCollective.CollectiveOf(__instance.Pawn);
-            if (collective == null)
+            if (collective != null)
             {
-                return;
+                int shared = collective.LevelFor(__instance.def);
+                if (shared > __result)
+                {
+                    __result = shared;
+                }
             }
-            int shared = collective.LevelFor(__instance.def);
-            if (shared > __result)
+            // Brain implants add on top of whatever the pawn or collective knows.
+            int bonus = SlorgImplants.SkillBonus(__instance.Pawn, __instance.def);
+            if (bonus != 0)
             {
-                __result = shared;
+                __result = UnityEngine.Mathf.Clamp(__result + bonus, 0, SkillRecord.MaxLevel);
             }
         }
     }

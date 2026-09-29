@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<!-- A colonist carrying Slorg implants hears the collective again and walks off to rejoin it.
+	     Triggered by code (collectiveCallMtbDays), never as a random mood break. -->
+	<MentalStateDef>
+		<defName>Slorg_CollectiveCall</defName>
+		<stateClass>MentalState_GiveUpExit</stateClass>
+		<label>answering the collective</label>
+		<category>Misc</category>
+		<colonistsOnly>true</colonistsOnly>
+		<baseInspectLine>Mental state: Answering the collective</baseInspectLine>
+		<recoveryMessage>{0} has shaken off the collective's call.</recoveryMessage>
+		<minTicksBeforeRecovery>30000</minTicksBeforeRecovery>
+		<recoveryMtbDays>0.5</recoveryMtbDays>
+	</MentalStateDef>
+
+</Defs>

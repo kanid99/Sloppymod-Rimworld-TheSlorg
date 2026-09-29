@@ -83,33 +83,6 @@
 	</GeneDef>
 
 	<GeneDef ParentName="Slorg_GeneBase">
-		<defName>Slorg_Exoplating</defName>
-		<label>subdermal exoplating</label>
-		<description>Carriers have interlocking polymer plates grown beneath the skin. The plates deflect blades and bullets.</description>
-		<iconPath>UI/Icons/Genes/Slorg_Exoplating</iconPath>
-		<displayOrderInCategory>10</displayOrderInCategory>
-		<biostatCpx>2</biostatCpx>
-		<biostatMet>-2</biostatMet>
-		<statOffsets>
-			<ArmorRating_Sharp>0.20</ArmorRating_Sharp>
-			<ArmorRating_Blunt>0.10</ArmorRating_Blunt>
-		</statOffsets>
-	</GeneDef>
-
-	<GeneDef ParentName="Slorg_GeneBase">
-		<defName>Slorg_OcularImplant</defName>
-		<label>ocular implant</label>
-		<description>One eye is replaced at the embryonic stage by a targeting laser and rangefinder, which makes aiming faster.</description>
-		<iconPath>UI/Icons/Genes/Slorg_OcularImplant</iconPath>
-		<displayOrderInCategory>20</displayOrderInCategory>
-		<biostatCpx>1</biostatCpx>
-		<biostatMet>-1</biostatMet>
-		<statFactors>
-			<AimingDelayFactor>0.8</AimingDelayFactor>
-		</statFactors>
-	</GeneDef>
-
-	<GeneDef ParentName="Slorg_GeneBase">
 		<defName>Slorg_Nanoprobes</defName>
 		<label>nanoprobe swarm</label>
 		<description>Self-replicating nanoprobes patrol the bloodstream, sealing wounds and fighting infection.</description>

@@ -15,7 +15,8 @@
 		<invNutrition>0</invNutrition>
 		<minGenerationAge>18</minGenerationAge>
 		<maxGenerationAge>60</maxGenerationAge>
-		<apparelAllowHeadgearChance>0.3</apparelAllowHeadgearChance>
+		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
+		<apparelMoney>0~0</apparelMoney>
 		<!-- Drones can't be talked round. Freeing one takes surgery. -->
 		<initialResistanceRange>60~90</initialResistanceRange>
 		<initialWillRange>6~10</initialWillRange>
@@ -29,17 +30,43 @@
 		<weaponTags>
 			<li>MedievalMeleeDecent</li>
 		</weaponTags>
-		<apparelMoney>600~1400</apparelMoney>
-		<apparelTags>
-			<li>IndustrialMilitaryBasic</li>
-			<li>IndustrialMilitaryAdvanced</li>
-		</apparelTags>
 		<skills>
 			<li>
 				<skill>Melee</skill>
 				<range>6~12</range>
 			</li>
 		</skills>
+			<modExtensions>
+			<li Class="TheSlorg.SlorgImplantSetExtension">
+				<implants>
+					<li>
+						<hediff>Slorg_DermalPlating</hediff>
+					</li>
+					<li>
+						<hediff>Slorg_OcularImplant</hediff>
+						<part>Eye</part>
+					</li>
+					<li>
+						<hediff>Slorg_AssimilationTubules</hediff>
+						<part>Hand</part>
+					</li>
+					<li>
+						<hediff>Slorg_ArmBlade</hediff>
+						<part>Arm</part>
+					</li>
+					<li>
+						<hediff>Slorg_ShieldEmitter</hediff>
+						<part>Torso</part>
+						<chance>0.3</chance>
+					</li>
+					<li>
+						<hediff>Slorg_TacticalCortex</hediff>
+						<part>Brain</part>
+						<chance>0.3</chance>
+					</li>
+				</implants>
+			</li>
+		</modExtensions>
 	</PawnKindDef>
 
 	<PawnKindDef ParentName="Slorg_KindBase">
@@ -50,17 +77,43 @@
 		<weaponTags>
 			<li>SpacerGun</li>
 		</weaponTags>
-		<apparelMoney>1500~3200</apparelMoney>
-		<apparelTags>
-			<li>IndustrialMilitaryAdvanced</li>
-			<li>SpacerMilitary</li>
-		</apparelTags>
 		<skills>
 			<li>
 				<skill>Shooting</skill>
 				<range>6~12</range>
 			</li>
 		</skills>
+			<modExtensions>
+			<li Class="TheSlorg.SlorgImplantSetExtension">
+				<implants>
+					<li>
+						<hediff>Slorg_DermalPlating</hediff>
+					</li>
+					<li>
+						<hediff>Slorg_OcularImplant</hediff>
+						<part>Eye</part>
+					</li>
+					<li>
+						<hediff>Slorg_ShieldEmitter</hediff>
+						<part>Torso</part>
+					</li>
+					<li>
+						<hediff>Slorg_BeamEmitter</hediff>
+						<part>Arm</part>
+					</li>
+					<li>
+						<hediff>Slorg_TacticalCortex</hediff>
+						<part>Brain</part>
+						<chance>0.6</chance>
+					</li>
+					<li>
+						<hediff>Slorg_AssimilationTubules</hediff>
+						<part>Hand</part>
+						<chance>0.5</chance>
+					</li>
+				</implants>
+			</li>
+		</modExtensions>
 	</PawnKindDef>
 
 	<PawnKindDef ParentName="Slorg_KindBase">
@@ -79,10 +132,6 @@
 		<weaponTags>
 			<li>SpacerGun</li>
 		</weaponTags>
-		<apparelMoney>4000~7000</apparelMoney>
-		<apparelTags>
-			<li>SpacerMilitary</li>
-		</apparelTags>
 		<apparelAllowHeadgearChance>0</apparelAllowHeadgearChance>
 		<initialResistanceRange>150~200</initialResistanceRange>
 		<skills>
@@ -95,6 +144,39 @@
 				<range>12~18</range>
 			</li>
 		</skills>
+			<modExtensions>
+			<li Class="TheSlorg.SlorgImplantSetExtension">
+				<implants>
+					<li>
+						<hediff>Slorg_DermalPlating</hediff>
+					</li>
+					<li>
+						<hediff>Slorg_OcularImplant</hediff>
+						<part>Eye</part>
+					</li>
+					<li>
+						<hediff>Slorg_ShieldEmitter</hediff>
+						<part>Torso</part>
+					</li>
+					<li>
+						<hediff>Slorg_BeamEmitter</hediff>
+						<part>Arm</part>
+					</li>
+					<li>
+						<hediff>Slorg_ArmBlade</hediff>
+						<part>Arm</part>
+					</li>
+					<li>
+						<hediff>Slorg_AssimilationTubules</hediff>
+						<part>Hand</part>
+					</li>
+					<li>
+						<hediff>Slorg_TacticalCortex</hediff>
+						<part>Brain</part>
+					</li>
+				</implants>
+			</li>
+		</modExtensions>
 	</PawnKindDef>
 
 </Defs>

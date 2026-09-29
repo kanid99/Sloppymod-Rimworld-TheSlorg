@@ -21,6 +21,7 @@ namespace TheSlorg
         public static HediffDef Slorg_DormantNanoprobes;
 
         public static JobDef Slorg_SecretInject;
+        public static MentalStateDef Slorg_CollectiveCall;
 
         public static FactionDef Slorg_CollectiveFaction;
         public static ThingDef Slorg_QueenCore;
