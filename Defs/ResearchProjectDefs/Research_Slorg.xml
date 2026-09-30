@@ -30,4 +30,16 @@
 		<researchViewY>1</researchViewY>
 	</ResearchProjectDef>
 
+	<ResearchProjectDef>
+		<defName>Slorg_QueenContainment</defName>
+		<label>queen containment</label>
+		<description>Build a stasis platform that can hold a captured Slorg queen. While powered it keeps her fully suppressed, with no warden needed.</description>
+		<baseCost>2000</baseCost>
+		<techLevel>Spacer</techLevel>
+		<requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+		<tab>Slorg_ResearchTab</tab>
+		<researchViewX>1</researchViewX>
+		<researchViewY>0</researchViewY>
+	</ResearchProjectDef>
+
 </Defs>

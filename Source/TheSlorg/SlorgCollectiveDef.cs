@@ -69,6 +69,18 @@ namespace TheSlorg
         public float queenSeedingMtbDaysAtDanger = 3f;
         public float queenSeedingMtbDaysAtZero = 0.5f;
 
+        /// <summary>Containment platform: how fast suppression drains without power, and the mean days to a breakout
+        /// at zero and at full suppression once the power has been out for an hour.</summary>
+        public float containmentUnpoweredDrainPerDay = 1f;
+        public float containmentBreakoutMtbDaysAtZero = 0.1f;
+        public float containmentBreakoutMtbDaysAtFull = 1f;
+
+        /// <summary>Adaptive physiology: hits of one damage type per adaptation level, how much each level resists,
+        /// and how long without being hit by it before the adaptation fades.</summary>
+        public int adaptationHitsPerLevel = 12;
+        public List<float> adaptationResistance = new List<float> { 0.3f, 0.55f, 0.75f };
+        public float adaptationFadeDays = 1f;
+
         /// <summary>Conditions nanoprobes cure in linked drones, on top of anything marked chronic.</summary>
         public List<HediffDef> nanoprobeCures = new List<HediffDef>();
 

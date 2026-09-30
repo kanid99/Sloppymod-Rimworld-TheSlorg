@@ -44,6 +44,9 @@ namespace TheSlorg
         public static ThingDef Slorg_PlasmaTurret;
         public static ThingDef Slorg_Alcove;
         public static ThingDef Slorg_Conduit;
+        public static ThingDef Slorg_QueenContainment;
+        public static JobDef Slorg_ContainQueen;
+        public static HediffDef Slorg_Designation;
 
         public static SlorgCollectiveDef Slorg_Collective;
 

@@ -142,6 +142,16 @@ namespace TheSlorg
                         sb.AppendLine("  - " + grantedTraitDefs[i].DataAtDegree(grantedTraitDegrees[i]).GetLabelCapFor(pawn));
                     }
                 }
+                bool adaptedHeader = false;
+                foreach (SlorgAdaptation adaptation in SlorgAdaptations.For(pawn.Faction))
+                {
+                    if (!adaptedHeader)
+                    {
+                        sb.AppendLine("Adapted to:");
+                        adaptedHeader = true;
+                    }
+                    sb.AppendLine($"  - {adaptation.DamageLabel}: {adaptation.Resistance.ToStringPercent()} resisted");
+                }
                 return sb.ToString().TrimEndNewlines();
             }
         }

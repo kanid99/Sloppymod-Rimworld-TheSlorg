@@ -65,14 +65,41 @@ namespace TheSlorg
             return pawn?.health?.hediffSet?.GetFirstHediffOfDef(SlorgDefOf.Slorg_QueenBound)?.TryGetComp<HediffComp_QueenBound>()?.queen;
         }
 
+        /// <summary>The "Summon drone" button, shown on the queen herself or on the platform holding her.</summary>
+        public static Command_Action SummonCommand(Pawn queen)
+        {
+            Command_Action summon = new Command_Action
+            {
+                defaultLabel = "Summon drone",
+                defaultDesc = $"Have {queen.LabelShortCap} call a drone to the colony. It will serve you as long as she stays captive. "
+                    + "If she escapes, dies or is severed (while the queen core stands), every drone she called turns hostile.\n\n"
+                    + $"Drones bound to her: {BoundTo(queen).Count()} / {SlorgDefOf.Slorg_Collective.captiveQueenMaxDrones}\n"
+                    + $"Suppression: {QueenSuppression.Level(queen).ToStringPercent()} (needs {SlorgDefOf.Slorg_Collective.queenSuppressionToSummon.ToStringPercent()}). "
+                    + $"Below {SlorgDefOf.Slorg_Collective.queenSuppressionDangerLevel.ToStringPercent()}, her drones start quietly infecting your colonists.",
+                icon = ContentFinder<Texture2D>.Get("UI/Icons/Xenotypes/Slorg"),
+                action = () => Summon(queen)
+            };
+            AcceptanceReport can = CanSummon(queen);
+            if (!can.Accepted)
+            {
+                summon.Disable(can.Reason);
+            }
+            return summon;
+        }
+
         public static AcceptanceReport CanSummon(Pawn queen)
         {
             SlorgCollectiveDef tuning = SlorgDefOf.Slorg_Collective;
-            if (!IsCaptiveQueen(queen) || !queen.Spawned)
+            bool contained = Building_QueenContainment.IsContained(queen);
+            if (!IsCaptiveQueen(queen) || queen.MapHeld == null || !(queen.Spawned || contained))
             {
                 return false;
             }
-            if (queen.Downed)
+            if (contained && !Building_QueenContainment.HolderOf(queen).Powered)
+            {
+                return "The containment platform has no power.";
+            }
+            if (queen.Downed && !contained)
             {
                 return $"{queen.LabelShortCap} is too weak to call her drones.";
             }
@@ -94,7 +121,7 @@ namespace TheSlorg
             {
                 return $"She can call another drone in {(ready - Find.TickManager.TicksGame).ToStringTicksToPeriod()}.";
             }
-            if (!TryFindArrivalCell(queen.Map, out _))
+            if (!TryFindArrivalCell(queen.MapHeld, out _))
             {
                 return "No drone could reach the colony.";
             }
@@ -108,7 +135,7 @@ namespace TheSlorg
 
         public static void Summon(Pawn queen)
         {
-            Map map = queen.Map;
+            Map map = queen.MapHeld;
             if (!TryFindArrivalCell(map, out IntVec3 cell))
             {
                 return;
@@ -272,24 +299,7 @@ namespace TheSlorg
             {
                 yield break;
             }
-            Pawn queen = __instance;
-            Command_Action summon = new Command_Action
-            {
-                defaultLabel = "Summon drone",
-                defaultDesc = $"Have {queen.LabelShortCap} call a drone to the colony. It will serve you as long as she stays captive. "
-                    + "If she escapes, dies or is severed (while the queen core stands), every drone she called turns hostile.\n\n"
-                    + $"Drones bound to her: {CaptiveQueen.BoundTo(queen).Count()} / {SlorgDefOf.Slorg_Collective.captiveQueenMaxDrones}\n"
-                    + $"Suppression: {QueenSuppression.Level(queen).ToStringPercent()} (needs {SlorgDefOf.Slorg_Collective.queenSuppressionToSummon.ToStringPercent()}). "
-                    + $"Below {SlorgDefOf.Slorg_Collective.queenSuppressionDangerLevel.ToStringPercent()}, her drones start quietly infecting your colonists.",
-                icon = ContentFinder<Texture2D>.Get("UI/Icons/Xenotypes/Slorg"),
-                action = () => CaptiveQueen.Summon(queen)
-            };
-            AcceptanceReport can = CaptiveQueen.CanSummon(queen);
-            if (!can.Accepted)
-            {
-                summon.Disable(can.Reason);
-            }
-            yield return summon;
+            yield return CaptiveQueen.SummonCommand(__instance);
         }
     }
 }

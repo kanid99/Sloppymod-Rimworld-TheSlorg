@@ -59,7 +59,7 @@ namespace TheSlorg
         public static void TickMap(Map map)
         {
             SlorgCollectiveDef tuning = SlorgDefOf.Slorg_Collective;
-            foreach (Pawn queen in map.mapPawns.PrisonersOfColonySpawned.ToList())
+            foreach (Pawn queen in map.mapPawns.PrisonersOfColony.ToList())
             {
                 if (!CaptiveQueen.IsCaptiveQueen(queen))
                 {

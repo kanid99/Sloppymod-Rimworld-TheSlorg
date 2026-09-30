@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 using Verse.AI;
 
@@ -90,6 +91,20 @@ namespace TheSlorg
                 return false;
             }
             return true;
+        }
+    }
+
+    /// <summary>A Slorg base isn't beaten while its queen core still stands, however many drones are down.</summary>
+    [HarmonyPatch(typeof(SettlementDefeatUtility), nameof(SettlementDefeatUtility.IsDefeated))]
+    public static class SettlementDefeatUtility_IsDefeated_Patch
+    {
+        public static void Postfix(Map map, Faction faction, ref bool __result)
+        {
+            if (__result && SlorgUtility.IsSlorgFaction(faction)
+                && map.listerThings.ThingsOfDef(SlorgDefOf.Slorg_QueenCore).Any(core => core.Faction == faction && !core.Destroyed))
+            {
+                __result = false;
+            }
         }
     }
 

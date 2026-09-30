@@ -21,6 +21,7 @@ namespace TheSlorg
         private List<Faction> surfaceControlLost = new List<Faction>();
         private Dictionary<Pawn, int> queenSummonReady = new Dictionary<Pawn, int>();
         private List<Faction> unicomplexRevealed = new List<Faction>();
+        internal List<SlorgAdaptation> adaptations = new List<SlorgAdaptation>();
         private List<Pawn> tmpSummonKeys;
         private List<int> tmpSummonValues;
 
@@ -157,6 +158,7 @@ namespace TheSlorg
             }
             CheckQueens();
             CaptiveQueen.CheckBonds();
+            SlorgAdaptations.Decay();
             GatherActivePawns();
 
             Dictionary<Faction, SlorgCollective> previous = new Dictionary<Faction, SlorgCollective>(collectives);
@@ -485,6 +487,11 @@ namespace TheSlorg
                 }
             }
 
+            bool atUnicomplex = map?.Parent is Settlement home && home == UnicomplexOf(faction);
+            string succession = atUnicomplex
+                ? "The Unicomplex has lost its queen. The hive is raising her successor elsewhere, and she will be waiting here the next time you come. "
+                  + "Until then the queen core stands unguarded by its queen: destroy it while you can."
+                : "Elsewhere, the collective is already raising a new queen.";
             if (severed > 0 || map != null)
             {
                 Find.LetterStack.ReceiveLetter(
@@ -492,7 +499,7 @@ namespace TheSlorg
                     $"{queen.LabelShortCap}, queen of {faction.Name}, has been {(captured ? "captured" : "killed")}.\n\n"
                     + $"{severed} drone(s) nearby have been severed from the collective and have collapsed. For the next couple of days they can be captured, "
                     + "and a skilled doctor with glitterworld medicine can perform the Sever link surgery on them to free them permanently.\n\n"
-                    + "Elsewhere, the collective is already raising a new queen.",
+                    + succession,
                     LetterDefOf.PositiveEvent,
                     new LookTargets(queen.PositionHeld, map));
             }
@@ -606,6 +613,7 @@ namespace TheSlorg
             Scribe_Collections.Look(ref surfaceControlLost, "surfaceControlLost", LookMode.Reference);
             Scribe_Collections.Look(ref queenSummonReady, "queenSummonReady", LookMode.Reference, LookMode.Value, ref tmpSummonKeys, ref tmpSummonValues);
             Scribe_Collections.Look(ref unicomplexRevealed, "unicomplexRevealed", LookMode.Reference);
+            Scribe_Collections.Look(ref adaptations, "adaptations", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 queens ??= new Dictionary<Faction, Pawn>();
@@ -616,6 +624,8 @@ namespace TheSlorg
                 unicomplexRevealed ??= new List<Faction>();
                 unicomplexRevealed.RemoveAll(f => f == null);
                 queenSummonReady.RemoveAll(kv => kv.Key == null);
+                adaptations ??= new List<SlorgAdaptation>();
+                adaptations.RemoveAll(a => a?.faction == null || a.damage == null);
             }
         }
     }

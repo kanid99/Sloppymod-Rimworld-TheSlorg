@@ -159,6 +159,24 @@ namespace TheSlorg
             }
         }
 
+        [DebugAction(Category, "Max adaptation: bullets", allowedGameStates = AllowedGameStates.Playing)]
+        private static void AdaptBullets()
+        {
+            Faction faction = SlorgFaction;
+            if (faction != null)
+            {
+                SlorgAdaptations.ForceMax(faction, DamageDefOf.Bullet);
+                Messages.Message("The Slorg are now fully adapted to bullets.", MessageTypeDefOf.NeutralEvent, historical: false);
+            }
+        }
+
+        [DebugAction(Category, "Clear adaptations", allowedGameStates = AllowedGameStates.Playing)]
+        private static void ClearAdaptations()
+        {
+            GameComponent_SlorgCollective.Instance?.adaptations.Clear();
+            Messages.Message("Slorg adaptations cleared.", MessageTypeDefOf.NeutralEvent, historical: false);
+        }
+
         [DebugAction(Category, "Log collective state", allowedGameStates = AllowedGameStates.Playing)]
         private static void LogCollective()
         {
@@ -171,6 +189,10 @@ namespace TheSlorg
                 sb.AppendLine($"{faction.Name}: defeated={faction.defeated}, surfaceControlLost={component?.SurfaceControlLost(faction)}, "
                     + $"queen={(queen == null ? "none" : queen.LabelShortCap + (queen.Spawned ? " (on map)" : " (off map)"))}, "
                     + $"unicomplex={GameComponent_SlorgCollective.UnicomplexOf(faction)?.Label ?? "none"}");
+                foreach (SlorgAdaptation adaptation in SlorgAdaptations.For(faction))
+                {
+                    sb.AppendLine($"  adapted to {adaptation.DamageLabel}: level {adaptation.level}, {adaptation.Resistance.ToStringPercent()} resisted, {adaptation.hits} hits");
+                }
             }
             foreach (Map map in Find.Maps)
             {

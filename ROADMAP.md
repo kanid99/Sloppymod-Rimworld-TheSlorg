@@ -20,7 +20,7 @@ A storyteller option (mod setting) where the Slorg actively conquer the world in
 
 | Gene | Effect | Size |
 |---|---|---|
-| **Adaptive physiology** | Each time a drone takes a damage type, the whole collective gets a stacking resistance to it for a while. "They've adapted." Change weapons to beat it. | M |
+| **Adaptive physiology** | Each time a drone takes a damage type, the whole collective gets a stacking resistance to it for a while. "They've adapted." Change weapons to beat it. | built |
 | **Regeneration nodes** | Drones regrow lost limbs slowly while linked | S |
 | **Hive synchrony** | Linked drones on the same map share a fraction of each other's healing | M |
 | **Cold-hardened / void-hardened** | Temperature and vacuum tolerance, for space Cubes | S |
@@ -41,7 +41,7 @@ A storyteller option (mod setting) where the Slorg actively conquer the world in
 
 | Idea | Effect | Size |
 |---|---|---|
-| **Drone designations** | Names like "Seven of Nine" instead of normal names | S |
+| **Drone designations** | Names like "Seven of Nine" instead of normal names | built |
 | **Assimilation of buildings** | Drones convert your turrets or power grid into Slorg tech if left alone near them | L |
 | **Kidnap-and-assimilate** | Raiders prefer carrying downed colonists off over killing, and those colonists come back later as drones in raids | M |
 | **Cube landing** | A late-game event: a small Cube crashes near the colony and sets up a mini base that sends drones every day until destroyed | L |
@@ -54,7 +54,7 @@ A storyteller option (mod setting) where the Slorg actively conquer the world in
 |---|---|---|
 | **Captive queen** | Built: summon bound drones | built |
 | **Reverse-engineered implants** | Research that lets you install Slorg implants on your own colonists, each carrying a small collective's call risk | M |
-| **Resonance cage** | An Anomaly-style containment building for the queen, so she's safer to hold, with a power cost and an escape chance when the power fails | M |
+| **Queen containment platform** | An Anomaly-style containment building for the queen, so she's safer to hold, with a power cost and an escape chance when the power fails | built |
 | **Disconnected drone backstories** | Freed drones get a backstory ("former drone") and a chance of useful traits from their old hive life | S |
 
 ## 6. Space (Odyssey)
@@ -67,5 +67,5 @@ A storyteller option (mod setting) where the Slorg actively conquer the world in
 ## Suggested next pick
 
 After the current playtest is stable:
-1. **Drone designations** (S), **adaptive physiology** (M), **kidnap-and-assimilate** (M). Cheap, and they add a lot of flavor and threat.
+1. **Kidnap-and-assimilate** (M) and the **interlink node** implant (M). Designations and adaptive physiology are done.
 2. Then **total war mode**, starting with **Destroy the Cube** quests and **growing threat**, since those don't need off-screen battles. The **assimilation front** and **Defend the settlement** come after.

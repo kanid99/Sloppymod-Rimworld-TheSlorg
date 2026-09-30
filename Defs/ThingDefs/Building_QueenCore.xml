@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
+	<!-- Player-built containment for a captured queen -->
+	<ThingDef ParentName="BuildingBase">
+		<defName>Slorg_QueenContainment</defName>
+		<label>queen containment platform</label>
+		<description>A powered stasis platform built to hold a Slorg queen. Neural dampers lock her will down completely: while it has power she is fully suppressed, needs no warden, and doesn't eat or age. She can still be made to call drones.
+
+If the power fails her suppression drains away, and before long she tears herself free.
+
+Right-click the platform with a colonist selected to carry a downed queen onto it.</description>
+		<thingClass>TheSlorg.Building_QueenContainment</thingClass>
+		<graphicData>
+			<texPath>Things/Building/Slorg_QueenContainment</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(3,3)</drawSize>
+		</graphicData>
+		<size>(3,3)</size>
+		<altitudeLayer>Building</altitudeLayer>
+		<drawerType>MapMeshAndRealTime</drawerType>
+		<tickerType>Normal</tickerType>
+		<passability>PassThroughOnly</passability>
+		<pathCost>50</pathCost>
+		<fillPercent>0.3</fillPercent>
+		<rotatable>false</rotatable>
+		<designationCategory>Security</designationCategory>
+		<researchPrerequisites>
+			<li>Slorg_QueenContainment</li>
+		</researchPrerequisites>
+		<constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+		<costList>
+			<Steel>200</Steel>
+			<Plasteel>120</Plasteel>
+			<ComponentSpacer>3</ComponentSpacer>
+		</costList>
+		<statBases>
+			<MaxHitPoints>500</MaxHitPoints>
+			<WorkToBuild>12000</WorkToBuild>
+			<Flammability>0</Flammability>
+			<Mass>80</Mass>
+		</statBases>
+		<comps>
+			<li Class="CompProperties_Power">
+				<compClass>CompPowerTrader</compClass>
+				<basePowerConsumption>600</basePowerConsumption>
+			</li>
+			<li Class="CompProperties_Flickable"/>
+			<li Class="CompProperties_Glower">
+				<glowRadius>4</glowRadius>
+				<glowColor>(180,120,255,0)</glowColor>
+			</li>
+		</comps>
+	</ThingDef>
+
 	<ThingDef ParentName="BuildingBase">
 		<defName>Slorg_QueenCore</defName>
 		<label>queen core</label>

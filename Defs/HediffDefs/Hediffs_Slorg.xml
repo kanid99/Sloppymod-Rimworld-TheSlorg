@@ -238,4 +238,15 @@
 		</stages>
 	</HediffDef>
 
+	<!-- A drone's hive designation, and the name it had before assimilation. -->
+	<HediffDef>
+		<defName>Slorg_Designation</defName>
+		<label>hive designation</label>
+		<description>This drone's designation in the collective. Its name was taken when it was assimilated. If it is ever freed, it gets its own name back. A drone born to the hive has none, so it gets a new one and keeps its number as a nickname.</description>
+		<hediffClass>TheSlorg.Hediff_SlorgDesignation</hediffClass>
+		<defaultLabelColor>(0.4, 0.9, 0.5)</defaultLabelColor>
+		<isBad>false</isBad>
+		<everCurableByItem>false</everCurableByItem>
+	</HediffDef>
+
 </Defs>

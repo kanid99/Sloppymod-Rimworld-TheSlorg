@@ -161,7 +161,13 @@ namespace TheSlorg
             }
             // A captive queen's drones join the rising, and she breaks out of her cell.
             List<Pawn> risers = new List<Pawn>(sleepers);
-            Pawn captiveQueen = map.mapPawns.PrisonersOfColonySpawned.FirstOrDefault(CaptiveQueen.IsCaptiveQueen);
+            // A queen in a powered containment platform stays put. Without power, the uprising frees her.
+            Pawn captiveQueen = map.mapPawns.PrisonersOfColony.FirstOrDefault(p => CaptiveQueen.IsCaptiveQueen(p)
+                && (p.Spawned || Building_QueenContainment.HolderOf(p)?.Powered == false));
+            if (captiveQueen != null && !captiveQueen.Spawned)
+            {
+                captiveQueen = Building_QueenContainment.HolderOf(captiveQueen).Release();
+            }
             if (captiveQueen != null)
             {
                 foreach (Pawn drone in CaptiveQueen.BoundTo(captiveQueen).Where(d => d.Spawned && d.Map == map).ToList())

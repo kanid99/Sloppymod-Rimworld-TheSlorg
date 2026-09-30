@@ -271,6 +271,7 @@ namespace TheSlorg
                 }
                 SlorgImplants.InstallSet(__result, set);
                 SlorgUtility.MakeHairless(__result);
+                SlorgDesignation.Designate(__result, rememberName: false);
             }
         }
     }

@@ -33,7 +33,9 @@ How every mechanic works, and how to test each one quickly with dev mode.
 | **Slorg raid with queen (6000 pts)** | Big raid that always includes the queen, if she's available |
 | **Reveal Unicomplex** | Marks the Unicomplex as found (same as tracing the hive signal) |
 | **Spawn queen core** | Places a queen core at the mouse position |
-| **Log collective state** | Writes each Slorg faction, its queen, Unicomplex and shared skills to the debug log |
+| **Max adaptation: bullets** | The Slorg resist 75% of bullet damage right away |
+| **Clear adaptations** | Wipes every adaptation |
+| **Log collective state** | Writes each Slorg faction, its queen, Unicomplex, adaptations and shared skills to the debug log |
 
 Useful vanilla dev tools:
 - **Tool: "Down pawn"** to down a colonist.
@@ -134,6 +136,26 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - [ ] Kill the drone that provides a skill. You get a *"collective has lost…"* message, and the others drop.
 - [ ] Hover the collective link label. It shows the drone count and *queen present* when she's there.
 
+## 4b. Designations and adaptive physiology
+
+**How it works**
+- **Designations:** every drone is named like *Three of Nine of Unimatrix 07* (shown as *Three of Nine*). This applies to raid drones, Unicomplex drones, summoned drones and anyone who completes assimilation. Queens keep their names.
+  - The health tab shows *hive designation*. For assimilated pawns it reads *formerly (their old name)*.
+  - When a drone is freed (Sever link, the queen core falls, a bound drone is released, or it burns out joining you), an assimilated pawn **gets their old name back**. A hive-born drone gets a **new name with its number as a nickname** (e.g. *Annika 'Seven' Hansen*).
+- **Adaptive physiology:** each hit a linked drone takes from a real weapon (not surgery, their own weapons or other Slorg) counts toward that damage type for its whole faction.
+  - **12 hits:** 30% resisted. **24:** 55%. **36:** 75%. You get a *The Slorg have adapted to …* message when it goes up, and *Adapted* sometimes pops over drones as damage is reduced.
+  - No hits of that type for **1 day**: the adaptation fades completely.
+  - Shield-blocked hits don't count. Disconnected and severed drones don't adapt or resist.
+  - The collective link tooltip lists current adaptations.
+
+**Test:**
+- [ ] Raid: drones show designations instead of names. Their health tab has *hive designation*.
+- [ ] Down a colonist, let them be assimilated (**Complete infection now**). They become *X of Y*, and the health tab shows *formerly (their name)*. Capture and sever them: their old name comes back.
+- [ ] Capture and sever a raid-born drone: it gets a fresh name with a nickname like *'Three'*.
+- [ ] Shoot a raid with one weapon type. After ~12 hits a *have adapted to bullet* message appears, and the collective link tooltip shows *bullet: 30% resisted*.
+- [ ] **Max adaptation: bullets**, then shoot a drone: much less damage. Hit them with melee or fire instead: full damage.
+- [ ] Wait a day without shooting them: **Log collective state** shows the adaptation gone.
+
 ---
 
 ## 5. The queen
@@ -185,8 +207,6 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - [ ] Kill a captive queen instead: her bound drones turn hostile (the core still stands).
 - [ ] Capture a queen, then run **Sever link** on her while she's severed. She becomes a **Freed queen**: *A queen set free* letter, mechlink on her brain, and her bound drones turn hostile. Recruit her and check her mech bandwidth.
 
----
-
 ## 5c. The control implant and the hidden Unicomplex
 
 **How it works**
@@ -204,6 +224,24 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - [ ] Sever a captive queen who still has her implant: as a Freed queen she can Trace hive signal herself.
 
 > Queens generated before this update don't have a control implant. Start a new game, or wait for a new queen to rise.
+
+---
+
+## 5d. The queen containment platform
+
+**How it works**
+- Research **Queen containment** (Slorg tab, 2000). Then build the **queen containment platform** (Security tab): 3×3, 200 steel, 120 plasteel, 3 advanced components, Construction 8, **600 W power**.
+- **Load her:** with a colonist selected, right-click the platform and choose **Contain (queen) on the platform**. The queen must be **downed**: a downed enemy queen is captured on the spot, and a prisoner queen can be anesthetized first. The colonist carries her there.
+- **While powered:** she's in **stasis**. Suppression is locked at 100%, no warden visits, and she doesn't eat, age or heal. The platform shows **Summon drone** (with the same rules, except being downed doesn't matter) and **Release from stasis**, which makes her an ordinary prisoner again.
+- **Power failure:** you get a warning, and her suppression drains about 100% a day. After an hour without power she can **break free** at any moment: sooner the lower her suppression (about 2.5 hours on average at 0%, a day at 100%). She wakes healed of her wounds and starts a prison break. If she escapes, her bound drones turn hostile as usual.
+- Below 30% suppression while unpowered, her bound drones can start seeding sleepers again. An uprising frees her from an unpowered platform, but not from a powered one.
+- Destroying or deconstructing the platform drops her out as a prisoner.
+
+**Test:**
+- [ ] Research, build and power the platform. Down a queen (**Slorg raid with queen**), then right-click the platform with a colonist selected and contain her. She appears on the platform and a message confirms it.
+- [ ] Select the platform: its inspect text shows her suppression at 100%. **Summon drone** works from the platform.
+- [ ] Switch the platform off. A warning appears and suppression starts dropping. Within hours she breaks out with a letter, and a prison break starts.
+- [ ] **Release from stasis**: she's dropped next to the platform as a normal prisoner.
 
 ---
 
@@ -270,7 +308,8 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 **Test** (real way):
 - [ ] Caravan to the Unicomplex and attack it. The core is at the map center, the **queen is there** next to it, and turrets, alcoves and conduits surround it.
 - [ ] The garrison defends: assault drones use the plasma lance on your turrets and mechs. Plasma turrets can kill your colonists. Disruptor turrets down them.
-- [ ] Kill the queen there. The drones on the map collapse (severed) as usual.
+- [ ] Kill the queen there. The drones on the map collapse (severed) as usual. The letter says her successor will be waiting **next time**: **no new queen appears during this visit.**
+- [ ] Kill every drone but leave the core standing. The settlement is **not** marked defeated. Destroy the core to finish it.
 - [ ] **Teleport test:** run **Slorg raid with queen (6000 pts)** on your colony, then, while she's on your map, send a caravan (or use dev mode) to attack the Unicomplex. She vanishes from your colony with a message and appears at the core with a letter. Only one queen exists (**Log collective state**).
 
 ---
@@ -338,6 +377,10 @@ What each pawn kind gets:
 | Plating not drawn or misplaced | Drones look plain, or plates float off the body. The body-overlay renderer is custom. |
 | Beam never used by the AI | Tactical drones never fire cutting beams |
 | Shield blocks too much or too little | Tell me what got through or what didn't |
+| Contained queen not drawn | The platform looks empty while its inspect text says it's holding her. The queen is drawn by custom code. |
+| Contain option missing | Right-clicking the platform with a colonist selected offers nothing, even with a downed queen on the map |
+| Odd designation display | A drone's full name reads strangely (e.g. the designation shows twice). Screenshot the name. |
+| Adaptation too strong | Weapons feel useless against a raid. Send the *Log collective state* output. |
 
 ---
 

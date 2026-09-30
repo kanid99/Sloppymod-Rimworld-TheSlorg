@@ -98,6 +98,7 @@ namespace TheSlorg
                 pawn.genes.SetXenotype(SlorgDefOf.Slorg_DisconnectedDrone);
             }
             GrowHairBack(pawn);
+            SlorgDesignation.Restore(pawn);
             if (pawn.guest != null)
             {
                 // Without the collective's voice in their head, a freed drone is open to persuasion.
@@ -153,6 +154,7 @@ namespace TheSlorg
             }
             pawn.genes.SetXenotype(SlorgDefOf.Slorg_Thrall);
             MakeHairless(pawn);
+            SlorgDesignation.Designate(pawn, rememberName: true);
         }
 
         /// <summary>Slorg are completely hairless.</summary>
@@ -219,6 +221,7 @@ namespace TheSlorg
                 pawn.health.RemoveHediff(dormant);
             }
             MakeHairless(pawn);
+            SlorgDesignation.Designate(pawn, rememberName: true);
             NanoprobeHeal(pawn);
         }
 

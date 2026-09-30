@@ -28,6 +28,8 @@ Drones walk up to downed colonists and inject them with nanoprobes. The nanoprob
 ### The collective
 Each Slorg faction shares one collective, and it only knows what its living drones know.
 
+- **Designations:** drones carry hive designations like *Three of Nine of Unimatrix 07*, not names. An assimilated colonist's old name is kept on file (the *hive designation* entry on the health tab shows it), and they get it back if they're freed. A drone born to the hive gets a new name, with its old number as a nickname.
+- **Adaptive physiology:** every hit a linked drone takes teaches the whole faction. After 12 hits of one damage type, every drone resists 30% of it, then 55% and 75%. A message warns you. If they aren't hit by that damage type for a day, the adaptation fades. Mix your weapons.
 - **Skills:** in every skill, each drone works at the best level of any drone in the faction, including off-map ones. If they assimilate your Shooting 16 colonist, every drone shoots at 16. Kill that drone and the collective loses it. You get a message when the collective gains or loses a skill in front of you.
 - **Stats:** a collective link effect grows with the number of drones on the map. A lone drone is isolated and weakened. A queen on the map counts as 10 extra drones.
 - **Traits:** useful traits (industrious, tough, careful shooter, iron-willed and others) spread from the drone that has them to every other drone.
@@ -38,6 +40,7 @@ Each Slorg faction shares one collective, and it only knows what its living dron
 - While a drone is severed, capture it and do the **Sever link** surgery. It needs the *Neural severance* research (in the Slorg research tab), Medicine 10 and 2 glitterworld medicine. The drone becomes a **disconnected drone** you can recruit, with its resistance lowered.
 - Severed drones that aren't operated on reconnect when the severance wears off.
 - The collective always raises a **new queen**.
+- **Captive queens** can be held on a **queen containment platform** (research *Queen containment*). While it's powered she's in stasis: fully suppressed, no warden needed, and she can still summon drones for you. If the power fails, her suppression drains and she breaks free.
 
 ### The Unicomplex and the queen core
 One Slorg settlement is secretly the **Unicomplex**. It stays hidden until you trace the hive signal with a queen's control implant. Once it's found, attacking it means facing:
@@ -45,6 +48,8 @@ One Slorg settlement is secretly the **Unicomplex**. It stays hidden until you t
 - **the queen herself, always**. There is only ever one queen. If she's away, even mid-raid on your colony, she **transwarps home** the moment you arrive. If she's dead or your prisoner, her successor is waiting. She won't join raids while the Unicomplex is under attack;
 - a heavy garrison of **3 assault drones, 2 tactical drones and 3 melee drones**;
 - **4 plasma turrets** (lethal), **4 disruptor turrets** (neural shock), regeneration alcoves and hive conduits.
+
+If you kill or capture the queen at the Unicomplex, that's a real win: her successor is raised elsewhere and only appears on your **next** visit. The base can't be defeated while the queen core still stands, however many drones are down.
 
 Destroying the core:
 - permanently disconnects every Slorg on the planet surface. They lose their faction and are left dazed for 2 days, so you can capture and recruit them.

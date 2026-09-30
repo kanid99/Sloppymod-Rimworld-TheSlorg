@@ -15,6 +15,12 @@
 		<reportString>suppressing TargetA.</reportString>
 	</JobDef>
 
+	<JobDef>
+		<defName>Slorg_ContainQueen</defName>
+		<driverClass>TheSlorg.JobDriver_ContainQueen</driverClass>
+		<reportString>containing TargetA.</reportString>
+	</JobDef>
+
 	<WorkGiverDef>
 		<defName>Slorg_SuppressQueen</defName>
 		<label>suppress captive queen</label>
