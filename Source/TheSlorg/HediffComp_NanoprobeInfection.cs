@@ -14,8 +14,14 @@ namespace TheSlorg
         /// <summary>During stage 1, a tend at least this good purges the nanoprobes completely.</summary>
         public float stage1CureTendQuality = 0.5f;
 
-        /// <summary>At any stage, a tend better than this purges the nanoprobes. Only glitterworld medicine goes past 100%.</summary>
-        public float anyStageCureTendQuality = 1.01f;
+        /// <summary>Severity at which stage 3 starts: only the purge surgery can help from here.</summary>
+        public float stage3Severity = 0.8f;
+
+        /// <summary>
+        /// A tend better than this (only glitterworld medicine goes past 100%) cures stage 1 and knocks stage 2 back to stage 1.
+        /// It does nothing in stage 3.
+        /// </summary>
+        public float glitterTendQuality = 1.01f;
 
         /// <summary>Genes the nanoprobes write into the host at stage 2.</summary>
         public List<GeneDef> stage2Genes = new List<GeneDef>();
@@ -30,10 +36,12 @@ namespace TheSlorg
     }
 
     /// <summary>
-    /// Assimilation in three stages:
-    ///  1. Neural takeover (first 1-3 hours): the host fights for the Slorg but has no implants. A decent tend cures it.
-    ///  2. Implants forming: implants and Slorg genes appear. Only the purge surgery cures it, and implants stay behind.
-    ///  3. Complete (4-6 hours in): the host is a full drone. No cure; only disconnection from the hive frees them.
+    /// Assimilation in stages:
+    ///  1. Neural takeover: the host fights for the Slorg but has no implants. A decent tend cures it.
+    ///  2. Implants forming: implants and Slorg genes appear. A glitterworld-quality tend knocks it back to stage 1;
+    ///     the purge surgery cures it. Implants stay behind either way.
+    ///  3. Almost assimilated: only the purge surgery helps.
+    ///  Complete (4-6 hours untended): a full drone. No cure; only disconnection from the hive frees them.
     /// Bleeding stops for the whole infection (see the hediff stages), so the host doesn't die before the collective gets them.
     /// </summary>
     public class HediffComp_NanoprobeInfection : HediffComp
@@ -47,20 +55,33 @@ namespace TheSlorg
 
         public bool InStage2 => parent.Severity >= Props.stage2Severity;
 
+        public bool InStage3 => parent.Severity >= Props.stage3Severity;
+
         private bool Held => Pawn.IsPrisonerOfColony || Pawn.IsSlaveOfColony;
 
         public override void CompTended(float quality, float maxQuality, int batchPosition = 0)
         {
             base.CompTended(quality, maxQuality, batchPosition);
-            if (quality >= Props.anyStageCureTendQuality)
+            if (InStage3)
             {
-                GameComponent_SlorgCollective.Instance?.QueueInfectionAction(this, InfectionAction.Cure);
+                Messages.Message($"{Pawn.LabelShortCap} is almost assimilated. Only the Purge nanoprobes surgery can save them now.",
+                    Pawn, MessageTypeDefOf.NegativeEvent, historical: false);
                 return;
             }
             if (InStage2)
             {
-                Messages.Message($"{Pawn.LabelShortCap}'s nanoprobes have started building implants. Only a glitterworld-quality tend or the purge surgery can stop them now.",
-                    Pawn, MessageTypeDefOf.NegativeEvent, historical: false);
+                if (quality >= Props.glitterTendQuality)
+                {
+                    // Knocked back to stage 1: one more good tend will cure it. Implants already grown stay.
+                    parent.Severity = UnityEngine.Mathf.Max(0.01f, Props.stage2Severity - 0.05f);
+                    Messages.Message($"The tend drove {Pawn.LabelShortCap}'s nanoprobes back. One more tend like that will purge them.",
+                        Pawn, MessageTypeDefOf.PositiveEvent, historical: false);
+                }
+                else
+                {
+                    Messages.Message($"{Pawn.LabelShortCap}'s nanoprobes are building implants. Only a glitterworld-quality tend or the purge surgery can push them back now.",
+                        Pawn, MessageTypeDefOf.NegativeEvent, historical: false);
+                }
                 return;
             }
             if (quality >= Props.stage1CureTendQuality)
@@ -310,9 +331,16 @@ namespace TheSlorg
             get
             {
                 string slowed = "Tending slows the infection while it lasts. ";
-                return slowed + (InStage2
-                    ? $"Implants are forming: only a tend above {(Props.anyStageCureTendQuality - 0.01f).ToStringPercent()} quality (glitterworld medicine) or the Purge nanoprobes surgery can cure this now, and the implants will stay."
-                    : $"Any tend of at least {Props.stage1CureTendQuality.ToStringPercent()} quality purges the nanoprobes.");
+                if (InStage3)
+                {
+                    return slowed + "Almost assimilated: only the Purge nanoprobes surgery can cure this now.";
+                }
+                if (InStage2)
+                {
+                    return slowed + $"Implants are forming: a tend above {(Props.glitterTendQuality - 0.01f).ToStringPercent()} quality (glitterworld medicine) "
+                        + "pushes it back to stage 1, where another good tend cures it. The Purge nanoprobes surgery also cures it. Implants already grown stay.";
+                }
+                return slowed + $"Any tend of at least {Props.stage1CureTendQuality.ToStringPercent()} quality purges the nanoprobes.";
             }
         }
 

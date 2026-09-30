@@ -88,12 +88,12 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 
 | Stage | When | What happens | Cure |
 |---|---|---|---|
-| **1. Neural takeover** | First ~1.5–2 h untended | The victim **switches to the Slorg** and fights like a drone, with no implants | **Any tend of 50%+ quality** cures it: capture them (they're hostile now), then tend |
-| **2. Implants forming** | Until done | Ocular implant and dermal plating grow, and Slorg genes are written in. | **A tend above 100% quality** (glitterworld medicine) or the **Purge nanoprobes** surgery (Medicine 8, 1 glitterworld medicine). Slorg genes are removed, but the **implants stay** and must be cut out. |
-| **3. Complete** | ~4–6 h | Full **Slorg drone**: drone xenotype, drone implants, hairless. Nanoprobes **heal chronic conditions** (Alzheimer's, dementia, cataracts, bad back, frailty, artery blockage, asthma, carcinoma). | **None.** Only disconnection (queen death, queen core) frees them. |
+| **1. Neural takeover** | Severity 0–35% (~1.5–2 h untended) | The victim **switches to the Slorg** and fights like a drone, with no implants | **Any tend of 50%+ quality** cures it: capture them (they're hostile now), then tend |
+| **2. Implants forming** | 35–80% | Ocular implant and dermal plating grow, and Slorg genes are written in | A **glitterworld-quality tend (above 100%)** knocks it **back to stage 1**, where a second good tend cures it. Or the **Purge nanoprobes** surgery. Implants stay either way. |
+| **3. Almost assimilated** | 80–100% | Last stretch | **Only the Purge nanoprobes** surgery (Medicine 8, 1 glitterworld medicine) |
+| **Complete** | ~4–6 h untended | Full **Slorg drone**: drone xenotype, drone implants, hairless, drops all gear. Nanoprobes **heal chronic conditions**. | **None.** Only disconnection (queen death, queen core) frees them. |
 
 - **Tending slows it down**: while tended it progresses about 3/day slower (roughly 1–3/day instead of 4–6/day).
-- **A glitterworld-quality tend (above 100%) cures it at any stage**, including stage 2.
 - **The queen's injection is instant**: her victim is a full drone on the spot.
 - On completion the new drone **drops all clothing, weapons and inventory**.
 - A cure returns the pawn to its original faction. **40% of cures only look cured** and leave a hidden sleeper agent (section 7).

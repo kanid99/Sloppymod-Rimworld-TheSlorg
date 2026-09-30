@@ -3,7 +3,7 @@
 
 	<!-- Assimilation. Severity rises 4-6 per day, so it completes in about 4-6 hours untended.
 	     While tended it rises 3/day slower (about 1-3/day), buying time.
-	     A tend above 100% quality (glitterworld medicine) cures it at any stage.
+	     A tend above 100% quality (glitterworld medicine) cures stage 1 and knocks stage 2 back to stage 1.
 	     Stage 1 (below stage2Severity, ~1.5-2 hours): the host fights for the Slorg; any tend of 50%+ cures it.
 	     Stage 2: implants and Slorg genes form; only the Purge nanoprobes surgery cures it.
 	     Complete: full drone, no cure. Bleeding is stopped throughout. -->
@@ -29,8 +29,10 @@
 			<li Class="TheSlorg.HediffCompProperties_NanoprobeInfection">
 				<stage2Severity>0.35</stage2Severity>
 				<stage1CureTendQuality>0.5</stage1CureTendQuality>
-				<!-- Above 100% quality: only glitterworld medicine gets there. Cures at any stage. -->
-				<anyStageCureTendQuality>1.01</anyStageCureTendQuality>
+				<!-- Stage 3 (last stretch before completion): only the purge surgery helps. -->
+				<stage3Severity>0.8</stage3Severity>
+				<!-- Above 100% quality (only glitterworld medicine): cures stage 1, knocks stage 2 back to stage 1, nothing in stage 3. -->
+				<glitterTendQuality>1.01</glitterTendQuality>
 				<stage2Genes>
 					<li>Slorg_CollectiveLink</li>
 					<li>Slorg_Nanoprobes</li>
