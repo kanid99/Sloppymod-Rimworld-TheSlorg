@@ -250,7 +250,8 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 **How it works**
 - **Once the Unicomplex has been located** with a control implant (section 5c), generating its map (attack it with a caravan) sets up the hive's heart:
   - a **queen core** (3×3, 4000 HP, glowing) at the map center;
-  - **the queen, always**. It's the current queen if she's free and not on another map; otherwise a new one is generated;
+  - **the queen, always**, and never a second one. If the reigning queen is elsewhere (another map, a caravan, the world), she **teleports in** with a green flash and a *The queen returns* letter. If she's dead or your prisoner, succession runs first and the new queen appears. While the Unicomplex map is open she won't be pulled into raids;
+  - if you trace the hive signal while already on the Unicomplex map, all of this appears within a few seconds (no reload needed);
   - a garrison of **3 assault drones, 2 tactical drones and 3 melee drones** that defend the base;
   - **4 plasma turrets** (2×2, lethal plasma bolts, 32 range), **4 disruptor turrets** (2×2, neural shock bursts, 28 range), **10 regeneration alcoves** and **12 hive conduits** (glowing, drop plasteel/components when destroyed).
   - Turrets need no power, can't be claimed or deconstructed, and may explode when destroyed.
@@ -270,6 +271,7 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - [ ] Caravan to the Unicomplex and attack it. The core is at the map center, the **queen is there** next to it, and turrets, alcoves and conduits surround it.
 - [ ] The garrison defends: assault drones use the plasma lance on your turrets and mechs. Plasma turrets can kill your colonists. Disruptor turrets down them.
 - [ ] Kill the queen there. The drones on the map collapse (severed) as usual.
+- [ ] **Teleport test:** run **Slorg raid with queen (6000 pts)** on your colony, then, while she's on your map, send a caravan (or use dev mode) to attack the Unicomplex. She vanishes from your colony with a message and appears at the core with a letter. Only one queen exists (**Log collective state**).
 
 ---
 

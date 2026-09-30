@@ -404,6 +404,13 @@ namespace TheSlorg
             return queen;
         }
 
+        /// <summary>Settles succession right now and returns the faction's reigning queen, raising a new one if needed.</summary>
+        public Pawn EnsureQueen(Faction faction)
+        {
+            CheckQueens();
+            return QueenOf(faction);
+        }
+
         private void CheckQueens()
         {
             foreach (Faction faction in Find.FactionManager.AllFactionsListForReading)

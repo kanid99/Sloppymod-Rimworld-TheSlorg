@@ -22,6 +22,20 @@ namespace TheSlorg
         public override void FinalizeInit()
         {
             base.FinalizeInit();
+            TrySetUp();
+        }
+
+        public override void MapComponentTick()
+        {
+            // Covers the hive signal being traced while the Unicomplex map is already open.
+            if (!coreSpawned && map.Parent is Settlement && Find.TickManager.TicksGame % 250 == 0)
+            {
+                TrySetUp();
+            }
+        }
+
+        private void TrySetUp()
+        {
             if (coreSpawned || !(map.Parent is Settlement settlement))
             {
                 return;
@@ -48,13 +62,85 @@ namespace TheSlorg
 
             Fortify(faction, center);
             List<Pawn> defenders = SpawnGarrison(faction, center);
+            Pawn queen = SummonQueen(faction, collective, center);
+            if (queen != null)
+            {
+                defenders.Add(queen);
+            }
             Lord lord = map.lordManager.lords.FirstOrDefault(l => l.faction == faction)
                 ?? LordMaker.MakeNewLord(faction, new LordJob_DefendBase(faction, center, 180000, false), map);
             foreach (Pawn defender in defenders)
             {
-                lord.AddPawn(defender);
+                if (defender.GetLord() == null)
+                {
+                    lord.AddPawn(defender);
+                }
             }
             GameComponent_SlorgCollective.RefreshNow();
+        }
+
+        /// <summary>
+        /// There is only ever one queen, and she is always home when the Unicomplex is attacked. If she's somewhere else,
+        /// even in the middle of a raid, she's pulled back through the hive's transwarp link.
+        /// </summary>
+        private Pawn SummonQueen(Faction faction, GameComponent_SlorgCollective collective, IntVec3 center)
+        {
+            Pawn queen = collective.EnsureQueen(faction);
+            if (queen == null || queen.Dead || queen.Faction != faction)
+            {
+                return null;
+            }
+            if (queen.Spawned && queen.Map == map)
+            {
+                return queen;
+            }
+
+            bool wasAway = queen.Spawned || queen.GetCaravan() != null;
+            if (queen.Spawned)
+            {
+                Map from = queen.Map;
+                IntVec3 at = queen.Position;
+                queen.GetLord()?.RemovePawn(queen);
+                queen.DeSpawn();
+                FleckMaker.ThrowLightningGlow(at.ToVector3Shifted(), from, 2.5f);
+                FleckMaker.ThrowMicroSparks(at.ToVector3Shifted(), from);
+                if (from.IsPlayerHome)
+                {
+                    Messages.Message($"{queen.LabelShortCap} vanishes in a flash of green light. The Unicomplex has called its queen home.",
+                        new LookTargets(at, from), MessageTypeDefOf.NeutralEvent);
+                }
+            }
+            else if (queen.GetCaravan() is Caravan caravan)
+            {
+                caravan.RemovePawn(queen);
+                if (!caravan.PawnsListForReading.Any())
+                {
+                    caravan.Destroy();
+                }
+            }
+            else if (queen.holdingOwner != null)
+            {
+                queen.holdingOwner.Remove(queen);
+            }
+            if (Find.WorldPawns.Contains(queen))
+            {
+                Find.WorldPawns.RemovePawn(queen);
+            }
+
+            if (!CellFinder.TryFindRandomCellNear(center, map, 3, c => c.Standable(map) && c.GetFirstPawn(map) == null, out IntVec3 spot))
+            {
+                spot = CellFinder.RandomClosewalkCellNear(center, map, 6);
+            }
+            GenSpawn.Spawn(queen, spot, map);
+            FleckMaker.ThrowLightningGlow(spot.ToVector3Shifted(), map, 2.5f);
+            FleckMaker.ThrowMicroSparks(spot.ToVector3Shifted(), map);
+            if (wasAway)
+            {
+                Find.LetterStack.ReceiveLetter("The queen returns",
+                    $"{queen.LabelShortCap} has transwarped back to the Unicomplex to defend the queen core.",
+                    LetterDefOf.ThreatBig, queen);
+            }
+            return queen;
         }
 
         private void Fortify(Faction faction, IntVec3 center)
@@ -102,31 +188,6 @@ namespace TheSlorg
         private List<Pawn> SpawnGarrison(Faction faction, IntVec3 center)
         {
             List<Pawn> spawned = new List<Pawn>();
-
-            // The queen is always home once the Unicomplex has been found.
-            Pawn queen = faction.leader;
-            bool leaderAvailable = queen != null && !queen.Dead && !queen.Spawned && queen.Faction == faction
-                && !queen.IsPrisoner && SlorgUtility.IsQueen(queen);
-            if (leaderAvailable)
-            {
-                if (Find.WorldPawns.Contains(queen))
-                {
-                    Find.WorldPawns.RemovePawn(queen);
-                }
-            }
-            else
-            {
-                queen = PawnGenerator.GeneratePawn(new PawnGenerationRequest(SlorgDefOf.Slorg_QueenKind, faction, PawnGenerationContext.NonPlayer,
-                    tile: map.Tile, forceGenerateNewPawn: true));
-                if (faction.leader == null || faction.leader.Dead)
-                {
-                    faction.leader = queen;
-                }
-            }
-            if (SpawnNear(queen, center, 3))
-            {
-                spawned.Add(queen);
-            }
 
             PawnKindDef[] garrison =
             {

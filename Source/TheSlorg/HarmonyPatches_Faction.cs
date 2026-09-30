@@ -52,6 +52,12 @@ namespace TheSlorg
                 return;
             }
 
+            // While her Unicomplex is under attack, the queen stays home to defend it.
+            if (GameComponent_SlorgCollective.UnicomplexOf(faction)?.HasMap == true)
+            {
+                return;
+            }
+
             List<Pawn> pawns = __result.ToList();
             Find.WorldPawns.RemovePawn(queen);
             pawns.Add(queen);

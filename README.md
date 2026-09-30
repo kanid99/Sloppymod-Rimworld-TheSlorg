@@ -42,7 +42,7 @@ Each Slorg faction shares one collective, and it only knows what its living dron
 ### The Unicomplex and the queen core
 One Slorg settlement is secretly the **Unicomplex**. It stays hidden until you trace the hive signal with a queen's control implant. Once it's found, attacking it means facing:
 - the **queen core**, a 3×3 building with 4000 HP;
-- **the queen herself, always**. If the current queen is away or gone, the hive has another one waiting;
+- **the queen herself, always**. There is only ever one queen. If she's away, even mid-raid on your colony, she **transwarps home** the moment you arrive. If she's dead or your prisoner, her successor is waiting. She won't join raids while the Unicomplex is under attack;
 - a heavy garrison of **3 assault drones, 2 tactical drones and 3 melee drones**;
 - **4 plasma turrets** (lethal), **4 disruptor turrets** (neural shock), regeneration alcoves and hive conduits.
 
