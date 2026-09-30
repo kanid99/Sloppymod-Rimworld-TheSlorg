@@ -118,4 +118,17 @@ namespace TheSlorg
             }
         }
     }
+
+    /// <summary>Capturing (or releasing) a queen takes effect at once, not at the next collective refresh.</summary>
+    [HarmonyPatch(typeof(Pawn_GuestTracker), nameof(Pawn_GuestTracker.SetGuestStatus))]
+    public static class Pawn_GuestTracker_SetGuestStatus_Patch
+    {
+        public static void Postfix(Pawn ___pawn)
+        {
+            if (___pawn != null && !___pawn.Dead && SlorgUtility.IsQueen(___pawn))
+            {
+                GameComponent_SlorgCollective.RefreshNow();
+            }
+        }
+    }
 }

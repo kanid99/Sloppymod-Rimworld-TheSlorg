@@ -148,6 +148,13 @@ namespace TheSlorg
 
         public void Refresh()
         {
+            foreach (Map map in Find.Maps)
+            {
+                foreach (Pawn prisoner in map.mapPawns.PrisonersOfColonySpawned.ToList())
+                {
+                    QueenSuppression.Maintain(prisoner);
+                }
+            }
             CheckQueens();
             CaptiveQueen.CheckBonds();
             GatherActivePawns();

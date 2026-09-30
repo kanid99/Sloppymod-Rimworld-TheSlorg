@@ -107,7 +107,7 @@
 	<RecipeDef ParentName="SurgeryFlesh">
 		<defName>Slorg_ExtractControlImplant</defName>
 		<label>extract control implant</label>
-		<description>Carefully extract the control implant intact. Taken from a captive queen, it breaks her hold on any drones she called.</description>
+		<description>Carefully extract the control implant intact. A queen's mind is built around it: taking it from a queen kills her.</description>
 		<workerClass>TheSlorg.Recipe_ExtractControlImplant</workerClass>
 		<jobString>Extracting control implant.</jobString>
 		<workAmount>3500</workAmount>
@@ -122,16 +122,18 @@
 		<ingredients>
 			<li>
 				<filter>
-					<thingDefs>
-						<li>MedicineIndustrial</li>
-					</thingDefs>
+					<categories>
+						<li>Medicine</li>
+					</categories>
 				</filter>
 				<count>2</count>
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<categories>
+				<li>Medicine</li>
+			</categories>
 			<thingDefs>
-				<li>MedicineIndustrial</li>
 			</thingDefs>
 		</fixedIngredientFilter>
 	</RecipeDef>
@@ -159,9 +161,9 @@
 		<ingredients>
 			<li>
 				<filter>
-					<thingDefs>
-						<li>MedicineIndustrial</li>
-					</thingDefs>
+					<categories>
+						<li>Medicine</li>
+					</categories>
 				</filter>
 				<count>2</count>
 			</li>
@@ -175,8 +177,10 @@
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<categories>
+				<li>Medicine</li>
+			</categories>
 			<thingDefs>
-				<li>MedicineIndustrial</li>
 				<li>Slorg_ControlImplantItem</li>
 			</thingDefs>
 		</fixedIngredientFilter>
@@ -194,16 +198,18 @@
 		<ingredients>
 			<li>
 				<filter>
-					<thingDefs>
-						<li>MedicineIndustrial</li>
-					</thingDefs>
+					<categories>
+						<li>Medicine</li>
+					</categories>
 				</filter>
 				<count>2</count>
 			</li>
 		</ingredients>
 		<fixedIngredientFilter>
+			<categories>
+				<li>Medicine</li>
+			</categories>
 			<thingDefs>
-				<li>MedicineIndustrial</li>
 			</thingDefs>
 		</fixedIngredientFilter>
 	</RecipeDef>

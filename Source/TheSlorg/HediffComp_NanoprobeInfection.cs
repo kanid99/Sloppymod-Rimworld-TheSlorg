@@ -14,6 +14,9 @@ namespace TheSlorg
         /// <summary>During stage 1, a tend at least this good purges the nanoprobes completely.</summary>
         public float stage1CureTendQuality = 0.5f;
 
+        /// <summary>At any stage, a tend better than this purges the nanoprobes. Only glitterworld medicine goes past 100%.</summary>
+        public float anyStageCureTendQuality = 1.01f;
+
         /// <summary>Genes the nanoprobes write into the host at stage 2.</summary>
         public List<GeneDef> stage2Genes = new List<GeneDef>();
 
@@ -49,9 +52,14 @@ namespace TheSlorg
         public override void CompTended(float quality, float maxQuality, int batchPosition = 0)
         {
             base.CompTended(quality, maxQuality, batchPosition);
+            if (quality >= Props.anyStageCureTendQuality)
+            {
+                GameComponent_SlorgCollective.Instance?.QueueInfectionAction(this, InfectionAction.Cure);
+                return;
+            }
             if (InStage2)
             {
-                Messages.Message($"{Pawn.LabelShortCap}'s nanoprobes have started building implants. Tending can't stop them now; only the purge surgery can.",
+                Messages.Message($"{Pawn.LabelShortCap}'s nanoprobes have started building implants. Only a glitterworld-quality tend or the purge surgery can stop them now.",
                     Pawn, MessageTypeDefOf.NegativeEvent, historical: false);
                 return;
             }
@@ -301,9 +309,10 @@ namespace TheSlorg
         {
             get
             {
-                return InStage2
-                    ? "Implants are forming. Only the Purge nanoprobes surgery can cure this now, and the implants will stay."
-                    : $"Any tend of at least {Props.stage1CureTendQuality.ToStringPercent()} quality purges the nanoprobes.";
+                string slowed = "Tending slows the infection while it lasts. ";
+                return slowed + (InStage2
+                    ? $"Implants are forming: only a tend above {(Props.anyStageCureTendQuality - 0.01f).ToStringPercent()} quality (glitterworld medicine) or the Purge nanoprobes surgery can cure this now, and the implants will stay."
+                    : $"Any tend of at least {Props.stage1CureTendQuality.ToStringPercent()} quality purges the nanoprobes.");
             }
         }
 

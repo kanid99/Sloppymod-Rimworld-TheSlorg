@@ -201,6 +201,7 @@ namespace TheSlorg
                 return;
             }
             pawn.genes.SetXenotype(SlorgDefOf.Slorg_Drone);
+            DropAllGear(pawn);
             SlorgImplantSetExtension set = SlorgDefOf.Slorg_DroneKind.GetModExtension<SlorgImplantSetExtension>();
             if (set != null)
             {
@@ -219,6 +220,24 @@ namespace TheSlorg
             }
             MakeHairless(pawn);
             NanoprobeHeal(pawn);
+        }
+
+        /// <summary>A new drone sheds everything it carried: clothes, weapons and inventory.</summary>
+        public static void DropAllGear(Pawn pawn)
+        {
+            if (pawn.Spawned)
+            {
+                IntVec3 pos = pawn.Position;
+                pawn.apparel?.DropAll(pos, forbid: false, dropLocked: true);
+                pawn.equipment?.DropAllEquipment(pos, forbid: false);
+                pawn.inventory?.DropAllNearPawn(pos);
+            }
+            else
+            {
+                pawn.apparel?.DestroyAll();
+                pawn.equipment?.DestroyAllEquipment();
+                pawn.inventory?.DestroyAll();
+            }
         }
 
         /// <summary>Linked nanoprobes clear out chronic conditions: dementia, cataracts, bad backs, blocked arteries and the like.</summary>

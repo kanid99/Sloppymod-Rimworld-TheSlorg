@@ -66,7 +66,8 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 ## 2. The faction and raids
 
 - **Slorg Collective**: permanent enemy, spacer tech, no trade.
-- Raids mix **slorg drones** (melee: neural lash) and **tactical drones** (ranged: disruptor beam). **Slorg spawn with no clothes and no weapons.** Their implants are their gear.
+- Raids mix **slorg drones** (melee: neural lash) and **tactical drones** (ranged: disruptor beam). **Slorg spawn with no clothes, weapons or inventory.** Their implants are their gear.
+- **Temperature:** dermal plating gives −40°/+40° comfortable temperature range and the nanoprobe gene −15°/+15°, so naked drones handle the cold and heat.
 - Faction and settlement names are Slorg-style ("Unimatrix 42", "Cube 317", "Node K-204").
 - **Slorg weapons down rather than kill.** They cause **neural shock**, which builds up per hit: pain, then −15%/−35% consciousness, then collapse. It fades over a few hours and does no physical damage. They can't show up before day 20 on the storyteller's own schedule. Debug raids ignore that.
 - The faction's oldest surface settlement is renamed **Unicomplex**.
@@ -87,11 +88,14 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 
 | Stage | When | What happens | Cure |
 |---|---|---|---|
-| **1. Neural takeover** | First ~1.5–2 h | The victim **switches to the Slorg** and fights like a drone, with no implants | **Any tend of 50%+ quality** cures it: capture them (they're hostile now), then tend |
-| **2. Implants forming** | Until done | Ocular implant and dermal plating grow, and Slorg genes are written in. Tending does nothing. | **Purge nanoprobes** surgery (Medicine 8, 1 glitterworld medicine). Slorg genes are removed, but the **implants stay** and must be cut out. |
+| **1. Neural takeover** | First ~1.5–2 h untended | The victim **switches to the Slorg** and fights like a drone, with no implants | **Any tend of 50%+ quality** cures it: capture them (they're hostile now), then tend |
+| **2. Implants forming** | Until done | Ocular implant and dermal plating grow, and Slorg genes are written in. | **A tend above 100% quality** (glitterworld medicine) or the **Purge nanoprobes** surgery (Medicine 8, 1 glitterworld medicine). Slorg genes are removed, but the **implants stay** and must be cut out. |
 | **3. Complete** | ~4–6 h | Full **Slorg drone**: drone xenotype, drone implants, hairless. Nanoprobes **heal chronic conditions** (Alzheimer's, dementia, cataracts, bad back, frailty, artery blockage, asthma, carcinoma). | **None.** Only disconnection (queen death, queen core) frees them. |
 
+- **Tending slows it down**: while tended it progresses about 3/day slower (roughly 1–3/day instead of 4–6/day).
+- **A glitterworld-quality tend (above 100%) cures it at any stage**, including stage 2.
 - **The queen's injection is instant**: her victim is a full drone on the spot.
+- On completion the new drone **drops all clothing, weapons and inventory**.
 - A cure returns the pawn to its original faction. **40% of cures only look cured** and leave a hidden sleeper agent (section 7).
 - On completion:
   - **On your home map**: they attack the colony.
@@ -139,7 +143,7 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - She joins **Combat raids of 5000+ points, 50% of the time**. The debug action forces it. When she's on your map you get a **"The Slorg queen is here"** letter.
 - She's easy to spot: violet skin and a tall glowing crown.
 - **Anyone she injects becomes a full drone immediately.**
-- **Killed** on a map: every Slorg drone on that map is **severed from collective immediately**. **Captured**: it happens at the next collective refresh, within about 8 seconds. They're downed (consciousness capped at 10%) for **about 1.7–2.3 days**. You get a *Slorg queen fallen* letter.
+- **Killed or captured** on a map: every Slorg drone on that map is **severed from collective immediately**, and a captured queen's suppression meter appears at once. They're downed (consciousness capped at 10%) for **about 1.7–2.3 days**. You get a *Slorg queen fallen* letter.
 - A **new queen** is raised straight away. She's a new pawn, not the same one.
 - Severed drones that aren't operated on reconnect when it wears off.
 
@@ -187,14 +191,14 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 
 **How it works**
 - Every queen carries a **control implant** in her brain. It's what lets her command drones.
-- **Extract control implant** surgery (Medicine 8, 2 industrial medicine) takes it out **intact** as an item, leaving a small head wound. Taking it from a captive queen **breaks her hold**: her bound drones turn hostile.
-- **Install control implant** puts it in any pawn. A colonist carrying it (or a **Freed queen** keeping her own) gets a **Trace hive signal** button.
+- **Extract control implant** surgery (Medicine 8, 2 of any medicine) takes it out **intact** as an item, leaving a small head wound. **Taking it from a queen kills her**, so her bound drones turn hostile and a new queen rises.
+- **Install control implant** surgery puts it in any pawn, or a pawn can **use the item on themselves** (right-click it: *Implant control implant*). A colonist carrying it (or a **Freed queen** keeping her own) gets a **Trace hive signal** button.
 - **The queen core is hidden** until then. No settlement is marked as the Unicomplex and no core spawns. **Trace hive signal** reveals which settlement is the Unicomplex (renamed, with a letter pointing at it on the world map). Then the core spawns when you attack it, and destroying it is the final victory.
 - Anyone except a Freed queen who carries it risks **the collective's call**, as with any Slorg implant.
 
 **Test:**
-- [ ] Capture a queen, run **Extract control implant**. The item drops, and any bound drones turn hostile.
-- [ ] Install it in a colonist. **Trace hive signal** appears. Use it: a letter, and a settlement renamed *Unicomplex*.
+- [ ] Capture a queen, run **Extract control implant** (any medicine works). The item drops, the queen dies, and any bound drones turn hostile.
+- [ ] Have a colonist right-click the item and self-implant it, or use the install surgery. **Trace hive signal** appears. Use it: a letter, and a settlement renamed *Unicomplex*.
 - [ ] Attack the Unicomplex (or **Spawn queen core** plus **Reveal Unicomplex** for a quick test). The core is there.
 - [ ] Before tracing, attacking the oldest Slorg settlement should show **no** core.
 - [ ] Sever a captive queen who still has her implant: as a Freed queen she can Trace hive signal herself.

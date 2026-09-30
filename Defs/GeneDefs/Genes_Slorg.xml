@@ -101,11 +101,15 @@
 	<GeneDef ParentName="Slorg_GeneBase">
 		<defName>Slorg_Nanoprobes</defName>
 		<label>nanoprobe swarm</label>
-		<description>Self-replicating nanoprobes patrol the bloodstream, sealing wounds and fighting infection.</description>
+		<description>Self-replicating nanoprobes patrol the bloodstream, sealing wounds, fighting infection and regulating body temperature.</description>
 		<iconPath>UI/Icons/Genes/Slorg_Nanoprobes</iconPath>
 		<displayOrderInCategory>30</displayOrderInCategory>
 		<biostatCpx>2</biostatCpx>
 		<biostatMet>-2</biostatMet>
+		<statOffsets>
+			<ComfyTemperatureMin>-15</ComfyTemperatureMin>
+			<ComfyTemperatureMax>15</ComfyTemperatureMax>
+		</statOffsets>
 		<statFactors>
 			<InjuryHealingFactor>2</InjuryHealingFactor>
 			<ImmunityGainSpeed>1.5</ImmunityGainSpeed>

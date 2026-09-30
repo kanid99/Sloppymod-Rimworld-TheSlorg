@@ -67,7 +67,7 @@
 		<defName>Slorg_DermalPlating</defName>
 		<label>dermal plating</label>
 		<labelNoun>dermal plating</labelNoun>
-		<description>Armor plates bolted straight into the bone and grown over by the skin, with a cranial plate anchoring the whole lattice to the skull. It stops blades and bullets well.\n\nIt was never meant to come off. Cutting it away leaves massive scarring all over the body, and many patients don't survive.</description>
+		<description>Armor plates bolted straight into the bone and grown over by the skin, with a cranial plate anchoring the whole lattice to the skull. It stops blades and bullets well, and seals the body against extreme cold and heat.\n\nIt was never meant to come off. Cutting it away leaves massive scarring all over the body, and many patients don't survive.</description>
 		<stages>
 			<li>
 				<statOffsets>
@@ -75,6 +75,8 @@
 					<ArmorRating_Blunt>0.18</ArmorRating_Blunt>
 					<ArmorRating_Heat>0.20</ArmorRating_Heat>
 					<PawnBeauty>-1</PawnBeauty>
+					<ComfyTemperatureMin>-40</ComfyTemperatureMin>
+					<ComfyTemperatureMax>40</ComfyTemperatureMax>
 				</statOffsets>
 				<capMods>
 					<li>

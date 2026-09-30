@@ -267,6 +267,7 @@ namespace TheSlorg
                 {
                     __result.apparel?.DestroyAll();
                     __result.equipment?.DestroyAllEquipment();
+                    __result.inventory?.DestroyAll();
                 }
                 SlorgImplants.InstallSet(__result, set);
                 SlorgUtility.MakeHairless(__result);

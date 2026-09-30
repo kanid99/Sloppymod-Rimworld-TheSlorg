@@ -95,7 +95,19 @@ namespace TheSlorg
             {
                 GenPlace.TryPlaceThing(ThingMaker.MakeThing(SlorgDefOf.Slorg_ControlImplantItem), pawn.PositionHeld, pawn.MapHeld, ThingPlaceMode.Near);
             }
-            Messages.Message($"The control implant has been extracted from {pawn.LabelShortCap}.", pawn, MessageTypeDefOf.PositiveEvent);
+            if (SlorgUtility.IsQueen(pawn) && !pawn.Dead)
+            {
+                // A queen's mind is built around her command node. Without it she dies.
+                pawn.Kill(null);
+                Find.LetterStack.ReceiveLetter("The queen is dead",
+                    $"{pawn.LabelShortCap}'s mind was built around her control implant. With it gone, she is dead.\n\n"
+                    + "The implant survived the extraction. Install it in a colonist, or have a colonist use it on themselves, to trace the hive signal to the Unicomplex.",
+                    LetterDefOf.NeutralEvent, pawn.Corpse ?? (LookTargets)pawn);
+            }
+            else
+            {
+                Messages.Message($"The control implant has been extracted from {pawn.LabelShortCap}.", pawn, MessageTypeDefOf.PositiveEvent);
+            }
             GameComponent_SlorgCollective.RefreshNow();
         }
     }
