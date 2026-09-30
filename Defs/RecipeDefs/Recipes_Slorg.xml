@@ -291,4 +291,15 @@
 		</skillRequirements>
 	</RecipeDef>
 
+	<RecipeDef ParentName="Slorg_RemoveImplantBase">
+		<defName>Slorg_RemovePlasmaEmitter</defName>
+		<label>cut out plasma emitter</label>
+		<description>Cut the Slorg plasma emitter out of the patient. The implant is destroyed, and the patient will be badly hurt.</description>
+		<jobString>Cutting out plasma emitter.</jobString>
+		<removesHediff>Slorg_PlasmaEmitter</removesHediff>
+		<skillRequirements>
+			<Medicine>8</Medicine>
+		</skillRequirements>
+	</RecipeDef>
+
 </Defs>

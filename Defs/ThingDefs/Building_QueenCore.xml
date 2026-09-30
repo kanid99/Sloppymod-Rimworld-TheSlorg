@@ -41,6 +41,241 @@
 		</comps>
 	</ThingDef>
 
+	<ThingDef ParentName="BuildingBase">
+		<defName>Slorg_DisruptorTurret</defName>
+		<label>disruptor turret</label>
+		<description>A Slorg defence node that fires neural disruptor bolts. It downs intruders for the drones to collect.</description>
+		<thingClass>Building_TurretGun</thingClass>
+		<drawerType>MapMeshAndRealTime</drawerType>
+		<graphicData>
+			<texPath>Things/Building/Slorg_TurretBase</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(2,2)</drawSize>
+			<damageData>
+				<rect>(0.2,0.2,1.6,1.6)</rect>
+			</damageData>
+		</graphicData>
+		<uiIconPath>Things/Building/Slorg_DisruptorTurret_Top</uiIconPath>
+		<size>(2,2)</size>
+		<altitudeLayer>Building</altitudeLayer>
+		<stealable>false</stealable>
+		<rotatable>false</rotatable>
+		<tickerType>Normal</tickerType>
+		<passability>PassThroughOnly</passability>
+		<pathCost>50</pathCost>
+		<fillPercent>0.5</fillPercent>
+		<hasTooltip>true</hasTooltip>
+		<statBases>
+			<MaxHitPoints>450</MaxHitPoints>
+			<Flammability>0</Flammability>
+			<Beauty>-10</Beauty>
+			<ShootingAccuracyTurret>0.9</ShootingAccuracyTurret>
+		</statBases>
+		<comps>
+			<li Class="CompProperties_Explosive">
+				<wickTicks>180</wickTicks>
+				<explosiveRadius>3.9</explosiveRadius>
+				<explosiveDamageType>Bomb</explosiveDamageType>
+				<chanceNeverExplodeFromDamage>0.5</chanceNeverExplodeFromDamage>
+			</li>
+			<li Class="CompProperties_Glower">
+				<glowRadius>4</glowRadius>
+				<glowColor>(80,220,100,0)</glowColor>
+			</li>
+		</comps>
+		<building>
+			<combatPower>90</combatPower>
+			<ai_combatDangerous>true</ai_combatDangerous>
+			<turretGunDef>Slorg_Gun_DisruptorTurret</turretGunDef>
+			<turretBurstCooldownTime>2.5</turretBurstCooldownTime>
+			<turretTopDrawSize>2</turretTopDrawSize>
+			<deconstructible>false</deconstructible>
+			<claimable>false</claimable>
+		</building>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseWeaponTurret">
+		<defName>Slorg_Gun_DisruptorTurret</defName>
+		<label>disruptor turret emitter</label>
+		<description>The emitter of a disruptor turret.</description>
+		<graphicData>
+			<texPath>Things/Building/Slorg_DisruptorTurret_Top</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<statBases>
+			<AccuracyTouch>0.7</AccuracyTouch>
+			<AccuracyShort>0.75</AccuracyShort>
+			<AccuracyMedium>0.7</AccuracyMedium>
+			<AccuracyLong>0.6</AccuracyLong>
+			<RangedWeapon_Cooldown>2.5</RangedWeapon_Cooldown>
+			<DeteriorationRate>0</DeteriorationRate>
+			<Mass>20</Mass>
+			<Flammability>0</Flammability>
+		</statBases>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<defaultProjectile>Slorg_BeamBolt</defaultProjectile>
+				<warmupTime>0</warmupTime>
+				<range>28</range>
+				<burstShotCount>2</burstShotCount>
+				<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+				<soundCast>ChargeLance_Fire</soundCast>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
+	</ThingDef>
+
+	<ThingDef ParentName="BuildingBase">
+		<defName>Slorg_PlasmaTurret</defName>
+		<label>plasma turret</label>
+		<description>A heavy Slorg defence node that fires plasma bolts. It is there to kill.</description>
+		<thingClass>Building_TurretGun</thingClass>
+		<drawerType>MapMeshAndRealTime</drawerType>
+		<graphicData>
+			<texPath>Things/Building/Slorg_TurretBase</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(2,2)</drawSize>
+			<damageData>
+				<rect>(0.2,0.2,1.6,1.6)</rect>
+			</damageData>
+		</graphicData>
+		<uiIconPath>Things/Building/Slorg_PlasmaTurret_Top</uiIconPath>
+		<size>(2,2)</size>
+		<altitudeLayer>Building</altitudeLayer>
+		<stealable>false</stealable>
+		<rotatable>false</rotatable>
+		<tickerType>Normal</tickerType>
+		<passability>PassThroughOnly</passability>
+		<pathCost>50</pathCost>
+		<fillPercent>0.5</fillPercent>
+		<hasTooltip>true</hasTooltip>
+		<statBases>
+			<MaxHitPoints>600</MaxHitPoints>
+			<Flammability>0</Flammability>
+			<Beauty>-10</Beauty>
+			<ShootingAccuracyTurret>0.94</ShootingAccuracyTurret>
+		</statBases>
+		<comps>
+			<li Class="CompProperties_Explosive">
+				<wickTicks>180</wickTicks>
+				<explosiveRadius>3.9</explosiveRadius>
+				<explosiveDamageType>Bomb</explosiveDamageType>
+				<chanceNeverExplodeFromDamage>0.5</chanceNeverExplodeFromDamage>
+			</li>
+			<li Class="CompProperties_Glower">
+				<glowRadius>4</glowRadius>
+				<glowColor>(80,220,100,0)</glowColor>
+			</li>
+		</comps>
+		<building>
+			<combatPower>90</combatPower>
+			<ai_combatDangerous>true</ai_combatDangerous>
+			<turretGunDef>Slorg_Gun_PlasmaTurret</turretGunDef>
+			<turretBurstCooldownTime>3.5</turretBurstCooldownTime>
+			<turretTopDrawSize>2</turretTopDrawSize>
+			<deconstructible>false</deconstructible>
+			<claimable>false</claimable>
+		</building>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseWeaponTurret">
+		<defName>Slorg_Gun_PlasmaTurret</defName>
+		<label>plasma turret emitter</label>
+		<description>The emitter of a plasma turret.</description>
+		<graphicData>
+			<texPath>Things/Building/Slorg_PlasmaTurret_Top</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<statBases>
+			<AccuracyTouch>0.7</AccuracyTouch>
+			<AccuracyShort>0.75</AccuracyShort>
+			<AccuracyMedium>0.7</AccuracyMedium>
+			<AccuracyLong>0.6</AccuracyLong>
+			<RangedWeapon_Cooldown>3.5</RangedWeapon_Cooldown>
+			<DeteriorationRate>0</DeteriorationRate>
+			<Mass>20</Mass>
+			<Flammability>0</Flammability>
+		</statBases>
+		<verbs>
+			<li>
+				<verbClass>Verb_Shoot</verbClass>
+				<defaultProjectile>Slorg_PlasmaBolt</defaultProjectile>
+				<warmupTime>0</warmupTime>
+				<range>32</range>
+				<burstShotCount>1</burstShotCount>
+				<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+				<soundCast>ChargeLance_Fire</soundCast>
+				<muzzleFlashScale>9</muzzleFlashScale>
+			</li>
+		</verbs>
+	</ThingDef>
+
+	<ThingDef ParentName="BuildingBase">
+		<defName>Slorg_Alcove</defName>
+		<label>regeneration alcove</label>
+		<description>A drone regeneration alcove, humming with nanoprobe feeds. Drones stand in these to rest and repair.</description>
+		<graphicData>
+			<texPath>Things/Building/Slorg_Alcove</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<drawSize>(1,2)</drawSize>
+		</graphicData>
+		<size>(1,2)</size>
+		<altitudeLayer>Building</altitudeLayer>
+		<rotatable>false</rotatable>
+		<passability>Impassable</passability>
+		<fillPercent>0.8</fillPercent>
+		<castEdgeShadows>true</castEdgeShadows>
+		<statBases>
+			<MaxHitPoints>300</MaxHitPoints>
+			<Flammability>0</Flammability>
+			<Beauty>-4</Beauty>
+		</statBases>
+		<building>
+			<claimable>false</claimable>
+		</building>
+		<killedLeavings>
+			<ComponentSpacer>1</ComponentSpacer>
+			<Plasteel>10</Plasteel>
+		</killedLeavings>
+		<comps>
+			<li Class="CompProperties_Glower">
+				<glowRadius>3</glowRadius>
+				<glowColor>(80,220,100,0)</glowColor>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="BuildingBase">
+		<defName>Slorg_Conduit</defName>
+		<label>hive conduit</label>
+		<description>A pillar of cabling and transceivers carrying the collective's signal through the Unicomplex.</description>
+		<graphicData>
+			<texPath>Things/Building/Slorg_Conduit</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<altitudeLayer>Building</altitudeLayer>
+		<rotatable>false</rotatable>
+		<passability>Impassable</passability>
+		<fillPercent>0.6</fillPercent>
+		<statBases>
+			<MaxHitPoints>200</MaxHitPoints>
+			<Flammability>0</Flammability>
+		</statBases>
+		<building>
+			<claimable>false</claimable>
+		</building>
+		<killedLeavings>
+			<Plasteel>5</Plasteel>
+		</killedLeavings>
+		<comps>
+			<li Class="CompProperties_Glower">
+				<glowRadius>2.5</glowRadius>
+				<glowColor>(80,220,100,0)</glowColor>
+			</li>
+		</comps>
+	</ThingDef>
+
 	<ThingDef ParentName="BodyPartBase">
 		<defName>Slorg_ControlImplantItem</defName>
 		<label>control implant</label>

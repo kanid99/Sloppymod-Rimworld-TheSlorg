@@ -204,6 +204,26 @@
 		</modExtensions>
 	</HediffDef>
 
+	<!-- Lethal beam weapon (assault drones, queens) -->
+	<HediffDef ParentName="Slorg_ImplantBase">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Slorg_PlasmaEmitter</defName>
+		<label>plasma emitter</label>
+		<labelNoun>a plasma emitter</labelNoun>
+		<description>A heavy plasma projector fused into the forearm. It kills. The collective only turns it on people when it has to.</description>
+		<comps>
+			<li Class="HediffCompProperties_GiveAbility">
+				<abilityDef>Slorg_PlasmaLance</abilityDef>
+			</li>
+		</comps>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantExtension">
+				<removalWounds>3</removalWounds>
+				<removalWoundSize>5~9</removalWoundSize>
+			</li>
+		</modExtensions>
+	</HediffDef>
+
 	<!-- Melee weapon -->
 	<HediffDef ParentName="Slorg_ImplantBase">
 		<hediffClass>HediffWithComps</hediffClass>

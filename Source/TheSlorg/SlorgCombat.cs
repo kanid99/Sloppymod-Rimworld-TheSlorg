@@ -38,7 +38,10 @@ namespace TheSlorg
         }
     }
 
-    /// <summary>Drones with a beam emitter fire it at the nearest standing enemy they can see.</summary>
+    /// <summary>
+    /// Drones fire their arm weapons at the nearest enemy in sight. The disruptor (non-lethal) is the default; the plasma
+    /// lance (lethal) is used against machines and turrets, or when the drone or the whole assault is in trouble.
+    /// </summary>
     public class JobGiver_SlorgBeam : ThinkNode_JobGiver
     {
         protected override Job TryGiveJob(Pawn pawn)
@@ -47,29 +50,81 @@ namespace TheSlorg
             {
                 return null;
             }
-            Ability beam = pawn.abilities.GetAbility(SlorgDefOf.Slorg_CuttingBeam);
-            if (beam == null || !beam.CanCast)
+            Ability disruptor = Ready(pawn, SlorgDefOf.Slorg_CuttingBeam);
+            Ability plasma = Ready(pawn, SlorgDefOf.Slorg_PlasmaLance);
+            if (disruptor == null && plasma == null)
             {
                 return null;
             }
-            float range = beam.verb?.verbProps.range ?? 25f;
-            Pawn best = null;
-            float bestDist = range * range;
+            bool desperate = plasma != null && (pawn.health.summaryHealth.SummaryHealthPercent < 0.5f || AssaultFailing(pawn));
+
+            Thing best = null;
+            Ability bestAbility = null;
+            float bestDist = float.MaxValue;
             foreach (Pawn other in pawn.Map.mapPawns.AllPawnsSpawned)
             {
                 if (other.Downed || other.Dead || !pawn.HostileTo(other))
                 {
                     continue;
                 }
-                float dist = pawn.Position.DistanceToSquared(other.Position);
-                if (dist >= bestDist || !GenSight.LineOfSight(pawn.Position, other.Position, pawn.Map))
+                bool machine = !other.RaceProps.IsFlesh;
+                Ability use = machine || desperate ? plasma ?? disruptor : disruptor;
+                Consider(pawn, other, use, ref best, ref bestAbility, ref bestDist);
+            }
+            if (plasma != null)
+            {
+                foreach (Building turret in pawn.Map.listerBuildings.allBuildingsColonist)
+                {
+                    if (turret is Building_Turret && pawn.HostileTo(turret))
+                    {
+                        Consider(pawn, turret, plasma, ref best, ref bestAbility, ref bestDist);
+                    }
+                }
+            }
+            return best == null ? null : bestAbility.GetJob(best, best);
+        }
+
+        private static Ability Ready(Pawn pawn, AbilityDef def)
+        {
+            Ability ability = pawn.abilities.GetAbility(def);
+            return ability != null && ability.CanCast ? ability : null;
+        }
+
+        private static void Consider(Pawn pawn, Thing target, Ability ability, ref Thing best, ref Ability bestAbility, ref float bestDist)
+        {
+            if (ability == null)
+            {
+                return;
+            }
+            float range = ability.verb?.verbProps.range ?? 25f;
+            float dist = pawn.Position.DistanceToSquared(target.Position);
+            if (dist > range * range || dist >= bestDist || !GenSight.LineOfSight(pawn.Position, target.Position, pawn.Map))
+            {
+                return;
+            }
+            best = target;
+            bestAbility = ability;
+            bestDist = dist;
+        }
+
+        /// <summary>Half or more of the Slorg on this map are down: stop taking prisoners.</summary>
+        private static bool AssaultFailing(Pawn pawn)
+        {
+            int total = 0;
+            int down = 0;
+            foreach (Pawn other in pawn.Map.mapPawns.SpawnedPawnsInFaction(pawn.Faction))
+            {
+                if (!SlorgUtility.HasLinkGene(other))
                 {
                     continue;
                 }
-                best = other;
-                bestDist = dist;
+                total++;
+                if (other.Downed)
+                {
+                    down++;
+                }
             }
-            return best == null ? null : beam.GetJob(best, best);
+            return total >= 2 && down * 2 >= total;
         }
     }
 }

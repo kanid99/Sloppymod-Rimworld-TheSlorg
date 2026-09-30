@@ -66,10 +66,10 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 ## 2. The faction and raids
 
 - **Slorg Collective**: permanent enemy, spacer tech, no trade.
-- Raids mix **slorg drones** (melee: neural lash) and **tactical drones** (ranged: disruptor beam). **Slorg spawn with no clothes, weapons or inventory.** Their implants are their gear.
+- Raids mix **slorg drones** (melee: neural lash), **tactical drones** (ranged: disruptor beam) and a few **assault drones** (disruptor beam plus a lethal **plasma lance**). **Slorg spawn with no clothes, weapons or inventory.** Their implants are their gear.
 - **Temperature:** dermal plating gives −40°/+40° comfortable temperature range and the nanoprobe gene −15°/+15°, so naked drones handle the cold and heat.
 - Faction and settlement names are Slorg-style ("Unimatrix 42", "Cube 317", "Node K-204").
-- **Slorg weapons down rather than kill.** They cause **neural shock**, which builds up per hit: pain, then −15%/−35% consciousness, then collapse. It fades over a few hours and does no physical damage. They can't show up before day 20 on the storyteller's own schedule. Debug raids ignore that.
+- **Slorg weapons down rather than kill** (except the plasma lance, below). They cause **neural shock**, which builds up per hit: pain, then −15%/−35% consciousness, then collapse. It fades over a few hours and does no physical damage. They can't show up before day 20 on the storyteller's own schedule. Debug raids ignore that.
 - The faction's oldest surface settlement is renamed **Unicomplex**.
 
 **Test:**
@@ -106,7 +106,7 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - [ ] Raid, then down a colonist next to a drone. It injects them, you get a letter, and the colonist **turns hostile**.
 - [ ] Health tab: *nanoprobe infection (neural takeover)*. Wounds should stop bleeding.
 - [ ] **Stage 1 cure**: arrest the downed victim, tend them with any medicine and a decent doctor. They're cured and rejoin your colony.
-- [ ] **Stage 2**: **Advance infection to stage 2**. Ocular implant and dermal plating appear, plus Slorg genes. Tending says it can't help. Run **Purge nanoprobes**: cured, genes gone, implants still there (cut them out with the removal bills).
+- [ ] **Stage 2**: **Advance infection to stage 2**. Ocular implant and dermal plating appear, plus Slorg genes. A glitterworld tend (over 100%) drops it back to stage 1. Or run **Purge nanoprobes**: cured, genes gone, implants still there (cut them out with the removal bills).
 - [ ] **Complete infection now**: full drone. Check it's hairless and that any chronic condition is gone.
 - [ ] Spawn a raid with the queen, down a colonist near her. She injects them and they rise as a drone at once.
 
@@ -248,7 +248,12 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 ## 8. The queen core and planetary collapse
 
 **How it works**
-- **Once the Unicomplex has been located** with a control implant (section 5c), generating its map (attack it with a caravan) spawns a **queen core** (3×3, 4000 HP, glowing) spawns at the map center.
+- **Once the Unicomplex has been located** with a control implant (section 5c), generating its map (attack it with a caravan) sets up the hive's heart:
+  - a **queen core** (3×3, 4000 HP, glowing) at the map center;
+  - **the queen, always**. It's the current queen if she's free and not on another map; otherwise a new one is generated;
+  - a garrison of **3 assault drones, 2 tactical drones and 3 melee drones** that defend the base;
+  - **4 plasma turrets** (2×2, lethal plasma bolts, 32 range), **4 disruptor turrets** (2×2, neural shock bursts, 28 range), **10 regeneration alcoves** and **12 hive conduits** (glowing, drop plasteel/components when destroyed).
+  - Turrets need no power, can't be claimed or deconstructed, and may explode when destroyed.
 - It can't be claimed or deconstructed, so it has to be destroyed by damage.
 - **When it's destroyed:**
   - every Slorg (drone, queen, thrall) on the **planet surface** becomes a **disconnected drone** with **no faction**, and the ones on maps are severed (downed about 2 days);
@@ -262,7 +267,9 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 - [ ] Try a Slorg raid via the vanilla incident menu (Raid → Slorg). The faction should no longer be an option on a surface map.
 
 **Test** (real way):
-- [ ] Caravan to the Unicomplex and attack it. The core is at the map center.
+- [ ] Caravan to the Unicomplex and attack it. The core is at the map center, the **queen is there** next to it, and turrets, alcoves and conduits surround it.
+- [ ] The garrison defends: assault drones use the plasma lance on your turrets and mechs. Plasma turrets can kill your colonists. Disruptor turrets down them.
+- [ ] Kill the queen there. The drones on the map collapse (severed) as usual.
 
 ---
 
@@ -279,19 +286,24 @@ Genes are only the biology. **All Slorg technology is implants** (section 9). Th
 | **Shield emitter** | Torso | Blocks ranged and explosive damage (60 pts), recharges, overloads for 15 s | Flash on hit | 3 wounds |
 | **Assimilation tubules** | Hand | Tubule stab (3 plus 10 neural shock). Infections start at 15% (well into stage 1). | none | 2 wounds |
 | **Beam emitter** | Arm | **Disruptor beam** ability: 22 neural shock, range 25, 4 s cooldown. Drones fire it at the nearest enemy in sight. | Green bolt | 3 wounds |
+| **Plasma emitter** | Arm | **Plasma lance** ability: 26 burn, 70% armor penetration, range 30, 5 s cooldown. **Lethal.** | Orange bolt | 3 wounds |
 | **Neural lash** | Arm | Melee: 5 blunt plus 18 neural shock | none | 3 wounds |
 | **Tactical cortex** | Brain | **+4 Shooting, +4 Melee** (on top of collective skills), +4 melee dodge | none | 2 wounds on the head, 10% death |
 
 What each pawn kind gets:
 - **Drone** (melee): plating, eye, tubules, neural lash. 30% chance each of shield and cortex.
 - **Tactical drone**: plating, eye, shield, beam. Cortex 60%, tubules 50%.
-- **Queen**: all seven.
+- **Assault drone**: plating, eye, shield, beam, plasma emitter, cortex.
+- **Queen**: all of them, plus the control implant.
+
+**When drones kill:** drones fire the non-lethal disruptor by default. They switch to the **plasma lance** when the target is a mech, turret or other machine, when the drone itself is below 50% health, or when half or more of the Slorg on the map are downed.
 
 **Test:**
 - [ ] Raid, then select drones. The health tab lists the implants, and the drones show plates on their bodies plus a head plate and eyepiece.
 - [ ] Shoot a shielded drone. There's a flash, no damage, and the shield % drops, then *Shield overloaded* and it recharges.
 - [ ] Tactical drones fire **disruptor beam** bolts. Colonists they hit build up *neural shock* and collapse instead of dying. If drones only punch, tell me.
 - [ ] Drones arrive naked and unarmed, and are hairless.
+- [ ] Assault drones (Spawn a raid, or **Unicomplex**) fire the orange **plasma lance** at your turrets and mechs, and at colonists once they're losing. It burns and can kill.
 - [ ] The skills tab of a drone with a tactical cortex shows +4 Shooting and Melee.
 - [ ] Use **Install full drone implant set** on a prisoner, then run each *cut out* bill. The implant is gone and never drops as an item, and the patient takes wounds (many scars for the plating, sometimes death).
 

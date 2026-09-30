@@ -6,14 +6,15 @@ A RimWorld 1.6 mod that adds the **Slorg Collective**, a cybernetic hive-mind en
 
 ## The enemy
 
-The Slorg are a permanent enemy. They don't trade or negotiate. They raid with melee drones that down your colonists and tactical drones with spacer guns.
+The Slorg are a permanent enemy. They don't trade or negotiate. They raid with melee drones and tactical drones whose weapons down your colonists rather than kill them. **Assault drones** also carry a lethal **plasma lance**, which they use on turrets and mechs, or on anyone once the fight turns against them.
 
 ### Assimilation is an infection
-Drones walk up to downed colonists and inject them with nanoprobes. The nanoprobe infection takes about **3 days** to finish:
+Drones walk up to downed colonists and inject them with nanoprobes. The nanoprobe infection runs in three stages and takes about **4–6 hours** to finish. Tending slows it.
 
-- Normal tending only slows it (to about 5–6 days).
-- A tend of **105%+ quality** purges part of the infection, and two or three of those clear it. That needs **glitterworld medicine and a skilled doctor**.
-- If it finishes, the pawn becomes a **Slorg thrall**: collective genes, no cybernetics, and their own look.
+- **Stage 1:** any tend of 50%+ quality cures it.
+- **Stage 2:** a glitterworld-quality tend (over 100%) knocks it back to stage 1, where another good tend cures it.
+- **Stage 3:** only the **Purge nanoprobes** surgery works.
+- If it finishes, the pawn becomes a full **Slorg drone**: it drops all its gear, gains the drone implants and goes hairless.
   - On your colony map, they turn hostile right there and try to assimilate the colony from inside.
   - Elsewhere, they join the Slorg and leave.
   - As your prisoner or slave, they either break out hostile or become a hidden sleeper (50/50).
@@ -39,7 +40,13 @@ Each Slorg faction shares one collective, and it only knows what its living dron
 - The collective always raises a **new queen**.
 
 ### The Unicomplex and the queen core
-The faction's oldest surface settlement is renamed the **Unicomplex** and holds the **queen core**, a 3×3 building with 4000 HP. Destroying it:
+One Slorg settlement is secretly the **Unicomplex**. It stays hidden until you trace the hive signal with a queen's control implant. Once it's found, attacking it means facing:
+- the **queen core**, a 3×3 building with 4000 HP;
+- **the queen herself, always**. If the current queen is away or gone, the hive has another one waiting;
+- a heavy garrison of **3 assault drones, 2 tactical drones and 3 melee drones**;
+- **4 plasma turrets** (lethal), **4 disruptor turrets** (neural shock), regeneration alcoves and hive conduits.
+
+Destroying the core:
 - permanently disconnects every Slorg on the planet surface. They lose their faction and are left dazed for 2 days, so you can capture and recruit them.
 - destroys their other surface settlements.
 - stops Slorg raids on the surface. They're still out there in space. Space content for gravships (Odyssey) is planned.

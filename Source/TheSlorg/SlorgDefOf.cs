@@ -36,6 +36,14 @@ namespace TheSlorg
 
         public static PawnKindDef Slorg_DroneKind;
         public static AbilityDef Slorg_CuttingBeam;
+        public static AbilityDef Slorg_PlasmaLance;
+        public static PawnKindDef Slorg_QueenKind;
+        public static PawnKindDef Slorg_TacticalDroneKind;
+        public static PawnKindDef Slorg_AssaultDroneKind;
+        public static ThingDef Slorg_DisruptorTurret;
+        public static ThingDef Slorg_PlasmaTurret;
+        public static ThingDef Slorg_Alcove;
+        public static ThingDef Slorg_Conduit;
 
         public static SlorgCollectiveDef Slorg_Collective;
 

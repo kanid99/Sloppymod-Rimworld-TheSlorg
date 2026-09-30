@@ -43,4 +43,46 @@
 		</projectile>
 	</ThingDef>
 
+	<!-- Granted by the plasma emitter implant. Lethal: drones use it on machines and turrets, or when they're losing. -->
+	<AbilityDef>
+		<defName>Slorg_PlasmaLance</defName>
+		<label>plasma lance</label>
+		<description>Fire a searing plasma bolt from the arm-mounted emitter. Unlike the disruptor, it kills.</description>
+		<iconPath>UI/Abilities/Slorg_PlasmaLance</iconPath>
+		<cooldownTicksRange>300</cooldownTicksRange>
+		<aiCanUse>true</aiCanUse>
+		<ai_IsOffensive>true</ai_IsOffensive>
+		<verbProperties>
+			<verbClass>Verb_CastAbility</verbClass>
+			<range>30</range>
+			<warmupTime>1.0</warmupTime>
+			<soundCast>ChargeLance_Fire</soundCast>
+			<targetParams>
+				<canTargetLocations>false</canTargetLocations>
+				<canTargetBuildings>true</canTargetBuildings>
+			</targetParams>
+		</verbProperties>
+		<comps>
+			<li Class="CompProperties_AbilityLaunchProjectile">
+				<projectileDef>Slorg_PlasmaBolt</projectileDef>
+			</li>
+		</comps>
+	</AbilityDef>
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Slorg_PlasmaBolt</defName>
+		<label>plasma bolt</label>
+		<graphicData>
+			<texPath>Things/Projectile/Slorg_PlasmaBolt</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+		</graphicData>
+		<projectile>
+			<damageDef>Burn</damageDef>
+			<damageAmountBase>26</damageAmountBase>
+			<armorPenetrationBase>0.7</armorPenetrationBase>
+			<speed>90</speed>
+		</projectile>
+	</ThingDef>
+
 </Defs>

@@ -109,6 +109,48 @@
 		</modExtensions>
 	</PawnKindDef>
 
+	<!-- Heavy tactical drone: disruptor for taking people, plasma lance for when that isn't an option. -->
+	<PawnKindDef ParentName="Slorg_KindBase">
+		<defName>Slorg_AssaultDroneKind</defName>
+		<label>assault drone</label>
+		<combatPower>220</combatPower>
+		<skills>
+			<li>
+				<skill>Shooting</skill>
+				<range>9~15</range>
+			</li>
+		</skills>
+		<modExtensions>
+			<li Class="TheSlorg.SlorgImplantSetExtension">
+				<implants>
+					<li>
+						<hediff>Slorg_DermalPlating</hediff>
+					</li>
+					<li>
+						<hediff>Slorg_OcularImplant</hediff>
+						<part>Eye</part>
+					</li>
+					<li>
+						<hediff>Slorg_ShieldEmitter</hediff>
+						<part>Torso</part>
+					</li>
+					<li>
+						<hediff>Slorg_BeamEmitter</hediff>
+						<part>Arm</part>
+					</li>
+					<li>
+						<hediff>Slorg_PlasmaEmitter</hediff>
+						<part>Arm</part>
+					</li>
+					<li>
+						<hediff>Slorg_TacticalCortex</hediff>
+						<part>Brain</part>
+					</li>
+				</implants>
+			</li>
+		</modExtensions>
+	</PawnKindDef>
+
 	<PawnKindDef ParentName="Slorg_KindBase">
 		<defName>Slorg_QueenKind</defName>
 		<label>slorg queen</label>
@@ -166,6 +208,10 @@
 					<li>
 						<hediff>Slorg_ControlImplant</hediff>
 						<part>Brain</part>
+					</li>
+					<li>
+						<hediff>Slorg_PlasmaEmitter</hediff>
+						<part>Arm</part>
 					</li>
 				</implants>
 			</li>

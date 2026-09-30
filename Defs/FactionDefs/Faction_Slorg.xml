@@ -64,6 +64,7 @@
 				<options>
 					<Slorg_DroneKind>10</Slorg_DroneKind>
 					<Slorg_TacticalDroneKind>6</Slorg_TacticalDroneKind>
+					<Slorg_AssaultDroneKind>2</Slorg_AssaultDroneKind>
 				</options>
 			</li>
 			<li>
@@ -80,6 +81,7 @@
 				<options>
 					<Slorg_DroneKind>10</Slorg_DroneKind>
 					<Slorg_TacticalDroneKind>10</Slorg_TacticalDroneKind>
+					<Slorg_AssaultDroneKind>5</Slorg_AssaultDroneKind>
 				</options>
 			</li>
 		</pawnGroupMakers>
