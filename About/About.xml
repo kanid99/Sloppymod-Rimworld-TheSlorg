@@ -3,7 +3,7 @@
 	<name>The Slorg</name>
 	<author>kanid99</author>
 	<packageId>kanid99.theslorg</packageId>
-	<modVersion>0.9.18</modVersion>
+	<modVersion>0.9.19</modVersion>
 	<supportedVersions>
 		<li>1.6</li>
 	</supportedVersions>
@@ -23,7 +23,7 @@
 		<li>brrainz.harmony</li>
 		<li>Ludeon.RimWorld.Biotech</li>
 	</loadAfter>
-	<description>Build 0.9.18
+	<description>Build 0.9.19
 
 We are the Slorg. Your biological and technological distinctiveness will be added to our own.
 
