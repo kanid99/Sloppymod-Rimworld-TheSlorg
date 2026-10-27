@@ -2,7 +2,7 @@
 
 *We are the Slorg. Your biological and technological distinctiveness will be added to our own.*
 
-A RimWorld 1.6 mod that adds the **Slorg Collective**, a cybernetic hive-mind enemy faction. Requires **Biotech** and **Harmony**.
+A RimWorld 1.6 and 1.7 mod that adds the **Slorg Collective**, a cybernetic hive-mind enemy faction. Requires **Biotech** and **Harmony**.
 
 ## The enemy
 
